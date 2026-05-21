@@ -62,7 +62,7 @@ export default function Reviews() {
   }, [next])
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden" aria-label="Customer reviews">
+    <section id="reviews" className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden" aria-label="Customer reviews">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,134,11,0.03)_0%,transparent_60%)]" />
       <div className="relative max-w-4xl mx-auto">
         <motion.div

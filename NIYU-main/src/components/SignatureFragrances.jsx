@@ -5,49 +5,49 @@ const fragrances = [
   {
     name: 'Rose Oudh',
     description: 'A romantic symphony of velvety roses entwined with the depth of oudh, leaving behind warmth and mystery.',
-    image: '/images/bottle-rose-oudh.svg',
+    image: '/Rose oudh.jpeg',
     gradient: 'from-rose-900/30 via-purple-900/20 to-transparent',
   },
   {
     name: 'Dezire',
     description: 'An ode to passion and longing with tender yet powerful notes that celebrate desire.',
-    image: '/images/bottle-dezire.svg',
+    image: '/dezire.jpeg',
     gradient: 'from-red-900/30 via-gold/10 to-transparent',
   },
   {
     name: 'Oudh',
     description: 'Rich, smoky, and enchanting — the pure essence of luxury and timeless heritage.',
-    image: '/images/bottle-oudh.svg',
+    image: '/oudh.jpeg',
     gradient: 'from-amber-950/40 via-amber-900/20 to-transparent',
   },
   {
     name: '1 Million',
     description: 'A bold declaration of confidence filled with radiant energy and golden allure.',
-    image: '/images/bottle-1million.svg',
+    image: '/1 million.jpeg',
     gradient: 'from-gold/20 via-amber-800/20 to-transparent',
   },
   {
     name: 'Musk',
     description: 'Soft, earthy, sensual, and comforting with an intimate lingering aroma.',
-    image: '/images/bottle-musk.svg',
+    image: '/musk.jpeg',
     gradient: 'from-stone-700/30 via-linen/10 to-transparent',
   },
   {
     name: 'Cherry Blossom',
     description: 'A delicate spring-inspired fragrance celebrating renewal, joy, and serenity.',
-    image: '/images/bottle-cherry.svg',
+    image: '/cherry blossom.jpeg',
     gradient: 'from-pink-800/30 via-rose-900/20 to-transparent',
   },
   {
     name: 'Aqua',
     description: 'Fresh, crisp, and invigorating like the spirit of the ocean bottled with elegance.',
-    image: '/images/bottle-aqua.svg',
+    image: '/NIYU Aqua.jpeg',
     gradient: 'from-blue-900/30 via-cyan-900/20 to-transparent',
   },
   {
     name: 'Creed',
     description: 'A majestic fragrance of strength, refinement, and timeless legacy.',
-    image: '/images/bottle-creed.svg',
+    image: '/1 million white.jpeg',
     gradient: 'from-emerald-900/30 via-teal-900/20 to-transparent',
   },
 ]
@@ -67,12 +67,15 @@ function FragranceCard({ fragrance, index }) {
       <div className={`absolute inset-0 bg-gradient-to-b ${fragrance.gradient} opacity-0 group-hover:opacity-100 transition-all duration-700`} />
       <div className="absolute inset-0 bg-gradient-to-t from-cream/80 via-cream/20 to-transparent" />
 
-      <div className="relative p-6 min-h-[340px] flex flex-col justify-between border border-ink/5 group-hover:border-gold/20 transition-all duration-500">
-        <div className="flex justify-center mb-4">
+      <div className="relative p-6 min-h-[400px] flex flex-col justify-between border border-ink/5 group-hover:border-gold/20 transition-all duration-500">
+        <div className="flex justify-center items-center mb-4 flex-1">
           <img
             src={fragrance.image}
             alt={`${fragrance.name} perfume bottle`}
-            className="h-40 w-auto object-contain opacity-60 group-hover:opacity-90 transition-opacity duration-700 drop-shadow-[0_0_30px_rgba(184,134,11,0.15)]"
+            loading="lazy"
+            width="200"
+            height="280"
+            className="h-52 md:h-60 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-700 drop-shadow-[0_0_30px_rgba(184,134,11,0.15)] group-hover:scale-105"
           />
         </div>
         <div>
@@ -96,7 +99,7 @@ export default function SignatureFragrances() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="fragrances" className="relative py-32 px-6 overflow-hidden">
+    <section id="signature" className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(184,134,11,0.04)_0%,transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(122,93,62,0.03)_0%,transparent_50%)]" />
 

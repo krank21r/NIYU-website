@@ -8,10 +8,8 @@ import useLenis from './hooks/useLenis'
 
 const Hero = lazy(() => import('./components/Hero'))
 const About = lazy(() => import('./components/About'))
-const BrandEssence = lazy(() => import('./components/BrandEssence'))
 const ProductCollection = lazy(() => import('./components/ProductCollection'))
 const SignatureFragrances = lazy(() => import('./components/SignatureFragrances'))
-const FragranceNotes = lazy(() => import('./components/FragranceNotes'))
 const Reviews = lazy(() => import('./components/Reviews'))
 const Gallery = lazy(() => import('./components/Gallery'))
 const Contact = lazy(() => import('./components/Contact'))
@@ -45,10 +43,8 @@ export default function App() {
         <Suspense fallback={<LoadingFallback />}>
           <Hero />
           <About />
-          <BrandEssence />
           <ProductCollection />
           <SignatureFragrances />
-          <FragranceNotes />
           <Reviews />
           <Gallery />
           <Contact />

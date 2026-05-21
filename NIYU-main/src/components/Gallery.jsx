@@ -2,13 +2,13 @@ import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
 const images = [
-  { id: 1, span: 'row-span-2', label: 'Rose Oudh', color: 'from-rose-900/40', src: '/images/bottle-rose-oudh.svg' },
-  { id: 2, span: '', label: 'Premium Collection', color: 'from-amber-900/40', src: '/images/gallery-perfume.svg' },
-  { id: 3, span: '', label: 'Attars', color: 'from-gold/30', src: '/images/bottle-oudh.svg' },
-  { id: 4, span: 'row-span-2', label: 'Gift Sets', color: 'from-rose-800/40', src: '/images/gallery-bottles.svg' },
-  { id: 5, span: 'col-span-2', label: 'Signature Collection', color: 'from-amber-950/40', src: '/images/gallery-lifestyle.svg' },
-  { id: 6, span: '', label: 'Car Perfumes', color: 'from-blue-900/40', src: '/images/bottle-aqua.svg' },
-  { id: 7, span: '', label: 'Dezire', color: 'from-red-900/40', src: '/images/bottle-dezire.svg' },
+  { id: 1, span: 'md:row-span-2', label: 'Rose Oudh', color: 'from-rose-900/40', src: '/Rose oudh.jpeg' },
+  { id: 2, span: '', label: 'Premium Collection', color: 'from-amber-900/40', src: '/1 million.jpeg' },
+  { id: 3, span: '', label: 'Attars', color: 'from-gold/30', src: '/oudh.jpeg' },
+  { id: 4, span: 'md:row-span-2', label: 'Gift Sets', color: 'from-rose-800/40', src: '/pretty women.jpeg' },
+  { id: 5, span: 'md:col-span-2', label: 'Signature Collection', color: 'from-amber-950/40', src: '/cherry blossom.jpeg' },
+  { id: 6, span: '', label: 'Car Perfumes', color: 'from-blue-900/40', src: '/NIYU Aqua.jpeg' },
+  { id: 7, span: '', label: 'Dezire', color: 'from-red-900/40', src: '/dezire.jpeg' },
 ]
 
 function GalleryItem({ item, index }) {
@@ -26,14 +26,18 @@ function GalleryItem({ item, index }) {
       <div className={`absolute inset-0 bg-gradient-to-b ${item.color} via-cream/20 to-cream opacity-60 group-hover:opacity-40 transition-opacity duration-700 z-10`} />
       <div className="absolute inset-0 bg-gradient-to-t from-cream/80 via-transparent to-transparent z-10" />
 
-      <div className="relative h-full min-h-[250px] bg-gradient-to-br from-parchment to-linen flex items-center justify-center overflow-hidden">
+      <div className="relative h-full min-h-[200px] md:min-h-[250px] bg-gradient-to-br from-parchment to-linen flex items-center justify-center overflow-hidden">
         <img
           src={item.src}
           alt={item.label}
-          className="absolute inset-0 w-full h-full object-contain p-4 opacity-30 group-hover:opacity-60 scale-90 group-hover:scale-100 transition-all duration-700"
+          loading="lazy"
+          width="400"
+          height="300"
+          className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 scale-100 group-hover:scale-105 transition-all duration-700"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         <div className="text-center z-20 relative">
-          <p className="text-lg font-heading text-ink-muted group-hover:text-gold transition-colors duration-500">
+          <p className="text-base md:text-lg font-heading text-white/90 group-hover:text-gold transition-colors duration-500 drop-shadow-lg">
             {item.label}
           </p>
         </div>
@@ -49,7 +53,7 @@ export default function Gallery() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section className="relative py-32 px-6" aria-label="Fragrance gallery">
+    <section id="gallery" className="relative py-20 sm:py-32 px-4 sm:px-6" aria-label="Fragrance gallery">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,134,11,0.02)_0%,transparent_60%)]" />
       <div className="relative max-w-7xl mx-auto">
         <motion.div

@@ -5,50 +5,30 @@ const products = [
   {
     title: 'Premium Perfumes',
     description:
-      'Experience luxury in every spray with rich fragrance notes and long-lasting freshness designed to leave a lasting impression.',
-    image: '/images/bottle-1million.svg',
+      'Experience luxury in every spray with our premium perfume collection. Crafted with rich fragrance notes and long-lasting freshness, Niyu Premium Perfumes are designed to leave a lasting impression wherever you go.',
+    image: '/1 million.jpeg',
     gradient: 'from-amber-900/30 via-gold/5 to-transparent',
-    icon: (
-      <svg className="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-      </svg>
-    ),
   },
   {
     title: 'Attars',
     description:
-      'Traditional alcohol-free attars blended with modern elegance for a deep and soothing fragrance experience.',
-    image: '/images/bottle-oudh.svg',
+      'Discover the timeless beauty of traditional attars blended with modern elegance. Our alcohol-free attars offer deep, soothing aromas perfect for everyday wear and special occasions.',
+    image: '/oudh.jpeg',
     gradient: 'from-amber-950/30 via-gold/5 to-transparent',
-    icon: (
-      <svg className="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-      </svg>
-    ),
   },
   {
     title: 'Car Perfumes',
     description:
-      'Transform every drive into a refreshing journey with luxurious fragrances that eliminate unwanted odors.',
-    image: '/images/bottle-aqua.svg',
+      'Turn every drive into a refreshing journey with Niyu Car Perfumes. Designed to eliminate unwanted odors and fill your car with luxurious fragrance that lasts for days.',
+    image: '/NIYU Aqua.jpeg',
     gradient: 'from-gold/10 via-gold/5 to-transparent',
-    icon: (
-      <svg className="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
   },
   {
     title: 'Gift Sets',
     description:
-      'Beautifully curated fragrance collections designed for special occasions and unforgettable gifting.',
-    image: '/images/gallery-bottles.svg',
+      'Celebrate special moments with beautifully curated Niyu Gift Sets. A perfect combination of luxury, fragrance, and elegance for your loved ones on every occasion.',
+    image: '/pretty women.jpeg',
     gradient: 'from-rose-900/20 via-gold/5 to-transparent',
-    icon: (
-      <svg className="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
   },
 ]
 
@@ -67,29 +47,31 @@ function ProductCard({ product, index }) {
       <div className={`absolute inset-0 bg-gradient-to-b ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
       <div className="absolute inset-0 bg-gradient-to-t from-cream via-transparent to-transparent" />
 
-      <div className="relative p-10 md:p-14 flex flex-col items-start min-h-[360px] border border-ink/5 group-hover:border-gold/20 transition-all duration-500">
-        <div className="absolute top-6 right-6 w-24 h-24 opacity-20 group-hover:opacity-40 transition-opacity duration-700">
+      <div className="relative p-6 sm:p-8 md:p-10 flex flex-col min-h-[280px] sm:min-h-[320px] md:min-h-[360px] border border-ink/5 group-hover:border-gold/20 transition-all duration-500">
+        {/* Background image */}
+        <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-700">
           <img
             src={product.image}
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-contain"
+            loading="lazy"
+            className="w-full h-full object-cover"
           />
         </div>
-        <div className="mb-8 p-4 bg-gold/5 rounded-full group-hover:bg-gold/10 transition-colors duration-500">
-          {product.icon}
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0E1218] via-[#0E1218]/80 to-transparent" />
 
-        <h3 className="text-2xl md:text-3xl font-heading text-ink-soft mb-4 group-hover:text-gold transition-colors duration-500">
-          {product.title}
-        </h3>
+        <div className="relative z-10 flex flex-col h-full">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-heading text-ink-soft mb-3 sm:mb-4 group-hover:text-gold transition-colors duration-500">
+            {product.title}
+          </h3>
 
-        <p className="text-ink-muted font-body font-light leading-relaxed text-sm md:text-base max-w-sm">
-          {product.description}
-        </p>
+          <p className="text-ink-muted font-body font-light leading-relaxed text-xs sm:text-sm md:text-base max-w-sm">
+            {product.description}
+          </p>
 
-        <div className="mt-auto pt-8">
-          <div className="w-12 h-[1px] bg-gold/30 group-hover:w-24 transition-all duration-700" />
+          <div className="mt-auto pt-6 sm:pt-8">
+            <div className="w-10 sm:w-12 h-[1px] bg-gold/30 group-hover:w-20 sm:group-hover:w-24 transition-all duration-700" />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -101,7 +83,7 @@ export default function ProductCollection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="collection" className="relative py-32 px-6">
+    <section id="collection" className="relative py-20 sm:py-32 px-4 sm:px-6">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(184,134,11,0.03)_0%,transparent_60%)]" />
       <div className="relative max-w-7xl mx-auto">
         <motion.div

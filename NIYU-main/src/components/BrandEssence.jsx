@@ -9,7 +9,7 @@ export default function BrandEssence() {
   const bgY = useTransform(scrollYProgress, [0, 1], ['-20%', '20%'])
 
   return (
-    <section ref={sectionRef} className="relative py-40 overflow-hidden" aria-label="Brand essence">
+    <section id="brand" ref={sectionRef} className="relative py-40 overflow-hidden" aria-label="Brand essence">
       <div className="absolute inset-0">
         <motion.div className="absolute inset-0" style={{ y: bgY }}>
           <div className="absolute inset-0 bg-gradient-to-b from-ink via-charcoal to-ink" />

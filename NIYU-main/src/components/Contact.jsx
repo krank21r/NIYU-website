@@ -80,7 +80,7 @@ export default function Contact() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="contact" className="relative py-32 px-6">
+    <section id="contact" className="relative py-20 sm:py-32 px-4 sm:px-6">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(184,134,11,0.04)_0%,transparent_60%)]" />
       <div className="relative max-w-4xl mx-auto">
         <motion.div

@@ -80,7 +80,7 @@ export default function FragranceNotes() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section className="relative py-32 px-6">
+    <section id="fragrances" className="relative py-32 px-6">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,134,11,0.02)_0%,transparent_60%)]" />
       <div className="relative max-w-6xl mx-auto">
         <motion.div
