@@ -57,52 +57,59 @@ export default function Reviews() {
   }, [])
 
   useEffect(() => {
-    const timer = setInterval(next, 4000)
+    const timer = setInterval(next, 5000)
     return () => clearInterval(timer)
   }, [next])
 
   return (
-    <section id="reviews" className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden" aria-label="Customer reviews">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,134,11,0.03)_0%,transparent_60%)]" />
+    <section id="reviews" className="relative py-24 sm:py-36 px-4 sm:px-6 overflow-hidden" aria-label="Customer reviews">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,134,11,0.04)_0%,transparent_60%)]" />
       <div className="relative max-w-4xl mx-auto">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
+          className="text-center mb-20"
         >
-          <div className="section-divider" />
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+            className="section-divider origin-center"
+          />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold gold-gradient mb-4">
             What Our Customers Say
           </h2>
         </motion.div>
 
-        <div className="relative min-h-[250px] flex items-center justify-center">
+        <div className="relative min-h-[280px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.blockquote
               key={current}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.6 }}
-              className="glass-card p-10 md:p-14 rounded-sm max-w-2xl mx-auto text-center"
+              initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -30, filter: 'blur(4px)' }}
+              transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
+              className="double-bezel max-w-2xl mx-auto"
             >
-              <div className="mb-6 flex justify-center">
-                <Stars rating={reviews[current].rating} />
+              <div className="double-bezel-inner p-10 md:p-14 text-center">
+                <div className="mb-6 flex justify-center">
+                  <Stars rating={reviews[current].rating} />
+                </div>
+                <p className="text-lg md:text-xl text-ink-muted font-elegant italic leading-relaxed mb-8">
+                  &ldquo;{reviews[current].text}&rdquo;
+                </p>
+                <div className="w-12 h-[1px] bg-gold/30 mx-auto mb-4" aria-hidden="true" />
+                <cite className="text-sm font-heading text-gold tracking-wider uppercase not-italic">
+                  {reviews[current].name}
+                </cite>
               </div>
-              <p className="text-lg md:text-xl text-ink-muted font-elegant italic leading-relaxed mb-8">
-                &ldquo;{reviews[current].text}&rdquo;
-              </p>
-              <div className="w-12 h-[1px] bg-gold/30 mx-auto mb-4" aria-hidden="true" />
-              <cite className="text-sm font-heading text-gold tracking-wider uppercase not-italic">
-                {reviews[current].name}
-              </cite>
             </motion.blockquote>
           </AnimatePresence>
         </div>
 
-        <div className="flex justify-center gap-3 mt-10" role="tablist" aria-label="Review navigation">
+        <div className="flex justify-center gap-3 mt-12" role="tablist" aria-label="Review navigation">
           {reviews.map((_, i) => (
             <button
               key={i}
@@ -110,10 +117,10 @@ export default function Reviews() {
               role="tab"
               aria-selected={i === current}
               aria-label={`Review ${i + 1}`}
-              className={`transition-all duration-500 rounded-full ${
+              className={`transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center ${
                 i === current
-                  ? 'w-8 h-3 bg-gold'
-                  : 'w-3 h-3 bg-ink/10 hover:bg-ink/20'
+                  ? 'w-10 h-4 bg-gold'
+                  : 'w-4 h-4 bg-ink/10 hover:bg-ink/20'
               }`}
             />
           ))}

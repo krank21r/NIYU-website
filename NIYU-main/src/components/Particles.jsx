@@ -10,7 +10,7 @@ export default function Particles({ count = 25 }) {
       size: Math.random() * 3 + 1,
       duration: Math.random() * 10 + 10,
       delay: Math.random() * 5,
-      opacity: Math.random() * 0.3 + 0.1,
+      opacity: Math.random() * 0.2 + 0.06,
     })), [count])
 
   return (
@@ -25,17 +25,17 @@ export default function Particles({ count = 25 }) {
             width: p.size,
             height: p.size,
             background: `radial-gradient(circle, rgba(184,134,11,${p.opacity}) 0%, transparent 100%)`,
-            boxShadow: `0 0 ${p.size * 3}px rgba(184,134,11,${p.opacity * 0.3})`,
+            boxShadow: `0 0 ${p.size * 3}px rgba(184,134,11,${p.opacity * 0.2})`,
           }}
           animate={{
-            y: [0, -20, 0],
-            opacity: [p.opacity, p.opacity * 1.3, p.opacity],
+            y: [0, -25, 0],
+            opacity: [p.opacity, p.opacity * 1.4, p.opacity],
           }}
           transition={{
             duration: p.duration,
             repeat: Infinity,
             delay: p.delay,
-            ease: "easeInOut",
+            ease: [0.32, 0.72, 0, 1],
           }}
         />
       ))}

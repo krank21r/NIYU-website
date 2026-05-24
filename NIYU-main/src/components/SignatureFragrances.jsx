@@ -4,51 +4,51 @@ import { useRef } from 'react'
 const fragrances = [
   {
     name: 'Rose Oudh',
-    description: 'A romantic symphony of velvety roses entwined with the depth of oudh, leaving behind warmth and mystery.',
+    description: 'A romantic symphony of velvety roses entwined with the depth of oudh.',
     image: '/Rose oudh.jpeg',
-    gradient: 'from-rose-900/30 via-purple-900/20 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
   {
     name: 'Dezire',
-    description: 'An ode to passion and longing with tender yet powerful notes that celebrate desire.',
+    description: 'An ode to passion and longing with tender yet powerful notes.',
     image: '/dezire.jpeg',
-    gradient: 'from-red-900/30 via-gold/10 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
   {
     name: 'Oudh',
-    description: 'Rich, smoky, and enchanting — the pure essence of luxury and timeless heritage.',
+    description: 'Rich, smoky, and enchanting — the pure essence of luxury.',
     image: '/oudh.jpeg',
-    gradient: 'from-amber-950/40 via-amber-900/20 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
   {
     name: '1 Million',
-    description: 'A bold declaration of confidence filled with radiant energy and golden allure.',
+    description: 'A bold declaration of confidence filled with radiant energy.',
     image: '/1 million.jpeg',
-    gradient: 'from-gold/20 via-amber-800/20 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
   {
     name: 'Musk',
-    description: 'Soft, earthy, sensual, and comforting with an intimate lingering aroma.',
+    description: 'Soft, earthy, sensual, and comforting with an intimate aroma.',
     image: '/musk.jpeg',
-    gradient: 'from-stone-700/30 via-linen/10 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
   {
     name: 'Cherry Blossom',
-    description: 'A delicate spring-inspired fragrance celebrating renewal, joy, and serenity.',
+    description: 'A delicate spring-inspired fragrance celebrating renewal and joy.',
     image: '/cherry blossom.jpeg',
-    gradient: 'from-pink-800/30 via-rose-900/20 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
   {
     name: 'Aqua',
-    description: 'Fresh, crisp, and invigorating like the spirit of the ocean bottled with elegance.',
+    description: 'Fresh, crisp, and invigorating like the spirit of the ocean.',
     image: '/NIYU Aqua.jpeg',
-    gradient: 'from-blue-900/30 via-cyan-900/20 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
   {
     name: 'Creed',
     description: 'A majestic fragrance of strength, refinement, and timeless legacy.',
     image: '/1 million white.jpeg',
-    gradient: 'from-emerald-900/30 via-teal-900/20 to-transparent',
+    prices: { '50ml': '1299', '30ml': '899', '15ml': '499' },
   },
 ]
 
@@ -59,15 +59,13 @@ function FragranceCard({ fragrance, index }) {
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 60 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: index * 0.1 }}
-      className="group relative overflow-hidden rounded-sm cursor-pointer"
+      initial={{ opacity: 0, y: 50, filter: 'blur(4px)' }}
+      animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+      transition={{ duration: 0.9, delay: index * 0.08, ease: [0.32, 0.72, 0, 1] }}
+      className="double-bezel group cursor-pointer"
     >
-      <div className={`absolute inset-0 bg-gradient-to-b ${fragrance.gradient} opacity-0 group-hover:opacity-100 transition-all duration-700`} />
-      <div className="absolute inset-0 bg-gradient-to-t from-cream/80 via-cream/20 to-transparent" />
-
-      <div className="relative p-6 min-h-[400px] flex flex-col justify-between border border-ink/5 group-hover:border-gold/20 transition-all duration-500">
+      <div className="double-bezel-inner p-6 min-h-[460px] flex flex-col justify-between">
+        {/* Product Image */}
         <div className="flex justify-center items-center mb-4 flex-1">
           <img
             src={fragrance.image}
@@ -75,19 +73,31 @@ function FragranceCard({ fragrance, index }) {
             loading="lazy"
             width="200"
             height="280"
-            className="h-52 md:h-60 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-700 drop-shadow-[0_0_30px_rgba(184,134,11,0.15)] group-hover:scale-105"
+            className="h-44 md:h-52 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] drop-shadow-[0_0_20px_rgba(184,134,11,0.08)] group-hover:scale-105"
           />
         </div>
+
+        {/* Info */}
         <div>
-          <div className="mb-3" aria-hidden="true">
-            <div className="w-8 h-[1px] bg-gold/40 group-hover:w-16 transition-all duration-700 mb-4" />
-          </div>
-          <h3 className="text-xl md:text-2xl font-heading text-ink-soft group-hover:text-gold transition-colors duration-500 mb-3">
+          <div className="w-8 h-[1px] bg-gold/30 group-hover:w-16 transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] mb-4" />
+          <h3 className="text-xl md:text-2xl font-heading text-ink-soft group-hover:text-gold transition-colors duration-700 mb-2">
             {fragrance.name}
           </h3>
-          <p className="text-ink-subtle font-body font-light text-sm leading-relaxed group-hover:text-ink-muted transition-colors duration-500">
+          <p className="text-ink-subtle font-body font-light text-xs leading-relaxed group-hover:text-ink-muted transition-colors duration-700 mb-4">
             {fragrance.description}
           </p>
+
+          {/* Pricing */}
+          <div className="flex items-center gap-3 pt-3 border-t border-ink/5">
+            {Object.entries(fragrance.prices).map(([size, price]) => (
+              <div key={size} className="text-center flex-1">
+                <p className="text-[11px] tracking-[0.12em] uppercase text-ink-subtle font-body mb-0.5">{size}</p>
+                <p className="text-sm font-body font-semibold text-ink-soft">
+                  <span className="text-[11px] text-ink-subtle font-normal mr-0.5">&#8377;</span>{price}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </motion.article>
@@ -99,19 +109,24 @@ export default function SignatureFragrances() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="signature" className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
+    <section id="signature" className="relative py-24 sm:py-36 px-4 sm:px-6 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(184,134,11,0.04)_0%,transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(122,93,62,0.03)_0%,transparent_50%)]" />
 
       <div className="relative max-w-7xl mx-auto">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
+          className="text-center mb-24"
         >
-          <div className="section-divider" />
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+            className="section-divider origin-center"
+          />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold gold-gradient mb-4">
             Signature Fragrances
           </h2>
@@ -120,7 +135,7 @@ export default function SignatureFragrances() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {fragrances.map((fragrance, i) => (
             <FragranceCard key={fragrance.name} fragrance={fragrance} index={i} />
           ))}

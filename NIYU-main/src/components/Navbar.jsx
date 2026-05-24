@@ -6,7 +6,8 @@ const navLinks = [
   { label: 'SHOP', href: '#collection' },
   { label: 'COLLECTIONS', href: '#signature' },
   { label: 'PERFUMES', href: '#about' },
-  { label: 'ATTAR', href: '#about' },
+  { label: 'ATTARS', href: '#attars' },
+  { label: 'CAR PERFUMES', href: '#car-perfumes' },
   { label: 'ABOUT', href: '#about' },
   { label: 'CONTACT', href: '#contact' },
 ]
@@ -19,7 +20,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 60)
-      const sections = ['hero', 'collection', 'signature', 'about', 'contact']
+      const sections = ['hero', 'trending', 'specials', 'attars', 'car-perfumes', 'about', 'collection', 'signature', 'contact']
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i])
         if (el && el.getBoundingClientRect().top <= 200) {
@@ -53,46 +54,47 @@ export default function Navbar() {
   }
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-      role="navigation"
-      aria-label="Main navigation"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-[#070B0F]/95 backdrop-blur-xl shadow-lg shadow-black/40'
-          : 'bg-[#070B0F]/60 backdrop-blur-md'
-      }`}
-    >
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <motion.a
-          href="#"
-          className="flex flex-col"
-          whileHover={{ scale: 1.02 }}
-          onClick={(e) => handleNavClick(e, '#hero')}
-          aria-label="NIYU Perfumes — back to top"
+    <>
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+        role="navigation"
+        aria-label="Main navigation"
+        className="fixed top-[calc(2.25rem+1.5rem)] left-1/2 -translate-x-1/2 z-50 hidden md:block"
+      >
+        <div
+          className={`flex items-center gap-1 px-2 py-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+            scrolled
+              ? 'bg-ivory/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(26,22,18,0.06),0_0_0_1px_rgba(237,233,227,0.5)]'
+              : 'bg-ivory/40 backdrop-blur-md shadow-[0_0_0_1px_rgba(237,233,227,0.3)]'
+          }`}
         >
-          <span className="text-xl md:text-2xl lg:text-[1.7rem] font-heading tracking-[0.2em] lg:tracking-[0.25em] text-white font-bold leading-none">
-            NIYU<sup className="text-[8px] lg:text-[9px] font-normal align-super ml-0.5 tracking-normal">®</sup>
-          </span>
-          <span className="text-[6px] md:text-[7px] lg:text-[8px] tracking-[0.15em] lg:tracking-[0.18em] uppercase text-white/40 mt-1 font-body hidden sm:block">
-            Pure Oils. Pure Luxury.
-          </span>
-        </motion.a>
+          {/* Logo */}
+          <motion.a
+            href="#"
+            className="flex items-center gap-2 px-4 py-2 mr-1"
+            whileHover={{ scale: 1.02 }}
+            onClick={(e) => handleNavClick(e, '#hero')}
+            aria-label="NIYU Perfumes — back to top"
+          >
+            <span className="text-base lg:text-lg font-heading tracking-[0.2em] text-charcoal font-bold leading-none">
+              NIYU<sup className="text-[7px] font-normal align-super ml-0.5 tracking-normal">®</sup>
+            </span>
+          </motion.a>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden lg:flex items-center gap-1 xl:gap-2">
+          <div className="w-[1px] h-4 bg-ink/8" aria-hidden="true" />
+
+          {/* Nav Links */}
           {navLinks.map((link) => (
             <motion.a
               key={link.label}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className={`text-[10px] xl:text-[11px] tracking-[0.1em] xl:tracking-[0.12em] uppercase relative py-2 px-3 xl:px-4 rounded-full font-body font-medium transition-all duration-300 ${
+              className={`text-[10px] xl:text-[11px] tracking-[0.1em] uppercase relative py-2 px-3 xl:px-4 rounded-full font-body font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                 active === link.href
-                  ? 'text-white bg-white/10'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                  ? 'text-charcoal bg-gold/10'
+                  : 'text-ink-muted hover:text-charcoal hover:bg-cream/60'
               }`}
               whileHover={{ y: -1 }}
               aria-current={active === link.href ? 'page' : undefined}
@@ -101,79 +103,93 @@ export default function Navbar() {
             </motion.a>
           ))}
         </div>
+      </motion.nav>
 
-        {/* Tablet Nav - shorter list */}
-        <div className="hidden md:flex lg:hidden items-center gap-1">
-          {navLinks.slice(0, 5).map((link) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className={`text-[9px] tracking-[0.08em] uppercase relative py-2 px-2 rounded-full font-body font-medium transition-all duration-300 ${
-                active === link.href
-                  ? 'text-white bg-white/10'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
-              }`}
-              aria-current={active === link.href ? 'page' : undefined}
-            >
-              {link.label}
-            </motion.a>
-          ))}
-          <button
-            onClick={() => setMobileOpen(true)}
-            className="text-[9px] tracking-[0.08em] uppercase text-white/60 hover:text-white py-2 px-3 rounded-full hover:bg-white/5 transition-all font-body"
-            aria-label="Show more menu items"
+      {/* Mobile navbar */}
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+        role="navigation"
+        aria-label="Main navigation"
+        className="fixed top-[calc(2.25rem+1rem)] left-4 right-4 z-50 md:hidden"
+      >
+        <div
+          className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+            scrolled
+              ? 'bg-ivory/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(26,22,18,0.06),0_0_0_1px_rgba(237,233,227,0.5)]'
+              : 'bg-ivory/40 backdrop-blur-md shadow-[0_0_0_1px_rgba(237,233,227,0.3)]'
+          }`}
+        >
+          <motion.a
+            href="#"
+            className="flex flex-col"
+            whileHover={{ scale: 1.02 }}
+            onClick={(e) => handleNavClick(e, '#hero')}
+            aria-label="NIYU Perfumes — back to top"
           >
-            MORE
+            <span className="text-lg font-heading tracking-[0.2em] text-charcoal font-bold leading-none">
+              NIYU<sup className="text-[7px] font-normal align-super ml-0.5 tracking-normal">®</sup>
+            </span>
+            <span className="text-[10px] tracking-[0.15em] uppercase text-ink-subtle mt-0.5 font-body">
+              Pure Oils. Pure Luxury.
+            </span>
+          </motion.a>
+
+          {/* Hamburger morph */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="relative w-11 h-11 flex items-center justify-center"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+          >
+            <div className="w-5 flex flex-col gap-1.5">
+              <motion.span
+                animate={mobileOpen ? { rotate: 45, y: 4.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+                className="block w-full h-[1.5px] bg-charcoal origin-center"
+              />
+              <motion.span
+                animate={mobileOpen ? { opacity: 0, x: -8 } : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.3 }}
+                className="block w-full h-[1.5px] bg-charcoal"
+              />
+              <motion.span
+                animate={mobileOpen ? { rotate: -45, y: -4.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+                className="block w-full h-[1.5px] bg-charcoal origin-center"
+              />
+            </div>
           </button>
         </div>
+      </motion.nav>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-3 min-w-[44px] min-h-[44px] items-center justify-center"
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-menu"
-        >
-          <motion.span
-            animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-[1.5px] bg-white"
-          />
-          <motion.span
-            animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-6 h-[1.5px] bg-white"
-          />
-          <motion.span
-            animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-[1.5px] bg-white"
-          />
-        </button>
-      </div>
-
-      {/* Mobile / Tablet Menu */}
+      {/* Mobile / Tablet Menu Overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#070B0F]/98 backdrop-blur-xl overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+            className="fixed inset-0 z-40 bg-ivory/95 backdrop-blur-3xl flex items-center justify-center md:hidden"
           >
-            <div className="px-4 sm:px-6 py-6 flex flex-col gap-1">
+            <div className="flex flex-col items-center gap-2">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className={`text-sm tracking-[0.12em] uppercase transition-all duration-300 py-3.5 px-5 min-h-[48px] flex items-center rounded-lg font-body font-medium ${
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ delay: 0.1 + i * 0.06, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+                  className={`text-2xl sm:text-3xl tracking-[0.15em] uppercase font-heading transition-colors duration-500 py-3 ${
                     active === link.href
-                      ? 'text-white bg-white/10'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                      ? 'text-gold'
+                      : 'text-ink-muted hover:text-charcoal'
                   }`}
                   aria-current={active === link.href ? 'page' : undefined}
                 >
@@ -184,6 +200,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   )
 }

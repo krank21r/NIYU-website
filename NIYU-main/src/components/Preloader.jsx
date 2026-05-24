@@ -32,19 +32,19 @@ export default function Preloader() {
       {loading && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black-soft"
+          exit={{ opacity: 0, transition: { duration: 1, ease: [0.32, 0.72, 0, 1] } }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-ivory"
         >
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
             className="text-center"
           >
-            <div className="text-5xl md:text-6xl font-heading font-bold gold-gradient tracking-[0.3em] mb-3">
+            <div className="text-5xl md:text-7xl font-heading font-bold gold-gradient tracking-[0.3em] mb-3">
               NIYU
             </div>
-            <div className="text-xs tracking-[0.4em] uppercase text-gold/60 font-body mb-10">
+            <div className="text-xs sm:text-sm tracking-[0.4em] uppercase text-gold/50 font-body mb-10">
               Pure Oils. Pure Luxury.
             </div>
           </motion.div>
@@ -55,16 +55,16 @@ export default function Preloader() {
               style={{ width: `${progress * 100}%` }}
             />
             <div
-              className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-white/40 to-transparent"
               style={{
                 transform: `translateX(${progress * 100}%)`,
-                transition: 'transform 0.1s linear',
+                transition: 'transform 0.1s cubic-bezier(0.32, 0.72, 0, 1)',
               }}
             />
           </div>
 
           <motion.p
-            className="mt-4 text-[10px] tracking-[0.2em] text-ink-subtle/40 font-body"
+            className="mt-4 text-[11px] tracking-[0.2em] text-ink-subtle/40 font-body"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
