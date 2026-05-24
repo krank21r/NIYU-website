@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { useCart } from '../context/CartContext'
 
 const fragrances = [
   {
@@ -55,6 +56,7 @@ const fragrances = [
 function FragranceCard({ fragrance, index }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const { openProductModal } = useCart()
 
   return (
     <motion.article
@@ -88,7 +90,7 @@ function FragranceCard({ fragrance, index }) {
           </p>
 
           {/* Pricing */}
-          <div className="flex items-center gap-3 pt-3 border-t border-ink/5">
+          <div className="flex items-center gap-3 pt-3 border-t border-ink/5 mb-4">
             {Object.entries(fragrance.prices).map(([size, price]) => (
               <div key={size} className="text-center flex-1">
                 <p className="text-[11px] tracking-[0.12em] uppercase text-ink-subtle font-body mb-0.5">{size}</p>
@@ -98,6 +100,18 @@ function FragranceCard({ fragrance, index }) {
               </div>
             ))}
           </div>
+
+          {/* Buy Now */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              openProductModal(fragrance)
+            }}
+            className="w-full py-3 rounded-full bg-gold/10 hover:bg-gold text-gold hover:text-white text-[11px] tracking-[0.1em] uppercase font-body font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
+            aria-label={`Buy ${fragrance.name}`}
+          >
+            Buy Now
+          </button>
         </div>
       </div>
     </motion.article>
