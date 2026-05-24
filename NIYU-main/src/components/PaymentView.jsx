@@ -13,33 +13,33 @@ function isIOS() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent)
 }
 
+// Build UPI params WITHOUT encoding the VPA (@ must stay raw)
 function buildUpiParams(amt) {
-  return `pa=${UPI_ID}&pn=${encodeURIComponent(MERCHANT)}&am=${encodeURIComponent(amt)}&cu=INR`
+  return `pa=${UPI_ID}&pn=NIYU+Perfumes&am=${amt}&cu=INR`
 }
 
-// Android intent:// URIs — open the SPECIFIC app, not generic UPI handler
+// Open the SPECIFIC payment app, not generic UPI handler
 function getPayUrl(method, amt) {
   const params = buildUpiParams(amt)
   if (isAndroid()) {
-    const packages = {
-      phonepe: 'com.phonepe.app',
-      gpay: 'com.google.android.apps.nbu.paisa.user',
-      paytm: 'com.paytm.payment',
+    // Android: use app-specific schemes that bypass WhatsApp
+    const schemes = {
+      phonepe: `phonepe://pay?${params}`,
+      gpay: `gpay://upi/pay?${params}`,
+      paytm: `paytmmp://pay?${params}`,
     }
-    // intent:// URI forces the OS to open the specific package
-    return `intent://upi/pay?${params}#Intent;scheme=upi;package=${packages[method]};end`
+    return schemes[method]
   }
   if (isIOS()) {
-    // iOS app-specific schemes
-    const iosSchemes = {
-      phonepe: 'phonepe',
-      gpay: 'googlepay',
-      paytm: 'paytmmp',
+    const schemes = {
+      phonepe: `phonepe://pay?${params}`,
+      gpay: `googlepay://upi/pay?${params}`,
+      paytm: `paytmmp://pay?${params}`,
     }
-    return `${iosSchemes[method]}://upi/pay?${params}`
+    return schemes[method]
   }
-  // Desktop fallback — use generic UPI (will show QR on desktop anyway)
-  return `upi://pay?${params}`
+  // Desktop — show QR instead
+  return '#'
 }
 
 const paymentApps = [
