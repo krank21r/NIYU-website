@@ -1,30 +1,62 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
 const UPI_ID = 'narasalapavankumarkumar@oksbi'
 const MERCHANT = 'NIYU Perfumes'
 
-function isMobile() {
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+function isAndroid() {
+  return /Android/i.test(navigator.userAgent)
 }
+
+function isIOS() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent)
+}
+
+function buildUpiParams(amt) {
+  return `pa=${UPI_ID}&pn=${encodeURIComponent(MERCHANT)}&am=${encodeURIComponent(amt)}&cu=INR`
+}
+
+// Android intent:// URIs — open the SPECIFIC app, not generic UPI handler
+function getPayUrl(method, amt) {
+  const params = buildUpiParams(amt)
+  if (isAndroid()) {
+    const packages = {
+      phonepe: 'com.phonepe.app',
+      gpay: 'com.google.android.apps.nbu.paisa.user',
+      paytm: 'com.paytm.payment',
+    }
+    // intent:// URI forces the OS to open the specific package
+    return `intent://upi/pay?${params}#Intent;scheme=upi;package=${packages[method]};end`
+  }
+  if (isIOS()) {
+    // iOS app-specific schemes
+    const iosSchemes = {
+      phonepe: 'phonepe',
+      gpay: 'googlepay',
+      paytm: 'paytmmp',
+    }
+    return `${iosSchemes[method]}://upi/pay?${params}`
+  }
+  // Desktop fallback — use generic UPI (will show QR on desktop anyway)
+  return `upi://pay?${params}`
+}
+
+const paymentApps = [
+  { id: 'phonepe', name: 'PhonePe', color: '#5f259f', initial: 'P' },
+  { id: 'gpay', name: 'Google Pay', color: '#4285F4', initial: 'G' },
+  { id: 'paytm', name: 'Paytm', color: '#00BAF2', initial: 'P' },
+]
 
 export default function PaymentView() {
   const { subtotal, confirmOrder, setStep } = useCart()
   const [paying, setPaying] = useState(false)
   const [paymentStarted, setPaymentStarted] = useState(false)
   const [selectedMethod, setSelectedMethod] = useState(null)
-  const formRef = useRef(null)
 
   const handlePayNow = (methodId) => {
     setSelectedMethod(methodId)
     setPaymentStarted(true)
-    // Submit the hidden form to open the UPI app
-    setTimeout(() => {
-      if (formRef.current) {
-        formRef.current.submit()
-      }
-    }, 200)
   }
 
   const handleConfirm = async () => {
@@ -33,26 +65,14 @@ export default function PaymentView() {
   }
 
   const getMethodName = () => {
-    const names = { phonepe: 'PhonePe', gpay: 'Google Pay', paytm: 'Paytm' }
-    return names[selectedMethod] || 'UPI App'
+    const m = paymentApps.find(a => a.id === selectedMethod)
+    return m ? m.name : 'UPI App'
   }
+
+  const getSelectedApp = () => paymentApps.find(a => a.id === selectedMethod)
 
   return (
     <div className="flex flex-col h-full">
-      {/* Hidden form that submits to upi://pay — most reliable way to open UPI apps */}
-      <form
-        ref={formRef}
-        method="get"
-        action="upi://pay"
-        style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}
-        aria-hidden="true"
-      >
-        <input type="hidden" name="pa" value={UPI_ID} />
-        <input type="hidden" name="pn" value={MERCHANT} />
-        <input type="hidden" name="am" value={String(subtotal)} />
-        <input type="hidden" name="cu" value="INR" />
-      </form>
-
       <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center">
         {/* Amount */}
         <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-2">Pay via UPI</p>
@@ -73,14 +93,12 @@ export default function PaymentView() {
             >
               <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4">Choose Payment App</p>
               <div className="space-y-3">
-                {[
-                  { id: 'phonepe', name: 'PhonePe', color: '#5f259f', initial: 'P' },
-                  { id: 'gpay', name: 'Google Pay', color: '#4285F4', initial: 'G' },
-                  { id: 'paytm', name: 'Paytm', color: '#00BAF2', initial: 'P' },
-                ].map((method) => (
-                  <button
+                {paymentApps.map((method) => (
+                  /* Real <a> tag — user tap opens the specific app via intent:// or app scheme */
+                  <a
                     key={method.id}
-                    onClick={() => handlePayNow(method.id)}
+                    href={getPayUrl(method.id, subtotal)}
+                    onClick={() => setSelectedMethod(method.id)}
                     className="w-full flex items-center gap-4 p-4 rounded-xl border border-ink/8 bg-cream/30 hover:border-gold/40 hover:bg-cream/50 transition-all duration-400 min-h-[44px] active:scale-[0.98]"
                   >
                     <div
@@ -96,11 +114,11 @@ export default function PaymentView() {
                     <svg className="w-4 h-4 text-ink-subtle ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                     </svg>
-                  </button>
+                  </a>
                 ))}
               </div>
 
-              {/* QR fallback — always visible, especially useful on desktop */}
+              {/* QR fallback */}
               <div className="mt-6 pt-6 border-t border-ink/5">
                 <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-3 text-center">Or scan QR to pay</p>
                 <div className="flex justify-center">
@@ -120,11 +138,10 @@ export default function PaymentView() {
               transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
               className="flex flex-col items-center text-center"
             >
-              <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-gold animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
-                </svg>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6" style={{ backgroundColor: getSelectedApp()?.color + '15' }}>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold font-body" style={{ backgroundColor: getSelectedApp()?.color }}>
+                  {getSelectedApp()?.initial}
+                </div>
               </div>
 
               <p className="text-lg font-heading font-semibold text-ink-soft mb-2">
@@ -137,18 +154,30 @@ export default function PaymentView() {
                 UPI ID: {UPI_ID}
               </p>
 
-              {/* Retry — also uses form submit */}
-              <button
-                onClick={() => {
-                  if (formRef.current) formRef.current.submit()
-                }}
-                className="py-3 px-6 rounded-full border border-gold/30 text-gold text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:bg-gold/5 transition-all duration-400 mb-3 min-h-[44px]"
+              {/* Retry — real <a> tag */}
+              <a
+                href={getPayUrl(selectedMethod, subtotal)}
+                className="py-3 px-6 rounded-full border border-gold/30 text-gold text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:bg-gold/5 transition-all duration-400 mb-3 min-h-[44px] inline-block text-center"
               >
                 Open {getMethodName()} Again
-              </button>
+              </a>
 
-              {/* Show QR as fallback if still on same page (app didn't open) */}
-              <div className="mt-4 pt-4 border-t border-ink/5">
+              {/* Switch app buttons */}
+              <div className="flex flex-wrap gap-2 justify-center mb-6">
+                {paymentApps.filter(m => m.id !== selectedMethod).map((m) => (
+                  <a
+                    key={m.id}
+                    href={getPayUrl(m.id, subtotal)}
+                    onClick={() => setSelectedMethod(m.id)}
+                    className="py-2 px-4 rounded-full bg-cream/40 border border-ink/5 text-[11px] font-body font-medium text-ink-subtle hover:border-gold/30 transition-all duration-300 min-h-[44px] flex items-center"
+                  >
+                    Switch to {m.name}
+                  </a>
+                ))}
+              </div>
+
+              {/* QR fallback */}
+              <div className="mt-2 pt-4 border-t border-ink/5">
                 <p className="text-[11px] text-ink-subtle font-body mb-3">Or scan this QR code</p>
                 <div className="p-2 bg-white rounded-xl shadow-[0_2px_12px_rgba(26,22,18,0.04)] inline-block">
                   <img src="/QR-Code.jpg" alt="UPI QR Code" className="w-[140px] h-[140px] object-contain" />
