@@ -1,15 +1,65 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
+
+const UPI_ID = 'narasalapavankumarkumar@oksbi'
+
+const paymentMethods = [
+  {
+    id: 'phonepe',
+    name: 'PhonePe',
+    color: '#5f259f',
+    bgLight: '#f3ecff',
+    // PhonePe UPI deep link — if app not installed, falls back to generic UPI
+    getUrl: (amt) => `phonepe://pay?pa=${UPI_ID}&pn=${encodeURIComponent('NIYU Perfumes')}&am=${amt}&cu=INR`,
+    fallbackUrl: (amt) => `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent('NIYU Perfumes')}&am=${amt}&cu=INR`,
+  },
+  {
+    id: 'gpay',
+    name: 'Google Pay',
+    color: '#4285F4',
+    bgLight: '#e8f0fe',
+    // Google Pay UPI deep link
+    getUrl: (amt) => `gpay://upi/pay?pa=${UPI_ID}&pn=${encodeURIComponent('NIYU Perfumes')}&am=${amt}&cu=INR`,
+    fallbackUrl: (amt) => `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent('NIYU Perfumes')}&am=${amt}&cu=INR`,
+  },
+  {
+    id: 'paytm',
+    name: 'Paytm',
+    color: '#00BAF2',
+    bgLight: '#e6f8ff',
+    // Paytm UPI deep link
+    getUrl: (amt) => `paytmmp://pay?pa=${UPI_ID}&pn=${encodeURIComponent('NIYU Perfumes')}&am=${amt}&cu=INR`,
+    fallbackUrl: (amt) => `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent('NIYU Perfumes')}&am=${amt}&cu=INR`,
+  },
+]
 
 export default function PaymentView() {
   const { subtotal, confirmOrder, setStep } = useCart()
+  const [selectedMethod, setSelectedMethod] = useState(null)
   const [paying, setPaying] = useState(false)
+  const [paymentStarted, setPaymentStarted] = useState(false)
+
+  const handlePayNow = (method) => {
+    setSelectedMethod(method.id)
+    setPaymentStarted(true)
+
+    // Try app-specific deep link first
+    const appUrl = method.getUrl(subtotal)
+    window.location.href = appUrl
+
+    // After a short delay, try generic UPI as fallback (if app wasn't installed)
+    setTimeout(() => {
+      window.location.href = method.fallbackUrl(subtotal)
+    }, 1500)
+  }
 
   const handleConfirm = async () => {
     setPaying(true)
     await confirmOrder()
   }
+
+  const selected = paymentMethods.find(m => m.id === selectedMethod)
 
   return (
     <div className="flex flex-col h-full">
@@ -20,37 +70,112 @@ export default function PaymentView() {
           &#8377;{subtotal}
         </p>
 
-        {/* QR Code Image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-          className="p-3 bg-white rounded-2xl shadow-[0_4px_24px_rgba(26,22,18,0.06)] mb-4"
-        >
-          <img
-            src="/QR-Code.jpg"
-            alt="UPI QR Code — Scan to pay"
-            className="w-[220px] h-[220px] object-contain"
-          />
-        </motion.div>
+        <AnimatePresence mode="wait">
+          {!paymentStarted ? (
+            /* Payment method selection */
+            <motion.div
+              key="select"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+              className="w-full max-w-sm"
+            >
+              <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4">Choose Payment App</p>
+              <div className="space-y-3">
+                {paymentMethods.map((method) => (
+                  <button
+                    key={method.id}
+                    onClick={() => handlePayNow(method)}
+                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-ink/8 bg-cream/30 hover:border-gold/40 hover:bg-cream/50 transition-all duration-400 min-h-[44px] active:scale-[0.98]"
+                  >
+                    <div
+                      className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold font-body flex-shrink-0"
+                      style={{ backgroundColor: method.color }}
+                    >
+                      {method.name.charAt(0)}
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-body font-medium text-ink-soft">{method.name}</p>
+                      <p className="text-[11px] text-ink-subtle font-body">Tap to pay now</p>
+                    </div>
+                    <svg className="w-4 h-4 text-ink-subtle ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                  </button>
+                ))}
+              </div>
 
-        <p className="text-sm text-ink-subtle font-body text-center mb-1">
-          Scan with PhonePe, Google Pay, Paytm, or any UPI app
-        </p>
-        <p className="text-[11px] text-ink-subtle/70 font-body text-center">
-          UPI ID: narasalapavankumarkumar@oksbi
-        </p>
+              {/* QR fallback */}
+              <div className="mt-6 pt-6 border-t border-ink/5">
+                <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-3 text-center">Or scan QR to pay</p>
+                <div className="flex justify-center">
+                  <div className="p-2 bg-white rounded-xl shadow-[0_2px_12px_rgba(26,22,18,0.04)]">
+                    <img
+                      src="/QR-Code.jpg"
+                      alt="UPI QR Code"
+                      className="w-[140px] h-[140px] object-contain"
+                    />
+                  </div>
+                </div>
+                <p className="text-[10px] text-ink-subtle/70 font-body text-center mt-2">
+                  UPI ID: {UPI_ID}
+                </p>
+              </div>
+            </motion.div>
+          ) : (
+            /* Payment started — waiting for user to complete */
+            <motion.div
+              key="waiting"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+              className="flex flex-col items-center text-center"
+            >
+              {/* Animated dots */}
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6" style={{ backgroundColor: selected?.bgLight }}>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold font-body" style={{ backgroundColor: selected?.color }}>
+                  {selected?.name.charAt(0)}
+                </div>
+              </div>
 
-        <p className="text-[11px] text-gold font-body font-medium text-center mt-4">
-          Please pay the exact amount shown above
-        </p>
+              <p className="text-lg font-heading font-semibold text-ink-soft mb-2">
+                Opening {selected?.name}...
+              </p>
+              <p className="text-sm text-ink-subtle font-body mb-2">
+                Complete the payment of <span className="font-semibold text-ink-soft">&#8377;{subtotal}</span>
+              </p>
+              <p className="text-[11px] text-ink-subtle/70 font-body mb-6">
+                UPI ID: {UPI_ID}
+              </p>
+
+              {/* Retry button if app didn't open */}
+              <button
+                onClick={() => {
+                  window.location.href = selected?.fallbackUrl(subtotal)
+                }}
+                className="py-3 px-6 rounded-full border border-gold/30 text-gold text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:bg-gold/5 transition-all duration-400 mb-4 min-h-[44px]"
+              >
+                Open {selected?.name} Again
+              </button>
+
+              <p className="text-[11px] text-ink-subtle font-body">
+                Once payment is done, come back and tap "I Have Paid" below
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Footer */}
       <div className="border-t border-ink/5 p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-ivory/80 backdrop-blur-sm">
         <div className="flex gap-3">
           <button
-            onClick={() => setStep('checkout')}
+            onClick={() => {
+              setPaymentStarted(false)
+              setSelectedMethod(null)
+              setStep('checkout')
+            }}
             className="flex-1 py-3 rounded-full border border-ink/10 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-gold/30 hover:text-ink-soft transition-all duration-400 min-h-[44px]"
           >
             Back
