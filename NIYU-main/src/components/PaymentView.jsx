@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
-const UPI_ID = 'narasalapavankumarkumar@oksbi'
+const UPI_ID = 'narasalapavankumar@oksbi'
 const MERCHANT = 'NIYU Perfumes'
 
 function isAndroid() {
