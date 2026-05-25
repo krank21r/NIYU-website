@@ -41,25 +41,18 @@ export default function Preloader() {
             transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
             className="text-center"
           >
-            <div className="text-5xl md:text-7xl font-heading font-bold gold-gradient tracking-[0.3em] mb-3">
+            <div className="text-5xl md:text-7xl font-heading font-bold text-ink tracking-[0.3em] mb-3">
               NIYU
             </div>
-            <div className="text-xs sm:text-sm tracking-[0.4em] uppercase text-gold/50 font-body mb-10">
+            <div className="text-xs sm:text-sm tracking-[0.4em] uppercase text-ink-subtle font-body mb-10">
               Pure Oils. Pure Luxury.
             </div>
           </motion.div>
 
-          <div className="relative w-48 h-[1px] bg-ink/5 overflow-hidden rounded-full">
+          <div className="relative w-48 h-[1px] bg-ink/5 overflow-hidden">
             <motion.div
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-gold-dark via-gold to-gold-dark"
+              className="absolute inset-y-0 left-0 bg-ink"
               style={{ width: `${progress * 100}%` }}
-            />
-            <div
-              className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-              style={{
-                transform: `translateX(${progress * 100}%)`,
-                transition: 'transform 0.1s cubic-bezier(0.32, 0.72, 0, 1)',
-              }}
             />
           </div>
 

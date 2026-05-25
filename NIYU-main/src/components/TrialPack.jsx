@@ -14,7 +14,7 @@ export default function TrialPack() {
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
         aria-hidden="true"
         style={{
-          backgroundImage: 'linear-gradient(110deg, transparent 25%, rgba(212,175,55,0.4) 50%, transparent 75%)',
+          backgroundImage: 'linear-gradient(110deg, transparent 25%, rgba(28,28,28,0.4) 50%, transparent 75%)',
           backgroundSize: '200% 100%',
           animation: 'shimmer-gold 5s linear infinite',
         }}
@@ -28,8 +28,8 @@ export default function TrialPack() {
         className="relative max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
       >
         {/* Left — Badge */}
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/15 border border-gold/25 text-[11px] tracking-[0.15em] uppercase text-gold-light font-body font-medium shrink-0">
-          <span className="w-1 h-1 rounded-full bg-gold-light animate-pulse-soft" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] tracking-[0.15em] uppercase text-ivory/80 font-body font-medium shrink-0">
+          <span className="w-1 h-1 rounded-full bg-gold animate-pulse-soft" />
           New to NIYU?
         </span>
 
@@ -39,9 +39,9 @@ export default function TrialPack() {
             Start with a Trial Pack
           </span>
           <span className="hidden sm:inline text-ivory/20" aria-hidden="true">|</span>
-          <span className="text-lg sm:text-xl font-heading font-bold text-gold-light">
+          <span className="text-lg sm:text-xl font-heading font-bold text-ivory">
             <span className="text-sm font-normal text-ivory/50 mr-0.5">&#8377;</span>99
-            <span className="text-[10px] text-ivory/40 font-body font-normal ml-1.5">onwards</span>
+            <span className="text-[10px] text-ivory/50 font-body font-normal ml-1.5">onwards</span>
           </span>
         </div>
 
@@ -50,7 +50,7 @@ export default function TrialPack() {
           href="https://wa.me/916302040779"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold hover:bg-gold-light text-charcoal text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shrink-0 min-h-[44px]"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold hover:bg-gold-light text-charcoal text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shrink-0 min-h-[44px]"
           aria-label="Get trial pack on WhatsApp"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

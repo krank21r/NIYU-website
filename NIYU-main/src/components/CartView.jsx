@@ -13,7 +13,7 @@ export default function CartView() {
         <p className="text-ink-subtle font-body text-sm mb-6">Your cart is empty</p>
         <button
           onClick={closeFlow}
-          className="py-3 px-8 rounded-full border border-gold/30 text-gold text-[11px] tracking-[0.1em] uppercase font-body font-medium hover:bg-gold/5 transition-all duration-400 min-h-[44px]"
+          className="py-3 px-8 border border-ink/15 text-ink text-[11px] tracking-[0.1em] uppercase font-body font-medium hover:bg-ink/5 transition-all duration-400 min-h-[44px]"
         >
           Continue Shopping
         </button>
@@ -31,10 +31,10 @@ export default function CartView() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="flex gap-4 p-4 rounded-xl bg-cream/40 border border-ink/5"
+            className="flex gap-4 p-4 bg-cream/40 border border-ink/5"
           >
             {/* Thumbnail */}
-            <div className="w-16 h-20 flex-shrink-0 flex items-center justify-center bg-ivory/60 rounded-lg overflow-hidden">
+            <div className="w-16 h-20 flex-shrink-0 flex items-center justify-center bg-ivory/60 overflow-hidden">
               <img src={item.image} alt={item.name} className="h-16 w-auto object-contain" />
             </div>
 
@@ -49,7 +49,7 @@ export default function CartView() {
                   <button
                     onClick={() => updateQty(index, item.qty - 1)}
                     disabled={item.qty <= 1}
-                    className="w-8 h-8 rounded-full border border-ink/10 bg-ivory flex items-center justify-center hover:border-gold/30 transition-colors disabled:opacity-30 min-w-[44px] min-h-[44px]"
+                    className="w-8 h-8 border border-ink/10 bg-ivory flex items-center justify-center hover:border-ink/20 transition-colors disabled:opacity-30 min-w-[44px] min-h-[44px]"
                     aria-label="Decrease quantity"
                   >
                     <svg className="w-3 h-3 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -59,7 +59,7 @@ export default function CartView() {
                   <span className="text-sm font-body font-semibold text-ink-soft w-6 text-center">{item.qty}</span>
                   <button
                     onClick={() => updateQty(index, item.qty + 1)}
-                    className="w-8 h-8 rounded-full border border-ink/10 bg-ivory flex items-center justify-center hover:border-gold/30 transition-colors min-w-[44px] min-h-[44px]"
+                    className="w-8 h-8 border border-ink/10 bg-ivory flex items-center justify-center hover:border-ink/20 transition-colors min-w-[44px] min-h-[44px]"
                     aria-label="Increase quantity"
                   >
                     <svg className="w-3 h-3 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -73,7 +73,7 @@ export default function CartView() {
                   <span className="text-sm font-body font-semibold text-ink-soft">&#8377;{item.price * item.qty}</span>
                   <button
                     onClick={() => removeFromCart(index)}
-                    className="text-ink-subtle hover:text-red-500 transition-colors p-1"
+                    className="text-ink-subtle hover:text-red-500 transition-colors w-11 h-11 flex items-center justify-center -mr-2 min-w-[44px] min-h-[44px]"
                     aria-label={`Remove ${item.name}`}
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -96,13 +96,13 @@ export default function CartView() {
         <div className="flex gap-3">
           <button
             onClick={closeFlow}
-            className="flex-1 py-3 rounded-full border border-ink/10 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-gold/30 hover:text-ink-soft transition-all duration-400 min-h-[44px]"
+            className="flex-1 py-3 border border-ink/10 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-ink/20 hover:text-ink-soft transition-all duration-400 min-h-[44px]"
           >
             Continue Shopping
           </button>
           <button
             onClick={() => setStep('checkout')}
-            className="flex-1 py-3 rounded-full bg-gold hover:bg-gold-dark text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_4px_20px_rgba(184,134,11,0.25)] min-h-[44px]"
+            className="flex-1 py-3 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
           >
             Checkout
           </button>

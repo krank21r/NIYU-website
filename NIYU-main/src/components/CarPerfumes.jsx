@@ -24,14 +24,14 @@ function CarItem({ item, index }) {
       className="group py-3.5 border-b border-ink/5 last:border-b-0 flex items-center justify-between"
     >
       <div className="flex items-center gap-3">
-        <span className="text-xs text-gold font-body tabular-nums">
+        <span className="text-xs text-ink font-body tabular-nums">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <h3 className="text-base sm:text-lg font-heading text-ink-soft group-hover:text-gold transition-colors duration-500">
+        <h3 className="text-base sm:text-lg font-heading text-ink-soft group-hover:text-ink transition-colors duration-500">
           {item.name}
         </h3>
       </div>
-      <div className="h-[1px] flex-1 mx-4 bg-ink/5 group-hover:bg-gold/20 transition-colors duration-700" />
+      <div className="h-[1px] flex-1 mx-4 bg-ink/5 group-hover:bg-ink/20 transition-colors duration-700" />
     </motion.div>
   )
 }
@@ -41,8 +41,8 @@ export default function CarPerfumes() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="car-perfumes" className="relative py-24 sm:py-36 px-4 sm:px-6 overflow-hidden" aria-label="Car perfumes">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_right,rgba(184,134,11,0.04)_0%,transparent_60%)]" />
+    <section id="car-perfumes" className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden" aria-label="Car perfumes">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_right,rgba(28,28,28,0.04)_0%,transparent_60%)]" />
 
       <div className="relative max-w-7xl mx-auto">
         {/* Header */}
@@ -59,7 +59,7 @@ export default function CarPerfumes() {
             transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
             className="section-divider origin-center"
           />
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold gold-gradient mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
             Car Perfumes
           </h2>
           <p className="text-ink-subtle font-body font-light max-w-xl mx-auto">
@@ -77,8 +77,8 @@ export default function CarPerfumes() {
             transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
             className="relative lg:sticky lg:top-32"
           >
-            <div className="double-bezel">
-              <div className="double-bezel-inner overflow-hidden p-0.5">
+            <div className="">
+              <div className="overflow-hidden p-0.5">
                 <img
                   src="/Car images.jpeg"
                   alt="NIYU car perfume — luxury car fragrance bottle on dashboard"
@@ -89,7 +89,7 @@ export default function CarPerfumes() {
                 />
               </div>
             </div>
-            <div className="absolute -bottom-4 -right-4 w-16 h-16 md:w-24 md:h-24 border-r border-b border-gold/15" aria-hidden="true" />
+            <div className="absolute -bottom-4 -right-4 w-16 h-16 md:w-24 md:h-24 border-r border-b border-ink/15" aria-hidden="true" />
           </motion.div>
 
           {/* Right — Car perfume list */}
@@ -111,10 +111,10 @@ export default function CarPerfumes() {
               transition={{ duration: 0.8, delay: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-gold/8 border border-gold/15">
+              <div className="inline-flex items-center gap-3 px-5 py-3 bg-ink/8 border border-ink/15">
                 <span className="text-xs font-body font-medium text-ink-soft tracking-wide">All Car Perfumes</span>
-                <div className="w-[1px] h-4 bg-gold/25" aria-hidden="true" />
-                <span className="text-sm font-body font-semibold text-gold">
+                <div className="w-[1px] h-4 bg-ink/25" aria-hidden="true" />
+                <span className="text-sm font-body font-semibold text-ink">
                   <span className="text-[11px] font-normal mr-0.5">&#8377;</span>599
                 </span>
               </div>
@@ -122,7 +122,7 @@ export default function CarPerfumes() {
                 href="https://wa.me/916302040779"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gold hover:bg-gold-dark text-white text-[11px] tracking-[0.1em] uppercase font-body font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-ink hover:bg-ink-soft text-cream text-[11px] tracking-[0.1em] uppercase font-body font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
                 aria-label="Buy car perfumes on WhatsApp"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

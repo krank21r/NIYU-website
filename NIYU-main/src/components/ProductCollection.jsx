@@ -38,9 +38,9 @@ function ProductCard({ product, index }) {
       initial={{ opacity: 0, y: 50, filter: 'blur(4px)' }}
       animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
       transition={{ duration: 0.9, delay: index * 0.15, ease: [0.32, 0.72, 0, 1] }}
-      className="double-bezel group cursor-pointer"
+      className="group border border-ink/5 bg-cream hover:border-ink/10 transition-all duration-500 cursor-pointer"
     >
-      <div className="double-bezel-inner overflow-hidden relative">
+      <div className="overflow-hidden relative">
         {/* Background image */}
         <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]">
           <img
@@ -54,9 +54,9 @@ function ProductCard({ product, index }) {
         <div className="absolute inset-0 bg-gradient-to-t from-cream via-cream/80 to-transparent" />
 
         <div className="relative p-8 sm:p-10 md:p-12 flex flex-col min-h-[300px] sm:min-h-[340px]">
-          <div className="w-10 h-[1px] bg-gold/40 mb-6 group-hover:w-20 transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]" />
+          <div className="w-10 h-[1px] bg-ink/40 mb-6 group-hover:w-20 transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]" />
 
-          <h3 className="text-2xl sm:text-3xl font-heading text-ink-soft mb-3 group-hover:text-gold transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]">
+          <h3 className="text-2xl sm:text-3xl font-heading text-ink-soft mb-3 group-hover:text-ink transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]">
             {product.title}
           </h3>
 
@@ -65,8 +65,8 @@ function ProductCard({ product, index }) {
           </p>
 
           <div className="mt-auto pt-8">
-            <div className="w-8 h-8 rounded-full bg-gold/8 group-hover:bg-gold/12 flex items-center justify-center transition-all duration-700">
-              <svg className="w-4 h-4 text-gold group-hover:translate-x-0.5 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+            <div className="w-8 h-8 rounded-full bg-ink/8 group-hover:bg-ink/8 flex items-center justify-center transition-all duration-700">
+              <svg className="w-4 h-4 text-ink group-hover:translate-x-0.5 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </div>
@@ -82,8 +82,8 @@ export default function ProductCollection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="collection" className="relative py-24 sm:py-36 px-4 sm:px-6">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(184,134,11,0.03)_0%,transparent_60%)]" />
+    <section id="collection" className="relative py-16 sm:py-24 px-4 sm:px-6">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(28,28,28,0.03)_0%,transparent_60%)]" />
       <div className="relative max-w-7xl mx-auto">
         <motion.div
           ref={ref}
@@ -98,7 +98,7 @@ export default function ProductCollection() {
             transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
             className="section-divider origin-center"
           />
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold gold-gradient mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
             Our Collection
           </h2>
           <p className="text-ink-subtle font-body font-light max-w-xl mx-auto">

@@ -1,40 +1,40 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Brand Colors ── */
-  --color-gold: #B8860B;
-  --color-gold-light: #D4AF37;
-  --color-gold-dark: #8B6914;
-  --color-champagne: #C9A96E;
-  --color-amber-warm: #C29958;
+  /* ── Brand Colors (Warm Luxury) ── */
+  --color-gold: #c9a96e;
+  --color-gold-light: #d4b97e;
+  --color-gold-dark: #a68a4e;
+  --color-champagne: #e8ddd0;
+  --color-amber-warm: #d4a574;
 
-  /* ── Surface Colors (Light) ── */
-  --color-ivory: #FAFAF8;
-  --color-cream: #F5F3EF;
-  --color-parchment: #EDE9E3;
-  --color-linen: #E8E4DD;
+  /* ── Surface Colors (Warm Ivory) ── */
+  --color-ivory: #faf8f5;
+  --color-cream: #ffffff;
+  --color-parchment: #f2ede6;
+  --color-linen: #e8e0d5;
 
-  /* ── Text Colors (Light) ── */
-  --color-ink: #1A1612;
-  --color-ink-soft: #2C261E;
-  --color-ink-muted: #6B5D4F;
-  --color-ink-subtle: #9C8B71;
+  /* ── Text Colors ── */
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #2d2d2d;
+  --color-ink-muted: #6b6560;
+  --color-ink-subtle: #9c9590;
 
   /* ── Accent & Surface ── */
-  --color-warm-brown: #8B7355;
-  --color-dark-brown: #3C2F20;
-  --color-charcoal: #1A1612;
-  --color-black-soft: #FAFAF8;
+  --color-warm-brown: #8b7355;
+  --color-dark-brown: #3d3229;
+  --color-charcoal: #1a1a1a;
+  --color-black-soft: #faf8f5;
 
-  /* ── Glass Effects (Light) ── */
-  --color-glass: rgba(255, 255, 255, 0.72);
-  --color-glass-border: rgba(184, 134, 11, 0.15);
-  --color-glass-card: rgba(255, 255, 255, 0.85);
+  /* ── Glass Effects ── */
+  --color-glass: rgba(255, 255, 255, 0.85);
+  --color-glass-border: rgba(201, 169, 110, 0.15);
+  --color-glass-card: rgba(255, 255, 255, 0.95);
 
   /* ── Typography ── */
-  --font-heading: "Playfair Display", serif;
+  --font-heading: "Cormorant Garamond", serif;
   --font-elegant: "Cormorant Garamond", serif;
-  --font-body: "Montserrat", sans-serif;
+  --font-body: "Outfit", sans-serif;
 }
 
 /* ── Animations ── */
@@ -86,8 +86,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(184, 134, 11, 0.1); }
-  50% { box-shadow: 0 0 40px rgba(184, 134, 11, 0.2); }
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 169, 110, 0.05); }
+  50% { box-shadow: 0 0 40px rgba(201, 169, 110, 0.15); }
 }
 
 @keyframes gradientShift {
@@ -111,6 +111,26 @@
   100% { transform: scaleX(1); }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 /* ── Animation Utilities ── */
 .animate-ping-slow { animation: ping-slow 2.5s cubic-bezier(0.32, 0.72, 0, 1) infinite; }
 .animate-float { animation: float 6s cubic-bezier(0.32, 0.72, 0, 1) infinite; }
@@ -125,6 +145,10 @@
 .animate-breathe { animation: breathe 6s cubic-bezier(0.32, 0.72, 0, 1) infinite; }
 .animate-hero-reveal { animation: heroTextReveal 1.2s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
 .animate-hero-line { animation: heroLineGrow 1s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
+.animate-marquee { animation: marquee 30s linear infinite; }
+.animate-fadeIn { animation: fadeIn 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
+.animate-slideUp { animation: slideUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
+.animate-scaleIn { animation: scaleIn 0.6s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
 
 /* ── Premium Glass Effects ── */
 .glass {
@@ -132,68 +156,160 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--color-glass-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, var(--color-glass-card) 0%, rgba(245, 243, 239, 0.6) 100%);
+  background: linear-gradient(135deg, var(--color-glass-card) 0%, rgba(255, 255, 255, 0.9) 100%);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--color-glass-border);
-  transition: border-color 0.4s cubic-bezier(0.32, 0.72, 0, 1), box-shadow 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.04);
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(184, 134, 11, 0.3);
-  box-shadow: 0 8px 40px rgba(184, 134, 11, 0.06), 0 0 0 1px rgba(184, 134, 11, 0.04);
+  border-color: rgba(201, 169, 110, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 
-/* ── Double-Bezel Card ── */
-.double-bezel {
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(237, 233, 227, 0.6);
-  border-radius: 1.25rem;
-  padding: 0.375rem;
+/* ── Editorial Typography ── */
+.heading-editorial {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
 }
 
-.double-bezel-inner {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 243, 239, 0.8) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: calc(1.25rem - 0.375rem);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 4px 24px rgba(26, 22, 18, 0.04);
+.heading-display {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.text-body {
+  font-family: "Outfit", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.7;
+}
+
+.text-label {
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
 }
 
 /* ── Gold Gradient Text ── */
 .gold-gradient {
-  background: linear-gradient(135deg, #8B6914 0%, #B8860B 40%, #D4AF37 60%, #8B6914 100%);
+  background: linear-gradient(135deg, #c9a96e 0%, #d4b97e 50%, #c9a96e 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gold-border {
-  border-image: linear-gradient(135deg, #B8860B, #D4AF37, #B8860B) 1;
+  border-image: linear-gradient(135deg, #c9a96e, #d4b97e, #c9a96e) 1;
 }
 
 /* ── Hero Watermark ── */
 .hero-watermark-text {
-  color: rgba(26, 22, 18, 0.04);
-  -webkit-text-stroke: 1px rgba(26, 22, 18, 0.06);
+  color: rgba(201, 169, 110, 0.04);
+  -webkit-text-stroke: 1px rgba(201, 169, 110, 0.06);
 }
 
 .text-shadow-gold {
-  text-shadow: 0 0 40px rgba(184, 134, 11, 0.15), 0 0 80px rgba(184, 134, 11, 0.06);
+  text-shadow: 0 0 40px rgba(201, 169, 110, 0.08), 0 0 80px rgba(201, 169, 110, 0.03);
 }
 
 .glow-gold {
-  box-shadow: 0 0 30px rgba(184, 134, 11, 0.08), 0 0 60px rgba(184, 134, 11, 0.03);
+  box-shadow: 0 0 30px rgba(201, 169, 110, 0.04), 0 0 60px rgba(201, 169, 110, 0.02);
 }
 
 /* ── Section Divider ── */
 .section-divider {
   width: 4rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  background: linear-gradient(90deg, transparent, #c9a96e, transparent);
   margin: 0 auto 1.5rem;
+}
+
+/* ── Premium Button ── */
+.btn-luxury {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: #1a1a1a;
+  color: #faf8f5;
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-luxury::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #c9a96e, #d4b97e);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.btn-luxury:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btn-luxury:hover::before {
+  opacity: 1;
+}
+
+.btn-luxury span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Luxury Card ── */
+.card-luxury {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(201, 169, 110, 0.1);
+  padding: 2rem;
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  position: relative;
+}
+
+.card-luxury::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.card-luxury:hover {
+  border-color: rgba(201, 169, 110, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.card-luxury:hover::before {
+  opacity: 1;
 }
 
 /* ── Base Styles ── */
@@ -211,7 +327,7 @@ body {
 }
 
 ::selection {
-  background: rgba(184, 134, 11, 0.2);
+  background: rgba(201, 169, 110, 0.2);
   color: var(--color-ink);
 }
 
@@ -221,21 +337,21 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-cream);
+  background: var(--color-parchment);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-gold-dark), var(--color-gold));
+  background: linear-gradient(180deg, #c9a96e, #a68a4e);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--color-gold), var(--color-gold-light));
+  background: linear-gradient(180deg, #d4b97e, #c9a96e);
 }
 
 /* ── Focus States ── */
 *:focus-visible {
-  outline: 2px solid var(--color-gold);
+  outline: 2px solid #c9a96e;
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -246,11 +362,11 @@ body {
   left: -9999px;
   z-index: 999;
   padding: 0.75rem 1.5rem;
-  background: var(--color-gold);
-  color: white;
+  background: #1a1a1a;
+  color: #faf8f5;
   font-weight: 600;
   font-size: 0.875rem;
-  border-radius: 0 0 0.5rem 0;
+  border-radius: 0 0 0.25rem 0;
 }
 
 .skip-nav:focus {
@@ -279,7 +395,11 @@ body {
   .animate-breathe,
   .animate-ping-slow,
   .animate-hero-reveal,
-  .animate-hero-line {
+  .animate-hero-line,
+  .animate-marquee,
+  .animate-fadeIn,
+  .animate-slideUp,
+  .animate-scaleIn {
     animation: none !important;
   }
 }

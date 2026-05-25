@@ -54,7 +54,7 @@ export default function TrustBar() {
               transition={{ duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.32, 0.72, 0, 1] }}
               className="flex items-start gap-4 group"
             >
-              <div className="shrink-0 w-12 h-12 rounded-xl bg-gold/6 flex items-center justify-center text-gold group-hover:bg-gold/10 transition-colors duration-500">
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-ink/6 flex items-center justify-center text-ink group-hover:bg-ink/10 transition-colors duration-500">
                 {item.icon}
               </div>
               <div>

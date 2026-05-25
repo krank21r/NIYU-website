@@ -53,7 +53,7 @@ function SectionTitle() {
         transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
         className="section-divider origin-center"
       />
-      <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold gold-gradient mb-4">
+      <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
         Why NIYU Perfumes?
       </h2>
       <p className="text-ink-subtle font-body font-light max-w-xl mx-auto">
@@ -73,17 +73,17 @@ function Card({ card, index }) {
       initial={{ opacity: 0, y: 50, filter: 'blur(4px)' }}
       animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
       transition={{ duration: 0.9, delay: index * 0.15, ease: [0.32, 0.72, 0, 1] }}
-      className="double-bezel group cursor-default"
+      className="group border border-ink/5 bg-cream hover:border-ink/10 transition-all duration-500 cursor-default"
     >
-      <div className="double-bezel-inner p-8 md:p-10">
-        <div className="mb-6 w-14 h-14 rounded-2xl bg-gold/8 flex items-center justify-center group-hover:bg-gold/12 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] text-gold">
+      <div className="p-8 md:p-10">
+        <div className="mb-6 w-14 h-14 bg-ink/8 flex items-center justify-center group-hover:bg-ink/8 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] text-ink">
           {card.icon}
         </div>
         <h3 className="text-xl md:text-2xl font-heading text-ink-soft mb-4">{card.title}</h3>
         <p className="text-ink-muted font-body font-light leading-relaxed text-sm md:text-base">
           {card.description}
         </p>
-        <div className="mt-6 w-10 h-[1px] bg-gold/30 group-hover:w-full transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]" />
+        <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]" />
       </div>
     </motion.div>
   )
@@ -96,8 +96,8 @@ function ImageWithParallax() {
 
   return (
     <motion.div ref={ref} style={{ y }} className="overflow-hidden rounded-[1rem]">
-      <div className="double-bezel">
-        <div className="double-bezel-inner overflow-hidden p-0.5">
+      <div className="">
+        <div className="overflow-hidden p-0.5">
           <img
             src="/1 million.jpeg"
             alt="NIYU Perfumes artisan craftsmanship"
@@ -114,8 +114,8 @@ function ImageWithParallax() {
 
 export default function About() {
   return (
-    <section id="about" className="relative py-24 sm:py-36 px-4 sm:px-6">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(184,134,11,0.03)_0%,transparent_60%)]" />
+    <section id="about" className="relative py-16 sm:py-24 px-4 sm:px-6">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(28,28,28,0.03)_0%,transparent_60%)]" />
       <div className="relative max-w-7xl mx-auto">
         <SectionTitle />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">

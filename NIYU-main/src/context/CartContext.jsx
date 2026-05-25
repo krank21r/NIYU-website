@@ -12,6 +12,7 @@ export function CartProvider({ children }) {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [delivery, setDelivery] = useState({ name: '', phone: '', address: '', pincode: '' })
   const [orderId, setOrderId] = useState(null)
+  const [detailProduct, setDetailProduct] = useState(null)
 
   const openProductModal = useCallback((product) => {
     setSelectedProduct(product)
@@ -21,6 +22,17 @@ export function CartProvider({ children }) {
   const closeFlow = useCallback(() => {
     setStep('closed')
     setSelectedProduct(null)
+  }, [])
+
+  const openProductDetail = useCallback((product) => {
+    setDetailProduct(product)
+    document.body.style.overflow = 'hidden'
+    history.pushState({ view: 'product-detail', productId: product.id }, '')
+  }, [])
+
+  const closeProductDetail = useCallback(() => {
+    setDetailProduct(null)
+    document.body.style.overflow = ''
   }, [])
 
   const addToCart = useCallback((item) => {
@@ -105,8 +117,9 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider value={{
-      items, step, selectedProduct, delivery, subtotal, orderId,
+      items, step, selectedProduct, delivery, subtotal, orderId, detailProduct,
       openProductModal, closeFlow, addToCart, removeFromCart, updateQty,
+      openProductDetail, closeProductDetail,
       setStep, setDelivery, confirmOrder, buildWhatsAppUrl,
     }}>
       {children}

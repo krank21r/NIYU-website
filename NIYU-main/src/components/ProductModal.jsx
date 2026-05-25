@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
-const sizeOptions = [
+const defaultSizes = [
   { label: '15ml', price: 499 },
   { label: '30ml', price: 899 },
   { label: '50ml', price: 1299 },
@@ -10,16 +10,29 @@ const sizeOptions = [
 
 export default function ProductModal() {
   const { selectedProduct, addToCart, closeFlow } = useCart()
-  const [selectedSize, setSelectedSize] = useState(sizeOptions[2])
+  const [selectedSize, setSelectedSize] = useState(defaultSizes[2])
   const [qty, setQty] = useState(1)
+
+  // Reset state when a new product is selected
+  useEffect(() => {
+    if (selectedProduct) {
+      const sizes = selectedProduct.sizes || defaultSizes
+      setSelectedSize(sizes[sizes.length - 1])
+      setQty(1)
+    }
+  }, [selectedProduct?.name])
 
   if (!selectedProduct) return null
 
+  const product = selectedProduct
+  const sizes = product.sizes || defaultSizes
+  const notes = product.notes || []
+
   const handleAddToCart = () => {
     addToCart({
-      name: selectedProduct.name,
-      image: selectedProduct.image,
-      description: selectedProduct.description || '',
+      name: product.name,
+      image: product.image,
+      description: product.description || '',
       size: selectedSize.label,
       price: selectedSize.price,
       qty,
@@ -40,13 +53,13 @@ export default function ProductModal() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.97 }}
         transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-        className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-ivory rounded-2xl shadow-[0_24px_80px_rgba(26,22,18,0.12)]"
+        className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-cream shadow-[0_24px_80px_rgba(0,0,0,0.15)]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={closeFlow}
-          className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-cream/80 backdrop-blur-sm flex items-center justify-center hover:bg-cream transition-colors duration-300 min-w-[44px] min-h-[44px]"
+          className="absolute top-4 right-4 z-10 w-10 h-10 bg-cream/80 backdrop-blur-sm flex items-center justify-center hover:bg-cream transition-colors duration-300 min-w-[44px] min-h-[44px]"
           aria-label="Close"
         >
           <svg className="w-4 h-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -55,39 +68,56 @@ export default function ProductModal() {
         </button>
 
         {/* Product image */}
-        <div className="relative bg-cream/40 flex justify-center items-center py-8 px-6">
+        <div className="relative bg-ivory/50 flex justify-center items-center py-10 px-6">
           <img
-            src={selectedProduct.image}
-            alt={selectedProduct.name}
-            className="h-48 w-auto object-contain drop-shadow-[0_0_20px_rgba(184,134,11,0.08)]"
+            src={product.image}
+            alt={product.name}
+            className="h-52 w-auto object-contain"
           />
+          {product.tag && (
+            <span className="absolute top-4 left-4 px-3 py-1 bg-ink text-cream text-[10px] tracking-[0.12em] uppercase font-body font-medium">
+              {product.tag}
+            </span>
+          )}
         </div>
 
         {/* Content */}
         <div className="p-6">
-          <h3 className="text-2xl font-heading text-ink-soft mb-1">{selectedProduct.name}</h3>
-          {selectedProduct.description && (
-            <p className="text-xs text-ink-subtle font-body font-light mb-5">{selectedProduct.description}</p>
+          <h3 className="text-2xl font-heading text-ink-soft mb-1">{product.name}</h3>
+
+          {product.description && (
+            <p className="text-sm text-ink-muted font-body font-light leading-relaxed mb-4">{product.description}</p>
           )}
 
-          {/* Size selector */}
+          {notes.length > 0 && (
+            <div className="flex gap-2 flex-wrap mb-5">
+              {notes.map((note) => (
+                <span key={note} className="px-3 py-1 bg-ivory border border-ink/8 text-[10px] tracking-[0.1em] uppercase text-ink-subtle font-body">
+                  {note}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="h-[1px] bg-ink/5 mb-5" />
+
           <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-3">Select Size</p>
           <div className="flex gap-3 mb-6">
-            {sizeOptions.map((s) => (
+            {sizes.map((s) => (
               <button
                 key={s.label}
                 onClick={() => setSelectedSize(s)}
-                className={`flex-1 py-3 rounded-xl border text-center transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px] ${
+                className={`flex-1 py-3 border text-center transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px] ${
                   selectedSize.label === s.label
-                    ? 'border-gold bg-gold/10 shadow-[0_0_16px_rgba(184,134,11,0.1)]'
-                    : 'border-ink/8 bg-cream/40 hover:border-gold/30'
+                    ? 'border-ink bg-ink/5'
+                    : 'border-ink/8 bg-cream/40 hover:border-ink/20'
                 }`}
               >
                 <p className={`text-xs tracking-[0.08em] uppercase font-body font-medium mb-0.5 ${
-                  selectedSize.label === s.label ? 'text-gold-dark' : 'text-ink-subtle'
+                  selectedSize.label === s.label ? 'text-ink' : 'text-ink-subtle'
                 }`}>{s.label}</p>
                 <p className={`text-sm font-body font-semibold ${
-                  selectedSize.label === s.label ? 'text-gold-dark' : 'text-ink-soft'
+                  selectedSize.label === s.label ? 'text-ink' : 'text-ink-soft'
                 }`}>
                   <span className="text-[10px] font-normal mr-px">&#8377;</span>{s.price}
                 </p>
@@ -95,12 +125,11 @@ export default function ProductModal() {
             ))}
           </div>
 
-          {/* Quantity */}
           <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-3">Quantity</p>
           <div className="flex items-center gap-4 mb-6">
             <button
               onClick={() => setQty(Math.max(1, qty - 1))}
-              className="w-11 h-11 rounded-full border border-ink/10 bg-cream/40 flex items-center justify-center hover:border-gold/30 transition-colors duration-300 min-w-[44px] min-h-[44px]"
+              className="w-11 h-11 border border-ink/10 bg-cream/40 flex items-center justify-center hover:border-ink/20 transition-colors duration-300 min-w-[44px] min-h-[44px]"
               aria-label="Decrease quantity"
             >
               <svg className="w-4 h-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -110,7 +139,7 @@ export default function ProductModal() {
             <span className="text-lg font-body font-semibold text-ink-soft w-8 text-center">{qty}</span>
             <button
               onClick={() => setQty(qty + 1)}
-              className="w-11 h-11 rounded-full border border-ink/10 bg-cream/40 flex items-center justify-center hover:border-gold/30 transition-colors duration-300 min-w-[44px] min-h-[44px]"
+              className="w-11 h-11 border border-ink/10 bg-cream/40 flex items-center justify-center hover:border-ink/20 transition-colors duration-300 min-w-[44px] min-h-[44px]"
               aria-label="Increase quantity"
             >
               <svg className="w-4 h-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -119,10 +148,9 @@ export default function ProductModal() {
             </button>
           </div>
 
-          {/* Add to Cart */}
           <button
             onClick={handleAddToCart}
-            className="w-full py-3.5 rounded-full bg-gold hover:bg-gold-dark text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_4px_20px_rgba(184,134,11,0.25)] hover:shadow-[0_6px_28px_rgba(184,134,11,0.35)] min-h-[44px]"
+            className="w-full py-3.5 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
           >
             Add to Cart — &#8377;{selectedSize.price * qty}
           </button>

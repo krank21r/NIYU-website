@@ -35,7 +35,7 @@ function Stars({ rating }) {
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
-          className={`w-4 h-4 ${i < rating ? 'text-gold' : 'text-ink/10'}`}
+          className={`w-4 h-4 ${i < rating ? 'text-ink' : 'text-ink/10'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
           aria-hidden="true"
@@ -62,8 +62,8 @@ export default function Reviews() {
   }, [next])
 
   return (
-    <section id="reviews" className="relative py-24 sm:py-36 px-4 sm:px-6 overflow-hidden" aria-label="Customer reviews">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(184,134,11,0.04)_0%,transparent_60%)]" />
+    <section id="reviews" className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden" aria-label="Customer reviews">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(28,28,28,0.04)_0%,transparent_60%)]" />
       <div className="relative max-w-4xl mx-auto">
         <motion.div
           ref={ref}
@@ -78,7 +78,7 @@ export default function Reviews() {
             transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
             className="section-divider origin-center"
           />
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold gold-gradient mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
             What Our Customers Say
           </h2>
         </motion.div>
@@ -91,17 +91,17 @@ export default function Reviews() {
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               exit={{ opacity: 0, y: -30, filter: 'blur(4px)' }}
               transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
-              className="double-bezel max-w-2xl mx-auto"
+              className="border border-ink/5 bg-cream max-w-2xl mx-auto"
             >
-              <div className="double-bezel-inner p-10 md:p-14 text-center">
+              <div className="p-10 md:p-14 text-center">
                 <div className="mb-6 flex justify-center">
                   <Stars rating={reviews[current].rating} />
                 </div>
                 <p className="text-lg md:text-xl text-ink-muted font-elegant italic leading-relaxed mb-8">
                   &ldquo;{reviews[current].text}&rdquo;
                 </p>
-                <div className="w-12 h-[1px] bg-gold/30 mx-auto mb-4" aria-hidden="true" />
-                <cite className="text-sm font-heading text-gold tracking-wider uppercase not-italic">
+                <div className="w-12 h-[1px] bg-ink/30 mx-auto mb-4" aria-hidden="true" />
+                <cite className="text-sm font-heading text-ink tracking-wider uppercase not-italic">
                   {reviews[current].name}
                 </cite>
               </div>
@@ -119,7 +119,7 @@ export default function Reviews() {
               aria-label={`Review ${i + 1}`}
               className={`transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center ${
                 i === current
-                  ? 'w-10 h-4 bg-gold'
+                  ? 'w-10 h-4 bg-ink'
                   : 'w-4 h-4 bg-ink/10 hover:bg-ink/20'
               }`}
             />

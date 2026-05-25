@@ -13,16 +13,13 @@ function isIOS() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent)
 }
 
-// Build UPI params WITHOUT encoding the VPA (@ must stay raw)
 function buildUpiParams(amt) {
   return `pa=${UPI_ID}&pn=NIYU+Perfumes&am=${amt}&cu=INR`
 }
 
-// Open the SPECIFIC payment app, not generic UPI handler
 function getPayUrl(method, amt) {
   const params = buildUpiParams(amt)
   if (isAndroid()) {
-    // Android: use app-specific schemes that bypass WhatsApp
     const schemes = {
       phonepe: `phonepe://pay?${params}`,
       gpay: `gpay://upi/pay?${params}`,
@@ -38,7 +35,6 @@ function getPayUrl(method, amt) {
     }
     return schemes[method]
   }
-  // Desktop — show QR instead
   return '#'
 }
 
@@ -74,7 +70,6 @@ export default function PaymentView() {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center">
-        {/* Amount */}
         <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-2">Pay via UPI</p>
         <p className="text-2xl font-heading font-bold text-ink-soft mb-6">
           &#8377;{subtotal}
@@ -82,7 +77,6 @@ export default function PaymentView() {
 
         <AnimatePresence mode="wait">
           {!paymentStarted ? (
-            /* Payment method selection */
             <motion.div
               key="select"
               initial={{ opacity: 0, y: 10 }}
@@ -94,15 +88,14 @@ export default function PaymentView() {
               <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4">Choose Payment App</p>
               <div className="space-y-3">
                 {paymentApps.map((method) => (
-                  /* Real <a> tag — user tap opens the specific app via intent:// or app scheme */
                   <a
                     key={method.id}
                     href={getPayUrl(method.id, subtotal)}
                     onClick={() => setSelectedMethod(method.id)}
-                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-ink/8 bg-cream/30 hover:border-gold/40 hover:bg-cream/50 transition-all duration-400 min-h-[44px] active:scale-[0.98]"
+                    className="w-full flex items-center gap-4 p-4 border border-ink/8 bg-cream/30 hover:border-ink/20 hover:bg-cream/50 transition-all duration-400 min-h-[44px] active:scale-[0.98]"
                   >
                     <div
-                      className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold font-body flex-shrink-0"
+                      className="w-11 h-11 flex items-center justify-center text-white text-sm font-bold font-body flex-shrink-0"
                       style={{ backgroundColor: method.color }}
                     >
                       {method.initial}
@@ -118,11 +111,10 @@ export default function PaymentView() {
                 ))}
               </div>
 
-              {/* QR fallback */}
               <div className="mt-6 pt-6 border-t border-ink/5">
                 <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-3 text-center">Or scan QR to pay</p>
                 <div className="flex justify-center">
-                  <div className="p-2 bg-white rounded-xl shadow-[0_2px_12px_rgba(26,22,18,0.04)]">
+                  <div className="p-2 bg-white shadow-[0_2px_12px_rgba(28,28,28,0.04)]">
                     <img src="/QR-Code.jpg" alt="UPI QR Code" className="w-[160px] h-[160px] object-contain" />
                   </div>
                 </div>
@@ -130,7 +122,6 @@ export default function PaymentView() {
               </div>
             </motion.div>
           ) : (
-            /* Payment started — waiting for user to complete */
             <motion.div
               key="waiting"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -138,8 +129,8 @@ export default function PaymentView() {
               transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
               className="flex flex-col items-center text-center"
             >
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6" style={{ backgroundColor: getSelectedApp()?.color + '15' }}>
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold font-body" style={{ backgroundColor: getSelectedApp()?.color }}>
+              <div className="w-16 h-16 flex items-center justify-center mb-6" style={{ backgroundColor: getSelectedApp()?.color + '15' }}>
+                <div className="w-8 h-8 flex items-center justify-center text-white text-sm font-bold font-body" style={{ backgroundColor: getSelectedApp()?.color }}>
                   {getSelectedApp()?.initial}
                 </div>
               </div>
@@ -154,32 +145,29 @@ export default function PaymentView() {
                 UPI ID: {UPI_ID}
               </p>
 
-              {/* Retry — real <a> tag */}
               <a
                 href={getPayUrl(selectedMethod, subtotal)}
-                className="py-3 px-6 rounded-full border border-gold/30 text-gold text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:bg-gold/5 transition-all duration-400 mb-3 min-h-[44px] inline-block text-center"
+                className="py-3 px-6 border border-ink/15 text-ink text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:bg-ink/5 transition-all duration-400 mb-3 min-h-[44px] inline-block text-center"
               >
                 Open {getMethodName()} Again
               </a>
 
-              {/* Switch app buttons */}
               <div className="flex flex-wrap gap-2 justify-center mb-6">
                 {paymentApps.filter(m => m.id !== selectedMethod).map((m) => (
                   <a
                     key={m.id}
                     href={getPayUrl(m.id, subtotal)}
                     onClick={() => setSelectedMethod(m.id)}
-                    className="py-2 px-4 rounded-full bg-cream/40 border border-ink/5 text-[11px] font-body font-medium text-ink-subtle hover:border-gold/30 transition-all duration-300 min-h-[44px] flex items-center"
+                    className="py-2 px-4 bg-cream/40 border border-ink/5 text-[11px] font-body font-medium text-ink-subtle hover:border-ink/15 transition-all duration-300 min-h-[44px] flex items-center"
                   >
                     Switch to {m.name}
                   </a>
                 ))}
               </div>
 
-              {/* QR fallback */}
               <div className="mt-2 pt-4 border-t border-ink/5">
                 <p className="text-[11px] text-ink-subtle font-body mb-3">Or scan this QR code</p>
-                <div className="p-2 bg-white rounded-xl shadow-[0_2px_12px_rgba(26,22,18,0.04)] inline-block">
+                <div className="p-2 bg-white shadow-[0_2px_12px_rgba(28,28,28,0.04)] inline-block">
                   <img src="/QR-Code.jpg" alt="UPI QR Code" className="w-[140px] h-[140px] object-contain" />
                 </div>
               </div>
@@ -201,14 +189,14 @@ export default function PaymentView() {
               setSelectedMethod(null)
               setStep('checkout')
             }}
-            className="flex-1 py-3 rounded-full border border-ink/10 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-gold/30 hover:text-ink-soft transition-all duration-400 min-h-[44px]"
+            className="flex-1 py-3 border border-ink/10 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-ink/20 hover:text-ink-soft transition-all duration-400 min-h-[44px]"
           >
             Back
           </button>
           <button
             onClick={handleConfirm}
             disabled={paying}
-            className="flex-1 py-3 rounded-full bg-gold hover:bg-gold-dark text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_4px_20px_rgba(184,134,11,0.25)] disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px]"
+            className="flex-1 py-3 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px]"
           >
             {paying ? 'Processing...' : 'I Have Paid'}
           </button>
