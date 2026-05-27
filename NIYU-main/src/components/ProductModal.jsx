@@ -44,7 +44,7 @@ export default function ProductModal() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-ink/40 backdrop-blur-sm"
       onClick={closeFlow}
     >
@@ -52,8 +52,8 @@ export default function ProductModal() {
         initial={{ opacity: 0, y: 40, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.97 }}
-        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-        className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-cream shadow-[0_24px_80px_rgba(0,0,0,0.15)]"
+        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+        className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-cream shadow-[0_24px_80px_rgba(0,0,0,0.15)] overscroll-contain"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -75,7 +75,7 @@ export default function ProductModal() {
             className="h-52 w-auto object-contain"
           />
           {product.tag && (
-            <span className="absolute top-4 left-4 px-3 py-1 bg-ink text-cream text-[10px] tracking-[0.12em] uppercase font-body font-medium">
+            <span className="absolute top-4 left-4 px-3 py-1 bg-ink text-cream text-[11px] tracking-[0.12em] uppercase font-body font-medium">
               {product.tag}
             </span>
           )}
@@ -92,7 +92,7 @@ export default function ProductModal() {
           {notes.length > 0 && (
             <div className="flex gap-2 flex-wrap mb-5">
               {notes.map((note) => (
-                <span key={note} className="px-3 py-1 bg-ivory border border-ink/8 text-[10px] tracking-[0.1em] uppercase text-ink-subtle font-body">
+                <span key={note} className="px-3 py-1 bg-ivory border border-ink/8 text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body">
                   {note}
                 </span>
               ))}
@@ -107,7 +107,7 @@ export default function ProductModal() {
               <button
                 key={s.label}
                 onClick={() => setSelectedSize(s)}
-                className={`flex-1 py-3 border text-center transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px] ${
+                className={`flex-1 py-3 border text-center transition-all duration-400 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[44px] ${
                   selectedSize.label === s.label
                     ? 'border-ink bg-ink/5'
                     : 'border-ink/8 bg-cream/40 hover:border-ink/20'
@@ -119,7 +119,7 @@ export default function ProductModal() {
                 <p className={`text-sm font-body font-semibold ${
                   selectedSize.label === s.label ? 'text-ink' : 'text-ink-soft'
                 }`}>
-                  <span className="text-[10px] font-normal mr-px">&#8377;</span>{s.price}
+                  <span className="text-[11px] font-normal mr-px">&#8377;</span>{s.price}
                 </p>
               </button>
             ))}
@@ -150,7 +150,7 @@ export default function ProductModal() {
 
           <button
             onClick={handleAddToCart}
-            className="w-full py-3.5 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
+            className="w-full py-3.5 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[44px] mb-[env(safe-area-inset-bottom,0px)]"
           >
             Add to Cart — &#8377;{selectedSize.price * qty}
           </button>

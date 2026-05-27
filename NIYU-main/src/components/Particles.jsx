@@ -35,7 +35,7 @@ export default function Particles({ count = 25 }) {
             duration: p.duration,
             repeat: Infinity,
             delay: p.delay,
-            ease: [0.32, 0.72, 0, 1],
+            ease: [0.23, 1, 0.32, 1],
           }}
         />
       ))}

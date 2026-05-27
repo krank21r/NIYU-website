@@ -1,6 +1,5 @@
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { useScroll, useTransform } from 'framer-motion'
 
 const cards = [
   {
@@ -42,16 +41,16 @@ function SectionTitle() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
+      transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
       className="text-center mb-24"
     >
       <motion.div
-        initial={{ scaleX: 0 }}
-        animate={isInView ? { scaleX: 1 } : {}}
-        transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-        className="section-divider origin-center"
+        initial={{ clipPath: 'inset(0 50% 0 50%)' }}
+        animate={isInView ? { clipPath: 'inset(0 0% 0 0%)' } : {}}
+        transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+        className="section-divider"
       />
       <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
         Why NIYU Perfumes?
@@ -70,20 +69,20 @@ function Card({ card, index }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50, filter: 'blur(4px)' }}
+      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
       animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.9, delay: index * 0.15, ease: [0.32, 0.72, 0, 1] }}
-      className="group border border-ink/5 bg-cream hover:border-ink/10 transition-all duration-500 cursor-default"
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.23, 1, 0.32, 1] }}
+      className="group border border-ink/5 bg-cream hover:border-ink/10 transition-all duration-300 cursor-default active:scale-[0.98]"
     >
       <div className="p-8 md:p-10">
-        <div className="mb-6 w-14 h-14 bg-ink/8 flex items-center justify-center group-hover:bg-ink/8 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] text-ink">
+        <div className="mb-6 w-14 h-14 bg-ink/8 flex items-center justify-center group-hover:bg-ink/10 transition-colors duration-300 text-ink">
           {card.icon}
         </div>
         <h3 className="text-xl md:text-2xl font-heading text-ink-soft mb-4">{card.title}</h3>
         <p className="text-ink-muted font-body font-light leading-relaxed text-sm md:text-base">
           {card.description}
         </p>
-        <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]" />
+        <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full transition-all duration-700 ease-[var(--ease-out)]" />
       </div>
     </motion.div>
   )

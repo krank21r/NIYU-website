@@ -17,11 +17,13 @@ export function CartProvider({ children }) {
   const openProductModal = useCallback((product) => {
     setSelectedProduct(product)
     setStep('product-modal')
+    document.body.style.overflow = 'hidden'
   }, [])
 
   const closeFlow = useCallback(() => {
     setStep('closed')
     setSelectedProduct(null)
+    document.body.style.overflow = ''
   }, [])
 
   const openProductDetail = useCallback((product) => {

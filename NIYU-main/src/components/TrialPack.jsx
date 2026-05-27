@@ -22,9 +22,9 @@ export default function TrialPack() {
 
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
         className="relative max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
       >
         {/* Left — Badge */}
@@ -41,7 +41,7 @@ export default function TrialPack() {
           <span className="hidden sm:inline text-ivory/20" aria-hidden="true">|</span>
           <span className="text-lg sm:text-xl font-heading font-bold text-ivory">
             <span className="text-sm font-normal text-ivory/50 mr-0.5">&#8377;</span>99
-            <span className="text-[10px] text-ivory/50 font-body font-normal ml-1.5">onwards</span>
+            <span className="text-[11px] text-ivory/50 font-body font-normal ml-1.5">onwards</span>
           </span>
         </div>
 
@@ -50,7 +50,7 @@ export default function TrialPack() {
           href="https://wa.me/916302040779"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold hover:bg-gold-light text-charcoal text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shrink-0 min-h-[44px]"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold hover:bg-gold-light text-charcoal text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-200 ease-[var(--ease-out)] shrink-0 min-h-[44px] active:scale-[0.97]"
           aria-label="Get trial pack on WhatsApp"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

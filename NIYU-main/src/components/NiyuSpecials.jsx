@@ -31,9 +31,9 @@ function ProductCard({ product, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.06, ease: [0.32, 0.72, 0, 1] }}
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}
       className="flex-shrink-0 w-[220px] sm:w-[240px] snap-start"
     >
       <div
@@ -42,7 +42,7 @@ function ProductCard({ product, index }) {
       >
         <div className="relative flex justify-center items-center py-6 min-h-[200px]">
           {product.tag && (
-            <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-gradient-to-r from-gold to-gold-light text-ivory text-[9px] tracking-[0.12em] uppercase font-body font-medium">
+            <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-gradient-to-r from-gold to-gold-light text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
               {product.tag}
             </span>
           )}
@@ -50,12 +50,12 @@ function ProductCard({ product, index }) {
             src={product.image}
             alt={`${product.name} perfume`}
             loading="lazy"
-            className="h-40 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:drop-shadow-[0_12px_32px_rgba(201,169,110,0.25)]"
+            className="h-40 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-500 ease-[var(--ease-out)] group-hover:scale-105 group-hover:drop-shadow-[0_12px_32px_rgba(201,169,110,0.25)]"
           />
         </div>
         <div className="p-5 mt-auto">
-          <div className="w-6 h-[1px] bg-ink/25 group-hover:w-12 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] mb-3" />
-          <h4 className="text-base font-heading text-ink-soft group-hover:text-ink transition-colors duration-500 mb-1">
+          <div className="w-6 h-[1px] bg-ink/25 group-hover:w-12 transition-all duration-500 ease-[var(--ease-out)] mb-3" />
+          <h4 className="text-base font-heading text-ink-soft group-hover:text-ink transition-colors duration-300 mb-1">
             {product.name}
           </h4>
           <p className="text-[11px] font-body font-light text-ink-subtle line-clamp-2 mb-3">
@@ -63,7 +63,7 @@ function ProductCard({ product, index }) {
           </p>
           <div className="flex gap-2">
             {product.sizes.map((s) => (
-              <span key={s.label} className="text-[10px] font-body text-ink-subtle">
+              <span key={s.label} className="text-[11px] font-body text-ink-subtle">
                 {s.label} <span className="text-ink-soft">&#8377;{s.price}</span>
               </span>
             ))}
@@ -77,10 +77,10 @@ function ProductCard({ product, index }) {
 function CategoryCard({ item, index, isActive, onClick }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.32, 0.72, 0, 1] }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}
       className={`group cursor-pointer ${isActive ? 'ring-2 ring-gold ring-offset-2 ring-offset-ivory' : ''}`}
       onClick={onClick}
     >
@@ -89,7 +89,7 @@ function CategoryCard({ item, index, isActive, onClick }) {
           src={item.image}
           alt={`NIYU ${item.name} collection`}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[0.7s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
         <div className="relative h-full flex flex-col justify-center px-8 sm:px-12 z-10">
@@ -101,18 +101,18 @@ function CategoryCard({ item, index, isActive, onClick }) {
           </p>
           {item.id === 'perfume' && (
             <div className="flex items-center gap-2 mt-4">
-              <span className="text-[11px] tracking-[0.1em] uppercase font-body font-medium text-gold group-hover:text-gold-light transition-colors duration-500">
+              <span className="text-[11px] tracking-[0.1em] uppercase font-body font-medium text-gold group-hover:text-gold-light transition-colors duration-300">
                 {isActive ? 'Hide Collection' : 'Discover the Collection'}
               </span>
               <svg
-                className={`w-4 h-4 text-gold transition-transform duration-500 ${isActive ? 'rotate-180' : ''}`}
+                className={`w-4 h-4 text-gold transition-transform duration-300 ${isActive ? 'rotate-180' : ''}`}
                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           )}
-          <div className="w-10 h-[1px] bg-gold mt-4 group-hover:w-20 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" />
+          <div className="w-10 h-[1px] bg-gold mt-4 group-hover:w-20 transition-all duration-500 ease-[var(--ease-out)]" />
         </div>
       </div>
     </motion.div>
@@ -150,16 +150,16 @@ export default function NiyuSpecials() {
         {/* Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
+          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-14"
         >
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-            className="section-divider origin-center mb-8"
+            initial={{ clipPath: 'inset(0 50% 0 50%)' }}
+            animate={isInView ? { clipPath: 'inset(0 0% 0 0%)' } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            className="section-divider mb-8"
           />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink">
             Categories
@@ -177,9 +177,9 @@ export default function NiyuSpecials() {
 
           {showPerfumes && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -189,7 +189,7 @@ export default function NiyuSpecials() {
                 <div className="hidden sm:flex items-center gap-2">
                   <button
                     onClick={() => scroll('left')}
-                    className="w-10 h-10 border border-ink/8 bg-ivory/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-500 group"
+                    className="w-10 h-10 border border-ink/8 bg-ivory/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-200 group active:scale-[0.97]"
                     aria-label="Scroll left"
                   >
                     <svg className="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -198,7 +198,7 @@ export default function NiyuSpecials() {
                   </button>
                   <button
                     onClick={() => scroll('right')}
-                    className="w-10 h-10 border border-ink/8 bg-ivory/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-500 group"
+                    className="w-10 h-10 border border-ink/8 bg-ivory/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-200 group active:scale-[0.97]"
                     aria-label="Scroll right"
                   >
                     <svg className="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -210,7 +210,7 @@ export default function NiyuSpecials() {
 
               <div
                 ref={scrollRef}
-                className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none"
+                className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none overscroll-contain touch-manipulation"
               >
                 {products.map((product, i) => (
                   <ProductCard key={product.id} product={product} index={i} />

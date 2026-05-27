@@ -102,7 +102,7 @@ export default function CartView() {
           </button>
           <button
             onClick={() => setStep('checkout')}
-            className="flex-1 py-3 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
+            className="flex-1 py-3 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[44px]"
           >
             Checkout
           </button>

@@ -37,34 +37,27 @@ export default function TrustBar() {
 
   return (
     <section className="relative py-14 sm:py-16 px-4 sm:px-6 border-t border-b border-ink/5" aria-label="Trust guarantees">
-      <div className="absolute inset-0 bg-gradient-to-b from-cream/50 to-ivory" />
-      <div className="relative max-w-6xl mx-auto">
+      <div className="relative max-w-7xl mx-auto">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6"
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {trustItems.map((item, i) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.32, 0.72, 0, 1] }}
-              className="flex items-start gap-4 group"
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.08, ease: [0.23, 1, 0.32, 1] }}
+              className="flex flex-col items-center text-center"
             >
-              <div className="shrink-0 w-12 h-12 rounded-xl bg-ink/6 flex items-center justify-center text-ink group-hover:bg-ink/10 transition-colors duration-500">
+              <div className="w-14 h-14 bg-ink/8 flex items-center justify-center text-ink-muted mb-4">
                 {item.icon}
               </div>
-              <div>
-                <h3 className="text-sm font-body font-semibold text-ink-soft mb-1 tracking-wide">
-                  {item.title}
-                </h3>
-                <p className="text-xs font-body text-ink-subtle leading-relaxed max-w-[220px]">
-                  {item.description}
-                </p>
-              </div>
+              <h3 className="text-base font-heading text-ink-soft mb-2">{item.title}</h3>
+              <p className="text-sm font-body font-light text-ink-muted">{item.description}</p>
             </motion.div>
           ))}
         </motion.div>

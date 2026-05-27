@@ -17,21 +17,21 @@ const carPerfumes = [
 function CarItem({ item, index }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.8, delay: 0.2 + index * 0.07, ease: [0.32, 0.72, 0, 1] }}
+      transition={{ duration: 0.5, delay: 0.15 + index * 0.05, ease: [0.23, 1, 0.32, 1] }}
       className="group py-3.5 border-b border-ink/5 last:border-b-0 flex items-center justify-between"
     >
       <div className="flex items-center gap-3">
         <span className="text-xs text-ink font-body tabular-nums">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <h3 className="text-base sm:text-lg font-heading text-ink-soft group-hover:text-ink transition-colors duration-500">
+        <h3 className="text-base sm:text-lg font-heading text-ink-soft group-hover:text-ink transition-colors duration-300">
           {item.name}
         </h3>
       </div>
-      <div className="h-[1px] flex-1 mx-4 bg-ink/5 group-hover:bg-ink/20 transition-colors duration-700" />
+      <div className="h-[1px] flex-1 mx-4 bg-ink/5 group-hover:bg-ink/20 transition-colors duration-500" />
     </motion.div>
   )
 }
@@ -48,16 +48,16 @@ export default function CarPerfumes() {
         {/* Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
+          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-16"
         >
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-            className="section-divider origin-center"
+            initial={{ clipPath: 'inset(0 50% 0 50%)' }}
+            animate={isInView ? { clipPath: 'inset(0 0% 0 0%)' } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            className="section-divider"
           />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
             Car Perfumes
@@ -71,10 +71,10 @@ export default function CarPerfumes() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Left — Car perfume image */}
           <motion.div
-            initial={{ opacity: 0, x: -40, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
+            transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
             className="relative lg:sticky lg:top-32"
           >
             <div className="">
@@ -95,20 +95,20 @@ export default function CarPerfumes() {
           {/* Right — Car perfume list */}
           <div className="lg:pt-8">
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
               className="text-sm font-body text-ink-muted leading-relaxed mb-8 max-w-md"
             >
               Transform every drive into a luxurious experience. Our car perfumes are crafted with natural essential oils that eliminate odors and fill your car with a long-lasting, premium fragrance.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              transition={{ duration: 0.6, delay: 0.25, ease: [0.23, 1, 0.32, 1] }}
               className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8"
             >
               <div className="inline-flex items-center gap-3 px-5 py-3 bg-ink/8 border border-ink/15">
@@ -122,7 +122,7 @@ export default function CarPerfumes() {
                 href="https://wa.me/916302040779"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-ink hover:bg-ink-soft text-cream text-[11px] tracking-[0.1em] uppercase font-body font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-ink hover:bg-ink-soft text-cream text-[11px] tracking-[0.1em] uppercase font-body font-medium transition-all duration-200 ease-[var(--ease-out)] min-h-[44px] active:scale-[0.97]"
                 aria-label="Buy car perfumes on WhatsApp"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

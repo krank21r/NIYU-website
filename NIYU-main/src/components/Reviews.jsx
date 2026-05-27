@@ -35,7 +35,7 @@ function Stars({ rating }) {
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
-          className={`w-4 h-4 ${i < rating ? 'text-ink' : 'text-ink/10'}`}
+          className={`w-4 h-4 ${i < rating ? 'text-gold' : 'text-ink/10'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
           aria-hidden="true"
@@ -67,15 +67,15 @@ export default function Reviews() {
       <div className="relative max-w-4xl mx-auto">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-20"
         >
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+            initial={{ clipPath: 'inset(0 0 0 100%)' }}
+            animate={isInView ? { clipPath: 'inset(0 0 0 0%)' } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
             className="section-divider origin-center"
           />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
@@ -87,10 +87,10 @@ export default function Reviews() {
           <AnimatePresence mode="wait">
             <motion.blockquote
               key={current}
-              initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }}
+              initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -30, filter: 'blur(4px)' }}
-              transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
+              exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
               className="border border-ink/5 bg-cream max-w-2xl mx-auto"
             >
               <div className="p-10 md:p-14 text-center">
@@ -100,7 +100,7 @@ export default function Reviews() {
                 <p className="text-lg md:text-xl text-ink-muted font-elegant italic leading-relaxed mb-8">
                   &ldquo;{reviews[current].text}&rdquo;
                 </p>
-                <div className="w-12 h-[1px] bg-ink/30 mx-auto mb-4" aria-hidden="true" />
+                <div className="w-12 h-[1px] bg-gold mx-auto mb-4" aria-hidden="true" />
                 <cite className="text-sm font-heading text-ink tracking-wider uppercase not-italic">
                   {reviews[current].name}
                 </cite>
@@ -117,9 +117,9 @@ export default function Reviews() {
               role="tab"
               aria-selected={i === current}
               aria-label={`Review ${i + 1}`}
-              className={`transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center ${
+              className={`transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center active:scale-90 ${
                 i === current
-                  ? 'w-10 h-4 bg-ink'
+                  ? 'w-10 h-4 bg-gold'
                   : 'w-4 h-4 bg-ink/10 hover:bg-ink/20'
               }`}
             />

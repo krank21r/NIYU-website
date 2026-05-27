@@ -33,13 +33,13 @@ export default function OrderConfirmation() {
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1], type: 'spring', stiffness: 200 }}
+        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1], type: 'spring', stiffness: 200 }}
         className="w-20 h-20 rounded-full bg-gold/10 flex items-center justify-center mb-6"
       >
         <motion.svg
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
-          transition={{ duration: 0.5, delay: 0.3, ease: [0.32, 0.72, 0, 1] }}
+          transition={{ duration: 0.5, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
           className="w-10 h-10 text-gold"
           fill="none"
           viewBox="0 0 24 24"
@@ -60,7 +60,7 @@ export default function OrderConfirmation() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+        transition={{ delay: 0.3, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
       >
         <h3 className="text-2xl font-heading font-bold text-ink-soft mb-2">Order Placed!</h3>
         <p className="text-sm text-ink-subtle font-body font-light mb-6">Thank you for your order</p>
@@ -70,7 +70,7 @@ export default function OrderConfirmation() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+        transition={{ delay: 0.5, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
         className="w-full max-w-sm bg-cream/40 border border-ink/5 p-5 mb-6 text-left"
       >
         <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-3">Order Summary</p>
@@ -85,7 +85,7 @@ export default function OrderConfirmation() {
           <span className="text-lg font-heading font-bold text-gold">&#8377;{subtotal}</span>
         </div>
         {orderId && (
-          <p className="text-[10px] text-ink-subtle font-body mt-3">Order ID: {orderId}</p>
+          <p className="text-[11px] text-ink-subtle font-body mt-3">Order ID: {orderId}</p>
         )}
         <div className="mt-3 pt-3 border-t border-ink/5">
           <p className="text-[11px] text-ink-subtle font-body">{delivery.name}</p>
@@ -98,7 +98,7 @@ export default function OrderConfirmation() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+        transition={{ delay: 0.7, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
         className="w-full max-w-sm"
       >
         <p className="text-xs text-ink-subtle font-body mb-4">

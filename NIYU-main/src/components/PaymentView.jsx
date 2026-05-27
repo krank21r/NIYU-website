@@ -82,7 +82,7 @@ export default function PaymentView() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
               className="w-full max-w-sm"
             >
               <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4">Choose Payment App</p>
@@ -118,7 +118,7 @@ export default function PaymentView() {
                     <img src="/QR-Code.jpg" alt="UPI QR Code" className="w-[160px] h-[160px] object-contain" />
                   </div>
                 </div>
-                <p className="text-[10px] text-ink-subtle/70 font-body text-center mt-2">UPI ID: {UPI_ID}</p>
+                <p className="text-[11px] text-ink-subtle/70 font-body text-center mt-2">UPI ID: {UPI_ID}</p>
               </div>
             </motion.div>
           ) : (
@@ -126,7 +126,7 @@ export default function PaymentView() {
               key="waiting"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
               className="flex flex-col items-center text-center"
             >
               <div className="w-16 h-16 flex items-center justify-center mb-6" style={{ backgroundColor: getSelectedApp()?.color + '15' }}>
@@ -196,7 +196,7 @@ export default function PaymentView() {
           <button
             onClick={handleConfirm}
             disabled={paying}
-            className="flex-1 py-3 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px]"
+            className="flex-1 py-3 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px]"
           >
             {paying ? 'Processing...' : 'I Have Paid'}
           </button>

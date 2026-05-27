@@ -18,9 +18,9 @@ function GalleryItem({ item, index }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
-      animate={isInView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.9, delay: index * 0.08, ease: [0.32, 0.72, 0, 1] }}
+      initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0 }}
+      animate={isInView ? { clipPath: 'inset(0 0 0% 0)', opacity: 1 } : {}}
+      transition={{ duration: 0.7, delay: index * 0.06, ease: [0.23, 1, 0.32, 1] }}
       className={`group relative overflow-hidden cursor-pointer ${item.span || ''}`}
     >
       <div className="relative h-full min-h-[200px] md:min-h-[250px] bg-gradient-to-br from-parchment to-linen flex items-center justify-center overflow-hidden">
@@ -30,14 +30,13 @@ function GalleryItem({ item, index }) {
           loading="lazy"
           width="400"
           height="300"
-          className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-90 scale-100 group-hover:scale-105 transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]"
+          className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-90 scale-100 group-hover:scale-105 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent" />
-        <div className="absolute inset-0 border border-white/5 group-hover:border-ink/15 transition-all duration-700" />
-        <div className="text-center z-20 relative">
-          <p className="text-base md:text-lg font-heading text-white/90 group-hover:text-ink-light transition-colors duration-700 drop-shadow-lg">
-            {item.label}
-          </p>
+        <div className="absolute inset-0 border border-white/5 group-hover:border-ink/15 transition-all duration-300" />
+        <div className="text-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]">
+          <p className="text-sm font-body text-ivory tracking-wider uppercase">{item.label}</p>
+          <div className="w-8 h-[1px] bg-gold-light mx-auto mt-3" />
         </div>
       </div>
     </motion.div>
@@ -49,33 +48,32 @@ export default function Gallery() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="gallery" className="relative py-16 sm:py-24 px-4 sm:px-6" aria-label="Fragrance gallery">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(28,28,28,0.03)_0%,transparent_60%)]" />
-      <div className="relative max-w-7xl mx-auto">
+    <section id="gallery" className="relative py-16 sm:py-24 overflow-hidden" aria-label="Product gallery">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
-          className="text-center mb-20"
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          className="text-center mb-14"
         >
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+            initial={{ clipPath: 'inset(0 0 0 100%)' }}
+            animate={isInView ? { clipPath: 'inset(0 0 0 0%)' } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
             className="section-divider origin-center"
           />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
-            Gallery
+            The NIYU Gallery
           </h2>
           <p className="text-ink-subtle font-body font-light max-w-xl mx-auto">
-            A glimpse into the world of NIYU
+            A visual journey through our collection
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[250px]">
-          {images.map((img, i) => (
-            <GalleryItem key={img.id} item={img} index={i} />
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 auto-rows-[200px] md:auto-rows-[250px]">
+          {images.map((item, i) => (
+            <GalleryItem key={item.id} item={item} index={i} />
           ))}
         </div>
       </div>

@@ -24,7 +24,7 @@ export default function FloatingBottle({ src = '/images/bottle-rose-oudh.svg', a
       {/* Bottle — Framer Motion float only, no CSS animate-float */}
       <motion.div
         animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: [0.32, 0.72, 0, 1] }}
+        transition={{ duration: 5, repeat: Infinity, ease: [0.23, 1, 0.32, 1] }}
       >
         <img
           src={src}

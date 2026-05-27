@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
-const ease = [0.32, 0.72, 0, 1]
+const ease = [0.23, 1, 0.32, 1]
 
 export default function ProductDetail() {
   const { detailProduct, closeProductDetail, addToCart } = useCart()
@@ -102,7 +102,7 @@ export default function ProductDetail() {
                 {/* Main Image */}
                 <div className="relative bg-ivory border border-ink/5 flex justify-center items-center py-8 sm:py-12 mb-4">
                   {product.tag && (
-                    <span className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-gradient-to-r from-gold to-gold-light text-ivory text-[10px] tracking-[0.12em] uppercase font-body font-medium">
+                    <span className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-gradient-to-r from-gold to-gold-light text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
                       {product.tag}
                     </span>
                   )}
@@ -174,7 +174,7 @@ export default function ProductDetail() {
                     className="flex gap-2 flex-wrap mb-6"
                   >
                     {notes.map((note) => (
-                      <span key={note} className="px-3 py-1.5 bg-ivory border border-ink/8 text-[10px] tracking-[0.1em] uppercase text-ink-subtle font-body">
+                      <span key={note} className="px-3 py-1.5 bg-ivory border border-ink/8 text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body">
                         {note}
                       </span>
                     ))}
@@ -195,7 +195,7 @@ export default function ProductDetail() {
                       <button
                         key={s.label}
                         onClick={() => setSelectedSize(s)}
-                        className={`flex-1 py-3.5 border text-center transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[44px] ${
+                        className={`flex-1 py-3.5 border text-center transition-all duration-400 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[44px] ${
                           selectedSize?.label === s.label
                             ? 'border-ink bg-ink/5'
                             : 'border-ink/8 bg-cream/40 hover:border-ink/20'
@@ -207,7 +207,7 @@ export default function ProductDetail() {
                         <p className={`text-sm font-body font-semibold ${
                           selectedSize?.label === s.label ? 'text-ink' : 'text-ink-soft'
                         }`}>
-                          <span className="text-[10px] font-normal mr-px">&#8377;</span>{s.price}
+                          <span className="text-[11px] font-normal mr-px">&#8377;</span>{s.price}
                         </p>
                       </button>
                     ))}
@@ -262,17 +262,17 @@ export default function ProductDetail() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2, ease }}
-                  className="flex flex-col gap-3"
+                  className="flex flex-col gap-3 pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
                 >
                   <button
                     onClick={handleAddToCart}
-                    className="w-full py-4 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[48px]"
+                    className="w-full py-4 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
                   >
                     Add to Cart
                   </button>
                   <button
                     onClick={handleAddToCart}
-                    className="w-full py-4 border border-gold text-gold hover:bg-gold hover:text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] min-h-[48px]"
+                    className="w-full py-4 border border-gold text-gold hover:bg-gold hover:text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
                   >
                     Buy Now
                   </button>

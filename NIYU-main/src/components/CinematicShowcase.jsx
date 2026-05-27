@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import FloatingBottle from './FloatingBottle'
 import SmokeEffect from './SmokeEffect'
 
-const ease = [0.32, 0.72, 0, 1]
+const ease = [0.23, 1, 0.32, 1]
 
 export default function CinematicShowcase() {
   const sectionRef = useRef(null)
@@ -74,7 +74,7 @@ export default function CinematicShowcase() {
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-[4] w-[90%] max-w-md"
       >
         <div className="glass-card px-6 py-5 text-center">
-          <p className="text-[10px] tracking-[0.15em] uppercase text-gold-dark font-body font-medium mb-2">
+          <p className="text-[11px] tracking-[0.15em] uppercase text-gold-dark font-body font-medium mb-2">
             Signature Collection
           </p>
           <p className="text-sm font-body font-light text-ink-muted leading-relaxed">

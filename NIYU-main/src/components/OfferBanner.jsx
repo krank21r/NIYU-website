@@ -23,7 +23,7 @@ export default function OfferBanner() {
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
+          transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
         >
           {/* Eyebrow */}
           <span className="inline-flex items-center gap-3 px-5 py-2 border border-gold/20 text-label text-gold-light mb-10">
@@ -35,7 +35,7 @@ export default function OfferBanner() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.3, ease: [0.32, 0.72, 0, 1] }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
             className="heading-display text-3xl md:text-4xl lg:text-5xl text-ivory mb-4"
           >
             Buy One Get One Free
@@ -45,7 +45,7 @@ export default function OfferBanner() {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.5, ease: [0.32, 0.72, 0, 1] }}
+            transition={{ duration: 1.2, delay: 0.5, ease: [0.23, 1, 0.32, 1] }}
             className="w-20 h-[1px] bg-gradient-to-r from-transparent via-gold/40 to-transparent mx-auto my-10"
           />
 
@@ -53,7 +53,7 @@ export default function OfferBanner() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.32, 0.72, 0, 1] }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
             className="text-body text-white/40 max-w-xl mx-auto mb-12"
           >
             Purchase any fragrance from our collection and receive a second one absolutely free. Choose your pair and experience the luxury of NIYU.
@@ -63,7 +63,7 @@ export default function OfferBanner() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.8, ease: [0.32, 0.72, 0, 1] }}
+            transition={{ duration: 0.8, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 mb-10"
           >
             {['Any Product', 'Second One Free', 'Free Shipping'].map((text, i) => (
@@ -79,7 +79,7 @@ export default function OfferBanner() {
             href="#collection"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 1, ease: [0.32, 0.72, 0, 1] }}
+            transition={{ duration: 0.8, delay: 1, ease: [0.23, 1, 0.32, 1] }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-3 px-8 py-3.5 bg-gold text-charcoal font-body font-medium text-xs sm:text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-colors duration-500 group min-h-[44px]"
