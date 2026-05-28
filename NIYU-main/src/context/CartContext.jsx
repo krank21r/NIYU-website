@@ -10,7 +10,7 @@ export function CartProvider({ children }) {
   const [items, setItems] = useState([])
   const [step, setStep] = useState('closed')
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const [delivery, setDelivery] = useState({ name: '', phone: '', address: '', pincode: '' })
+  const [delivery, setDelivery] = useState({ name: '', phone: '', email: '', address: '', pincode: '' })
   const [orderId, setOrderId] = useState(null)
   const [detailProduct, setDetailProduct] = useState(null)
 
@@ -90,6 +90,8 @@ export function CartProvider({ children }) {
   }, [items, delivery, subtotal])
 
   const confirmOrder = useCallback(async () => {
+    let savedOrderId = null
+
     // Insert to Supabase if configured
     if (supabase) {
       try {
@@ -99,6 +101,7 @@ export function CartProvider({ children }) {
           .insert({
             customer_name: delivery.name,
             phone: delivery.phone,
+            email: delivery.email,
             address: delivery.address,
             pincode: delivery.pincode,
             items: items.map(i => ({ name: i.name, size: i.size, price: i.price, qty: i.qty })),
@@ -113,6 +116,7 @@ export function CartProvider({ children }) {
           console.error('[NIYU] Supabase insert error:', error)
         } else {
           console.log('[NIYU] Order saved:', data.id)
+          savedOrderId = data.id
           setOrderId(data.id)
         }
       } catch (err) {
@@ -121,6 +125,23 @@ export function CartProvider({ children }) {
     } else {
       console.warn('[NIYU] Supabase not configured — order not saved')
     }
+
+    // Send order confirmation email (fire-and-forget)
+    const emailPayload = {
+      email: delivery.email,
+      name: delivery.name,
+      phone: delivery.phone,
+      orderId: savedOrderId,
+      items: items.map(i => ({ name: i.name, size: i.size, price: i.price, qty: i.qty })),
+      subtotal,
+      address: delivery.address,
+      pincode: delivery.pincode,
+    }
+    fetch('/api/send-confirmation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(emailPayload),
+    }).catch(err => console.error('[NIYU] Email failed:', err))
 
     setStep('confirmation')
   }, [items, delivery, subtotal])

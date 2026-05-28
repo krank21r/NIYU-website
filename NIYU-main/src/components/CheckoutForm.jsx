@@ -10,6 +10,7 @@ export default function CheckoutForm() {
     const errs = {}
     if (!delivery.name.trim()) errs.name = 'Name is required'
     if (!/^\d{10}$/.test(delivery.phone)) errs.phone = 'Enter a valid 10-digit number'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(delivery.email)) errs.email = 'Enter a valid email address'
     if (!delivery.address.trim()) errs.address = 'Address is required'
     if (!/^\d{6}$/.test(delivery.pincode)) errs.pincode = 'Enter a valid 6-digit pincode'
     setErrors(errs)
@@ -52,6 +53,18 @@ export default function CheckoutForm() {
             className={`w-full px-4 py-3 bg-cream/40 border ${errors.phone ? 'border-red-400' : 'border-ink/8'} text-[16px] font-body text-ink-soft placeholder:text-ink-subtle/50 focus:outline-none focus:border-ink/30 transition-colors duration-300`}
           />
           {errors.phone && <p className="text-[11px] text-red-500 font-body mt-1">{errors.phone}</p>}
+        </div>
+
+        <div>
+          <label className="block text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-2">Email</label>
+          <input
+            type="email"
+            value={delivery.email}
+            onChange={handleChange('email')}
+            placeholder="you@example.com"
+            className={`w-full px-4 py-3 bg-cream/40 border ${errors.email ? 'border-red-400' : 'border-ink/8'} text-[16px] font-body text-ink-soft placeholder:text-ink-subtle/50 focus:outline-none focus:border-ink/30 transition-colors duration-300`}
+          />
+          {errors.email && <p className="text-[11px] text-red-500 font-body mt-1">{errors.email}</p>}
         </div>
 
         <div>

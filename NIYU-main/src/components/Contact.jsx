@@ -92,29 +92,6 @@ export default function Contact() {
             </motion.a>
           ))}
         </div>
-
-        {/* QR Code */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5, delay: 0.5, ease: [0.23, 1, 0.32, 1] }}
-          className="mt-12 flex justify-center"
-        >
-          <div className="border border-white/10 bg-white/5 p-4 text-center">
-            <img
-              src="/QR-Code.jpg"
-              alt="NIYU WhatsApp QR code — scan to open chat"
-              width="128"
-              height="128"
-              className="w-24 h-24 object-cover opacity-80"
-              loading="lazy"
-            />
-            <p className="text-[11px] tracking-[0.1em] uppercase text-ivory/40 font-body mt-3">
-              Scan to Chat
-            </p>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
