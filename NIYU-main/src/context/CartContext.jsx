@@ -4,8 +4,6 @@ import { stopSmoothScroll, startSmoothScroll } from '../hooks/useLenis'
 
 const CartContext = createContext(null)
 
-const WHATSAPP_NUMBER = '916302040779'
-
 export function CartProvider({ children }) {
   const [items, setItems] = useState([])
   const [step, setStep] = useState('closed')
@@ -64,30 +62,6 @@ export function CartProvider({ children }) {
   }, [])
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
-
-  const buildWhatsAppUrl = useCallback(() => {
-    const itemLines = items.map(i =>
-      `\u2022 ${i.name} \u2014 ${i.size} x ${i.qty} \u2014 \u20B9${i.price * i.qty}`
-    ).join('\n')
-
-    const msg = [
-      `\uD83D\uDED2 NEW ORDER \u2014 NIYU Perfumes`,
-      ``,
-      `Customer: ${delivery.name}`,
-      `Phone: ${delivery.phone}`,
-      `Address: ${delivery.address}, ${delivery.pincode}`,
-      ``,
-      `Items:`,
-      itemLines,
-      ``,
-      `Total: \u20B9${subtotal}`,
-      `Payment: UPI`,
-      ``,
-      `Please confirm and dispatch.`,
-    ].join('\n')
-
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
-  }, [items, delivery, subtotal])
 
   const confirmOrder = useCallback(async () => {
     let savedOrderId = null
@@ -151,7 +125,7 @@ export function CartProvider({ children }) {
       items, step, selectedProduct, delivery, subtotal, orderId, detailProduct,
       openProductModal, closeFlow, addToCart, removeFromCart, updateQty,
       openProductDetail, closeProductDetail,
-      setStep, setDelivery, confirmOrder, buildWhatsAppUrl,
+      setStep, setDelivery, confirmOrder,
     }}>
       {children}
     </CartContext.Provider>
