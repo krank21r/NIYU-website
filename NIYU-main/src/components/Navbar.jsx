@@ -1,314 +1,187 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useWishlist } from '../context/WishlistContext'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import WishlistOverlay from './WishlistOverlay'
 
-const navLinks = [
-  { label: 'Home', href: '#hero' },
-  { label: 'Shop', href: '#specials' },
+const categories = [
+  { label: 'All', href: '#trending' },
+  { label: 'Perfumes', href: '#specials' },
   { label: 'Attars', href: '#attars' },
   { label: 'Car Perfumes', href: '#car-perfumes' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Gift Sets', href: '#collection' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [active, setActive] = useState('#hero')
   const [wishlistOpen, setWishlistOpen] = useState(false)
-  const { wishlistCount } = useWishlist()
-  const { items, setStep } = useCart()
+  const { items } = useCart()
+  const { wishlist } = useWishlist()
+  const cartCount = items.length
 
   useEffect(() => {
-    let ticking = false
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 60)
-          const sections = ['hero', 'trending', 'specials', 'attars', 'car-perfumes', 'about', 'collection', 'contact']
-          for (let i = sections.length - 1; i >= 0; i--) {
-            const el = document.getElementById(sections[i])
-            if (el && el.getBoundingClientRect().top <= 200) {
-              setActive('#' + sections[i])
-              break
-            }
-          }
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
   const handleNavClick = (e, href) => {
     e.preventDefault()
-    const targetId = href.replace('#', '')
-    const targetEl = document.getElementById(targetId)
-    if (targetEl) {
-      targetEl.scrollIntoView({ behavior: 'smooth' })
-      setActive(href)
-    }
-    if (mobileOpen) setMobileOpen(false)
+    const id = href.replace('#', '')
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    setMobileOpen(false)
   }
 
   return (
     <>
-      {/* Desktop Nav */}
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-        style={{ top: 'calc(2.25rem + env(safe-area-inset-top, 0px))' }}
-        className={`fixed left-0 right-0 z-50 hidden lg:block transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-          scrolled
-            ? 'bg-cream/90 backdrop-blur-2xl border-b border-gold/10 shadow-[0_1px_30px_rgba(0,0,0,0.06)]'
-            : 'bg-cream/60 backdrop-blur-lg'
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? 'shadow-[0_1px_0_rgba(0,0,0,0.06)]' : ''
         }`}
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-8">
-          {/* Logo — left */}
-          <motion.a
-            href="#"
-            className="flex items-baseline gap-1 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={(e) => handleNavClick(e, '#hero')}
-            aria-label="NIYU Perfumes — back to top"
-          >
-            <span className="text-xl font-heading tracking-[0.3em] text-charcoal leading-none transition-all duration-300 group-hover:tracking-[0.35em]">
-              NIYU
-            </span>
-            <sup className="text-[11px] font-body font-light tracking-normal text-ink-muted">&reg;</sup>
-          </motion.a>
-
-          {/* Nav Links — center */}
-          <nav className="flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="group relative px-4 py-2 text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ink-muted hover:text-charcoal transition-colors duration-200"
-                aria-current={active === link.href ? 'page' : undefined}
+        {/* Main nav row */}
+        <div className={`bg-surface transition-all duration-300 ${scrolled ? '' : 'border-b border-black/5'}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="flex items-center gap-3 sm:gap-4 h-14 sm:h-16">
+              {/* Hamburger — mobile */}
+              <button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-soft transition-colors"
+                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               >
-                {link.label}
-                {/* Hover underline reveal */}
-                <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] origin-left" />
-                {/* Active underline */}
-                {active === link.href && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute bottom-0 left-4 right-4 h-[1px] bg-gold"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
+                <svg className="w-5 h-5 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  {mobileOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+
+              {/* Logo */}
+              <a href="#hero" onClick={(e) => handleNavClick(e, '#hero')} className="flex items-baseline gap-1 shrink-0">
+                <span className="text-xl sm:text-2xl font-heading tracking-[0.2em] text-ink font-semibold">NIYU</span>
+                <sup className="text-[9px] text-ink-muted font-body">®</sup>
               </a>
-            ))}
-          </nav>
 
-          {/* Cart + Wishlist icons — right */}
-          <div className="flex items-center">
-            <button
-              onClick={() => setStep('cart')}
-              className="relative w-10 h-10 flex items-center justify-center hover:text-gold transition-colors duration-300 min-w-[44px] min-h-[44px]"
-              aria-label="Open cart"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              {items.length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
-                  {items.length}
-                </span>
-              )}
-            </button>
-            <button
-              onClick={() => setWishlistOpen(true)}
-              className="relative w-10 h-10 flex items-center justify-center hover:text-gold transition-colors duration-300 min-w-[44px] min-h-[44px]"
-              aria-label="Open wishlist"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-              </svg>
-              {wishlistCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
-                  {wishlistCount}
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
-      </motion.header>
+              {/* Right icons */}
+              <div className="flex items-center gap-1 sm:gap-2 ml-auto">
+                {/* Wishlist */}
+                <button
+                  onClick={() => setWishlistOpen(true)}
+                  className="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-soft transition-colors"
+                  aria-label={`Wishlist (${wishlist.length} items)`}
+                >
+                  <svg className="w-5 h-5 text-ink-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                  </svg>
+                  {wishlist.length > 0 && (
+                    <span className="cart-badge">{wishlist.length}</span>
+                  )}
+                </button>
 
-      {/* Mobile Nav */}
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-        style={{ top: 'calc(2.25rem + env(safe-area-inset-top, 0px))' }}
-        className={`fixed left-0 right-0 z-50 lg:hidden transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-          scrolled || mobileOpen
-            ? 'bg-cream/90 backdrop-blur-2xl border-b border-gold/10 shadow-[0_1px_30px_rgba(0,0,0,0.06)]'
-            : 'bg-cream/60 backdrop-blur-lg'
-        }`}
-      >
-        <div className="flex items-center justify-between h-14 px-5">
-          {/* Hamburger — left */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="relative w-11 h-11 flex items-center justify-center -ml-1"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-          >
-            <div className="w-5 flex flex-col gap-[6px]">
-              <motion.span
-                animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="block w-full h-[1.5px] bg-charcoal origin-center"
-              />
-              <motion.span
-                animate={mobileOpen ? { opacity: 0, x: -8, scaleX: 0 } : { opacity: 1, x: 0, scaleX: 1 }}
-                transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-                className="block w-full h-[1.5px] bg-charcoal origin-left"
-              />
-              <motion.span
-                animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="block w-full h-[1.5px] bg-charcoal origin-center"
-              />
+                {/* Cart */}
+                <button
+                  className="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-soft transition-colors"
+                  aria-label={`Cart (${cartCount} items)`}
+                >
+                  <svg className="w-5 h-5 text-ink-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                  </svg>
+                  {cartCount > 0 && (
+                    <span className="cart-badge">{cartCount}</span>
+                  )}
+                </button>
+              </div>
             </div>
-          </button>
-
-          {/* Logo — center */}
-          <motion.a
-            href="#"
-            className="absolute left-1/2 -translate-x-1/2 flex items-baseline gap-0.5 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={(e) => handleNavClick(e, '#hero')}
-            aria-label="NIYU Perfumes — back to top"
-          >
-            <span className="text-lg font-heading tracking-[0.3em] text-charcoal leading-none transition-all duration-300 group-hover:tracking-[0.35em]">
-              NIYU
-            </span>
-            <sup className="text-[11px] font-body font-light tracking-normal text-ink-muted">&reg;</sup>
-          </motion.a>
-
-          {/* Cart + Wishlist icons — right */}
-          <div className="flex items-center">
-            <button
-              onClick={() => setStep('cart')}
-              className="relative w-11 h-11 flex items-center justify-center"
-              aria-label="Open cart"
-            >
-              <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              {items.length > 0 && (
-                <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
-                  {items.length}
-                </span>
-              )}
-            </button>
-            <button
-              onClick={() => setWishlistOpen(true)}
-              className="relative w-11 h-11 flex items-center justify-center"
-              aria-label="Open wishlist"
-            >
-              <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-              </svg>
-              {wishlistCount > 0 && (
-                <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
-                  {wishlistCount}
-                </span>
-              )}
-            </button>
           </div>
         </div>
-      </motion.header>
 
-      {/* Mobile Menu Overlay */}
+        {/* Category nav row — desktop */}
+        <div className="hidden lg:block bg-surface border-b border-black/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <nav className="flex items-center gap-0 h-11 overflow-x-auto scrollbar-none" aria-label="Category navigation">
+              {categories.map((cat) => (
+                <a
+                  key={cat.label}
+                  href={cat.href}
+                  onClick={(e) => handleNavClick(e, cat.href)}
+                  className="px-4 h-full flex items-center text-[13px] font-body font-medium text-ink-muted hover:text-ink hover:bg-surface-soft transition-colors whitespace-nowrap"
+                >
+                  {cat.label}
+                </a>
+              ))}
+              <div className="ml-auto px-4 h-full flex items-center">
+                <span className="text-[11px] font-body text-green-700 font-semibold tracking-wide">🎉 Launch Offer: Extra 10% Off</span>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Spacer for fixed header */}
+      <div className="h-[104px] sm:h-[120px] lg:h-[156px]" aria-hidden="true" />
+
+      {/* Mobile menu overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-0 z-40 bg-ivory/98 backdrop-blur-3xl flex flex-col items-center justify-center lg:hidden"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 lg:hidden"
           >
-            {/* Close button — top right */}
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="absolute top-4 right-5 w-11 h-11 flex items-center justify-center"
-              aria-label="Close menu"
-            >
-              <motion.svg
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                className="w-5 h-5 text-charcoal"
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </motion.svg>
-            </button>
-
-            {/* Nav links */}
-            <div className="flex flex-col items-center gap-1">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ delay: 0.05 + i * 0.04, duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                  className={`relative text-[13px] tracking-[0.18em] uppercase font-body font-medium py-3 min-h-[44px] flex items-center transition-colors duration-200 ${
-                    active === link.href
-                      ? 'text-gold-dark'
-                      : 'text-ink-muted hover:text-charcoal'
-                  }`}
-                  aria-current={active === link.href ? 'page' : undefined}
-                >
-                  {link.label}
-                  {/* Hover underline */}
-                  <span className="absolute bottom-1 left-0 right-0 h-[1px] bg-gold scale-x-0 hover:scale-x-100 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] origin-center" />
-                </motion.a>
-              ))}
-            </div>
-
-            {/* Decorative divider */}
+            <div className="absolute inset-0 bg-black/30" onClick={() => setMobileOpen(false)} />
             <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="mt-10 flex items-center gap-4"
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+              className="absolute left-0 top-0 bottom-0 w-[280px] bg-surface shadow-xl overflow-y-auto"
             >
-              <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-gold/30" />
-              <span className="text-[11px] tracking-[0.3em] uppercase text-gold-dark font-body font-light">NIYU</span>
-              <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-gold/30" />
+              <div className="p-4 border-b border-black/5">
+                <a href="#hero" onClick={(e) => handleNavClick(e, '#hero')} className="flex items-baseline gap-1">
+                  <span className="text-xl font-heading tracking-[0.2em] text-ink font-semibold">NIYU</span>
+                  <sup className="text-[9px] text-ink-muted">®</sup>
+                </a>
+              </div>
+              <nav className="p-4" aria-label="Mobile navigation">
+                <p className="text-label text-ink-subtle mb-3">Categories</p>
+                <ul className="space-y-1">
+                  {categories.map((cat) => (
+                    <li key={cat.label}>
+                      <a
+                        href={cat.href}
+                        onClick={(e) => handleNavClick(e, cat.href)}
+                        className="block px-3 py-2.5 text-sm font-body text-ink-soft hover:text-ink hover:bg-surface-soft rounded-lg transition-colors"
+                      >
+                        {cat.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 pt-6 border-t border-black/5">
+                  <p className="text-label text-ink-subtle mb-3">Quick Links</p>
+                  <ul className="space-y-1">
+                    <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')} className="block px-3 py-2.5 text-sm font-body text-ink-soft hover:text-ink hover:bg-surface-soft rounded-lg transition-colors">About Us</a></li>
+                    <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="block px-3 py-2.5 text-sm font-body text-ink-soft hover:text-ink hover:bg-surface-soft rounded-lg transition-colors">Contact</a></li>
+                    <li><a href="https://wa.me/916302040779" target="_blank" rel="noopener noreferrer" className="block px-3 py-2.5 text-sm font-body text-ink-soft hover:text-ink hover:bg-surface-soft rounded-lg transition-colors">WhatsApp Us</a></li>
+                  </ul>
+                </div>
+              </nav>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Wishlist Overlay */}
       <WishlistOverlay open={wishlistOpen} onClose={() => setWishlistOpen(false)} />
     </>
   )

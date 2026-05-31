@@ -28,7 +28,7 @@ export default function CheckoutForm() {
   }
 
   const inputClass = (field) =>
-    `w-full px-4 py-3 bg-transparent border ${errors[field] ? 'border-red-400' : 'border-ink/10'} text-[15px] font-body text-ink-soft placeholder:text-ink-subtle/40 focus:outline-none focus:border-gold transition-colors duration-300`
+    `w-full px-4 py-3 bg-transparent border ${errors[field] ? 'border-red-400' : 'border-black/8'} text-[15px] font-body text-ink-soft placeholder:text-ink-subtle/40 focus:outline-none focus:border-gold transition-colors duration-300`
 
   return (
     <form onSubmit={handleSubmit} className="p-5 sm:p-8">
@@ -146,8 +146,8 @@ export default function CheckoutForm() {
 
         {/* Right: Order Summary */}
         <div className="lg:w-80 xl:w-96 flex-shrink-0">
-          <div className="lg:sticky lg:top-24 border border-ink/5 bg-cream/30 p-5 sm:p-6">
-            <h3 className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4 pb-3 border-b border-ink/5">
+          <div className="lg:sticky lg:top-24 border border-black/5 bg-surface-soft/30 p-5 sm:p-6">
+            <h3 className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4 pb-3 border-b border-black/5">
               Order Summary
             </h3>
 
@@ -155,7 +155,7 @@ export default function CheckoutForm() {
             <div className="space-y-3 mb-4">
               {items.map((item, i) => (
                 <div key={i} className="flex gap-3">
-                  <div className="w-12 h-14 flex-shrink-0 bg-cream/50 border border-ink/5 flex items-center justify-center overflow-hidden">
+                  <div className="w-12 h-14 flex-shrink-0 bg-surface-soft/50 border border-black/5 flex items-center justify-center overflow-hidden">
                     <img src={item.image} alt={item.name} className="h-10 w-auto object-contain" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -170,7 +170,7 @@ export default function CheckoutForm() {
             </div>
 
             {/* Price breakdown */}
-            <div className="border-t border-ink/5 pt-3 space-y-2">
+            <div className="border-t border-black/5 pt-3 space-y-2">
               <div className="flex justify-between text-[13px] font-body">
                 <span className="text-ink-subtle">Subtotal</span>
                 <span className="text-ink-soft">&#8377;{subtotal}</span>
@@ -179,7 +179,7 @@ export default function CheckoutForm() {
                 <span className="text-ink-subtle">Delivery</span>
                 <span className="text-green-700 font-medium">Free</span>
               </div>
-              <div className="border-t border-ink/5 pt-2 mt-2">
+              <div className="border-t border-black/5 pt-2 mt-2">
                 <div className="flex justify-between">
                   <span className="text-sm font-body font-semibold text-ink-soft">Total</span>
                   <span className="text-lg font-heading font-bold text-gold">&#8377;{subtotal}</span>

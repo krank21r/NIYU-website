@@ -47,6 +47,7 @@ export default function PaymentView() {
   const [paying, setPaying] = useState(false)
   const [paymentStarted, setPaymentStarted] = useState(false)
   const [selectedMethod, setSelectedMethod] = useState(null)
+  const [transactionRef, setTransactionRef] = useState('')
 
   const handlePayNow = (methodId) => {
     setSelectedMethod(methodId)
@@ -55,7 +56,7 @@ export default function PaymentView() {
 
   const handleConfirm = async () => {
     setPaying(true)
-    await confirmOrder()
+    await confirmOrder(transactionRef.trim() || null)
   }
 
   const getMethodName = () => {
@@ -83,7 +84,7 @@ export default function PaymentView() {
                 key={method.id}
                 href={getPayUrl(method.id, subtotal)}
                 onClick={() => handlePayNow(method.id)}
-                className="flex items-center gap-3 p-3 border border-ink/8 bg-cream/30 hover:border-ink/20 hover:bg-cream/50 transition-all duration-400 min-h-[44px] active:scale-[0.98]"
+                className="flex items-center gap-3 p-3 border border-black/5 bg-surface-soft/30 hover:border-black/10 hover:bg-surface-soft/50 transition-all duration-400 min-h-[44px] active:scale-[0.98]"
               >
                 <div
                   className="w-9 h-9 flex items-center justify-center text-white text-xs font-bold font-body flex-shrink-0"
@@ -122,7 +123,7 @@ export default function PaymentView() {
           </p>
           <a
             href={getPayUrl(selectedMethod, subtotal)}
-            className="py-2 px-5 border border-ink/15 text-ink text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:bg-ink/5 transition-all duration-400 min-h-[44px] inline-block text-center mb-3"
+            className="py-2 px-5 border border-black/8 text-ink text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:bg-black/5 transition-all duration-400 min-h-[44px] inline-block text-center mb-3"
           >
             Open {getMethodName()} Again
           </a>
@@ -132,7 +133,7 @@ export default function PaymentView() {
                 key={m.id}
                 href={getPayUrl(m.id, subtotal)}
                 onClick={() => setSelectedMethod(m.id)}
-                className="py-1.5 px-3 bg-cream/40 border border-ink/5 text-[11px] font-body font-medium text-ink-subtle hover:border-ink/15 transition-all duration-300 min-h-[36px] flex items-center"
+                className="py-1.5 px-3 bg-surface-soft/40 border border-black/5 text-[11px] font-body font-medium text-ink-subtle hover:border-black/8 transition-all duration-300 min-h-[36px] flex items-center"
               >
                 Switch to {m.name}
               </a>
@@ -145,7 +146,20 @@ export default function PaymentView() {
       )}
 
       {/* Footer — always visible, no scroll needed */}
-      <div className="border-t border-ink/5 pt-4 pb-2">
+      <div className="border-t border-black/5 pt-4 pb-2 space-y-3">
+        <div>
+          <label className="text-[11px] tracking-[0.08em] uppercase text-ink-subtle font-body font-medium mb-1 block">
+            UPI Reference / UTR Number <span className="text-ink-subtle/50">(optional)</span>
+          </label>
+          <input
+            type="text"
+            value={transactionRef}
+            onChange={(e) => setTransactionRef(e.target.value)}
+            placeholder="e.g. 512345678901"
+            maxLength={30}
+            className="w-full px-3 py-2.5 border border-black/8 bg-surface-soft/20 text-ink text-sm font-body placeholder:text-ink-subtle/40 focus:outline-none focus:border-black/10 transition-colors min-h-[44px]"
+          />
+        </div>
         <div className="flex gap-3">
           <button
             onClick={() => {
@@ -153,7 +167,7 @@ export default function PaymentView() {
               setSelectedMethod(null)
               setStep('checkout')
             }}
-            className="flex-1 py-3 border border-ink/10 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-ink/20 hover:text-ink-soft transition-all duration-400 min-h-[44px]"
+            className="flex-1 py-3 border border-black/8 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-black/10 hover:text-ink-soft transition-all duration-400 min-h-[44px]"
           >
             Back
           </button>

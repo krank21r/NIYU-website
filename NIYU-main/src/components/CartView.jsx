@@ -13,7 +13,7 @@ export default function CartView() {
         <p className="text-ink-subtle font-body text-sm mb-6">Your cart is empty</p>
         <button
           onClick={closeFlow}
-          className="py-3 px-8 border border-ink/15 text-ink text-[11px] tracking-[0.1em] uppercase font-body font-medium hover:bg-ink/5 transition-all duration-400 min-h-[44px]"
+          className="py-3 px-8 border border-black/8 text-ink text-[11px] tracking-[0.1em] uppercase font-body font-medium hover:bg-black/5 transition-all duration-400 min-h-[44px]"
         >
           Continue Shopping
         </button>
@@ -38,7 +38,7 @@ export default function CartView() {
           </div>
 
           {/* Item list */}
-          <div className="divide-y divide-ink/5 border-t border-ink/5">
+          <div className="divide-y divide-black/5 border-t border-black/5">
             {items.map((item, index) => (
               <motion.div
                 key={`${item.name}-${item.size}-${index}`}
@@ -49,7 +49,7 @@ export default function CartView() {
                 className="flex gap-4 sm:gap-5 py-5"
               >
                 {/* Product Image */}
-                <div className="w-20 h-24 sm:w-24 sm:h-28 flex-shrink-0 bg-cream/40 border border-ink/5 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-24 sm:w-24 sm:h-28 flex-shrink-0 bg-surface-soft/40 border border-black/5 flex items-center justify-center overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -74,23 +74,23 @@ export default function CartView() {
                   {/* Qty + Price row */}
                   <div className="flex items-end justify-between mt-3">
                     {/* Quantity controls — Amazon pill style */}
-                    <div className="flex items-center border border-ink/10 bg-cream/30">
+                    <div className="flex items-center border border-black/8 bg-surface-soft/30">
                       <button
                         onClick={() => updateQty(index, item.qty - 1)}
                         disabled={item.qty <= 1}
-                        className="w-9 h-9 flex items-center justify-center hover:bg-ink/5 transition-colors disabled:opacity-30 min-w-[44px] min-h-[44px]"
+                        className="w-9 h-9 flex items-center justify-center hover:bg-black/5 transition-colors disabled:opacity-30 min-w-[44px] min-h-[44px]"
                         aria-label="Decrease quantity"
                       >
                         <svg className="w-3 h-3 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
                         </svg>
                       </button>
-                      <span className="w-10 text-center text-sm font-body font-semibold text-ink-soft border-x border-ink/10">
+                      <span className="w-10 text-center text-sm font-body font-semibold text-ink-soft border-x border-black/8">
                         {item.qty}
                       </span>
                       <button
                         onClick={() => updateQty(index, item.qty + 1)}
-                        className="w-9 h-9 flex items-center justify-center hover:bg-ink/5 transition-colors min-w-[44px] min-h-[44px]"
+                        className="w-9 h-9 flex items-center justify-center hover:bg-black/5 transition-colors min-w-[44px] min-h-[44px]"
                         aria-label="Increase quantity"
                       >
                         <svg className="w-3 h-3 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -128,8 +128,8 @@ export default function CartView() {
 
         {/* Right: Price Summary */}
         <div className="lg:w-80 xl:w-96 flex-shrink-0">
-          <div className="lg:sticky lg:top-24 border border-ink/5 bg-cream/30 p-5 sm:p-6">
-            <h3 className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4 pb-3 border-b border-ink/5">
+          <div className="lg:sticky lg:top-24 border border-black/5 bg-surface-soft/30 p-5 sm:p-6">
+            <h3 className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-4 pb-3 border-b border-black/5">
               Price Details
             </h3>
 
@@ -142,7 +142,7 @@ export default function CartView() {
                 <span className="text-ink-subtle">Delivery</span>
                 <span className="text-green-700 font-medium">Free</span>
               </div>
-              <div className="border-t border-ink/5 pt-3 mt-3">
+              <div className="border-t border-black/5 pt-3 mt-3">
                 <div className="flex justify-between">
                   <span className="text-sm font-body font-semibold text-ink-soft">Total</span>
                   <span className="text-lg font-heading font-bold text-gold">&#8377;{subtotal}</span>

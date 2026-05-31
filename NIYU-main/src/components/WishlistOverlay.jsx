@@ -29,10 +29,10 @@ export default function WishlistOverlay({ open, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-ivory z-[201] flex flex-col shadow-[-8px_0_30px_rgba(0,0,0,0.08)]"
+            className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-surface-soft z-[201] flex flex-col shadow-[-8px_0_30px_rgba(0,0,0,0.08)]"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4 border-b border-ink/5">
+            <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4 border-b border-black/5">
               <div className="flex items-center gap-2">
                 <h2 className="text-sm tracking-[0.12em] uppercase font-heading text-ink-soft">
                   Wishlist
@@ -43,7 +43,7 @@ export default function WishlistOverlay({ open, onClose }) {
               </div>
               <button
                 onClick={onClose}
-                className="w-10 h-10 rounded-full bg-cream/60 flex items-center justify-center hover:bg-cream transition-colors duration-300 min-w-[44px] min-h-[44px]"
+                className="w-10 h-10 rounded-full bg-surface-soft/60 flex items-center justify-center hover:bg-surface-soft transition-colors duration-300 min-w-[44px] min-h-[44px]"
                 aria-label="Close wishlist"
               >
                 <svg className="w-4 h-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -65,8 +65,8 @@ export default function WishlistOverlay({ open, onClose }) {
               ) : (
                 <div className="p-5 space-y-4">
                   {wishedProducts.map((product) => (
-                    <div key={product.id} className="flex gap-4 p-3 bg-cream/30 border border-ink/5">
-                      <div className="w-16 h-20 flex-shrink-0 bg-ivory/60 flex items-center justify-center overflow-hidden">
+                    <div key={product.id} className="flex gap-4 p-3 bg-surface-soft/30 border border-black/5">
+                      <div className="w-16 h-20 flex-shrink-0 bg-surface-soft/60 flex items-center justify-center overflow-hidden">
                         <img src={product.image} alt={product.name} className="h-16 w-auto object-contain" />
                       </div>
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
@@ -87,7 +87,7 @@ export default function WishlistOverlay({ open, onClose }) {
                           </button>
                           <button
                             onClick={() => toggleWishlist(product.id)}
-                            className="w-9 h-9 flex items-center justify-center border border-ink/10 hover:border-red-300 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px]"
+                            className="w-9 h-9 flex items-center justify-center border border-black/8 hover:border-red-300 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px]"
                             aria-label="Remove from wishlist"
                           >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

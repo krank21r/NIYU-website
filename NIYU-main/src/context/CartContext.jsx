@@ -66,13 +66,12 @@ export function CartProvider({ children }) {
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
 
-  const confirmOrder = useCallback(async () => {
+  const confirmOrder = useCallback(async (transactionRef) => {
     let savedOrderId = null
 
     // Insert to Supabase if configured
     if (supabase) {
       try {
-        console.log('[NIYU] Attempting Supabase insert...', { delivery, items, subtotal })
         const { data, error } = await supabase
           .from('orders')
           .insert({
@@ -84,6 +83,7 @@ export function CartProvider({ children }) {
             items: items.map(i => ({ name: i.name, size: i.size, price: i.price, qty: i.qty })),
             subtotal,
             payment_method: 'UPI',
+            transaction_ref: transactionRef || null,
             status: 'pending',
           })
           .select('id')
@@ -92,7 +92,6 @@ export function CartProvider({ children }) {
         if (error) {
           console.error('[NIYU] Supabase insert error:', error)
         } else {
-          console.log('[NIYU] Order saved:', data.id)
           savedOrderId = data.id
           setOrderId(data.id)
         }
@@ -113,6 +112,7 @@ export function CartProvider({ children }) {
       subtotal,
       address: delivery.address,
       pincode: delivery.pincode,
+      transactionRef: transactionRef || null,
     }
     fetch('/api/send-confirmation', {
       method: 'POST',

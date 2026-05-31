@@ -8,21 +8,19 @@ export default function Preloader() {
   useEffect(() => {
     let raf
     let start = performance.now()
-    const duration = 1800
+    const duration = 1500
 
     function tick(now) {
       const elapsed = now - start
       const p = Math.min(elapsed / duration, 1)
       const eased = 1 - Math.pow(1 - p, 3)
       setProgress(eased)
-
       if (p < 1) {
         raf = requestAnimationFrame(tick)
       } else {
-        setTimeout(() => setLoading(false), 400)
+        setTimeout(() => setLoading(false), 300)
       }
     }
-
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
   }, [])
@@ -32,38 +30,28 @@ export default function Preloader() {
       {loading && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.23, 1, 0.32, 1] } }}
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-ivory"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-surface"
         >
           <motion.div
-            initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <div className="text-5xl md:text-7xl font-heading font-bold text-ink tracking-[0.3em] mb-3">
-              NIYU
-            </div>
-            <div className="text-xs sm:text-sm tracking-[0.4em] uppercase text-ink-subtle font-body mb-10">
-              Pure Oils. Pure Luxury.
-            </div>
+            <div className="text-5xl md:text-6xl font-heading font-bold text-ink tracking-[0.25em] mb-2">NIYU</div>
+            <div className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-ink-subtle font-body mb-8">Pure Oils. Pure Luxury.</div>
           </motion.div>
 
-          <div className="relative w-48 h-[1px] bg-ink/5 overflow-hidden">
+          <div className="relative w-40 h-[2px] bg-surface-muted rounded-full overflow-hidden">
             <motion.div
-              className="absolute inset-y-0 left-0 bg-ink"
+              className="absolute inset-y-0 left-0 bg-gold rounded-full"
               style={{ width: `${progress * 100}%` }}
             />
           </div>
 
-          <motion.p
-            className="mt-4 text-[11px] tracking-[0.2em] text-ink-subtle/40 font-body"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            {Math.round(progress * 100)}%
-          </motion.p>
+          <p className="mt-3 text-[10px] tracking-[0.15em] text-ink-subtle/40 font-body">{Math.round(progress * 100)}%</p>
         </motion.div>
       )}
     </AnimatePresence>

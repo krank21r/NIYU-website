@@ -1,78 +1,84 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
-import AnnouncementBar from './components/AnnouncementBar'
+import Hero from './components/Hero'
+import DealBanner from './components/DealBanner'
+import ProductGrid from './components/ProductGrid'
+import TrendingNow from './components/TrendingNow'
+import ProductCollection from './components/ProductCollection'
+import TrustBar from './components/TrustBar'
+import AttarSection from './components/AttarSection'
+import CarPerfumes from './components/CarPerfumes'
+import About from './components/About'
+import Reviews from './components/Reviews'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
 import Preloader from './components/Preloader'
-import ScrollProgress from './components/ScrollProgress'
 import ScrollToTop from './components/ScrollToTop'
 import OrderFlow from './components/OrderFlow'
 import ProductDetail from './components/ProductDetail'
-import Particles from './components/Particles'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
-import useLenis from './hooks/useLenis'
-
-const Hero = lazy(() => import('./components/Hero'))
-const TrialPack = lazy(() => import('./components/TrialPack'))
-const TrendingProducts = lazy(() => import('./components/TrendingProducts'))
-const NiyuSpecials = lazy(() => import('./components/NiyuSpecials'))
-const AttarSection = lazy(() => import('./components/AttarSection'))
-const CarPerfumes = lazy(() => import('./components/CarPerfumes'))
-const About = lazy(() => import('./components/About'))
-const ProductCollection = lazy(() => import('./components/ProductCollection'))
-const Reviews = lazy(() => import('./components/Reviews'))
-const Gallery = lazy(() => import('./components/Gallery'))
-const Contact = lazy(() => import('./components/Contact'))
-const TrustBar = lazy(() => import('./components/TrustBar'))
-const Footer = lazy(() => import('./components/Footer'))
 
 function LoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-ivory">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-8 h-8 border border-gold/30 border-t-gold rounded-full animate-spin" />
-        <p className="text-xs tracking-[0.2em] uppercase text-ink-subtle font-body">Loading</p>
+    <div className="min-h-[50vh] flex items-center justify-center bg-surface">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-6 h-6 border-2 border-gold/20 border-t-gold rounded-full animate-spin" />
+        <p className="text-[10px] tracking-[0.15em] uppercase text-ink-subtle font-body">Loading</p>
       </div>
     </div>
   )
 }
 
 export default function App() {
-  useLenis()
+  const [isAdmin, setIsAdmin] = useState(window.location.pathname === '/admin')
+
+  useEffect(() => {
+    const handlePathChange = () => setIsAdmin(window.location.pathname === '/admin')
+    window.addEventListener('popstate', handlePathChange)
+    return () => window.removeEventListener('popstate', handlePathChange)
+  }, [])
+
+  if (isAdmin) {
+    return (
+      <Suspense fallback={<LoadingFallback />}>
+        <div className="min-h-screen bg-surface">
+          <div className="p-8 max-w-4xl mx-auto">
+            <h1 className="heading text-3xl text-ink mb-6">Admin Dashboard</h1>
+            <p className="text-ink-muted font-body text-sm">Coming soon...</p>
+          </div>
+        </div>
+      </Suspense>
+    )
+  }
 
   return (
     <CartProvider>
-    <WishlistProvider>
-      <div className="bg-ivory min-h-screen relative">
-        <a href="#main-content" className="skip-nav">
-          Skip to main content
-        </a>
-        <Preloader />
-        <Particles />
-        <ScrollProgress />
-        <ScrollToTop />
-        <AnnouncementBar />
-        <Navbar />
-        <OrderFlow />
-        <ProductDetail />
-        <main id="main-content">
-          <Suspense fallback={<LoadingFallback />}>
-            <Hero />
-            <TrialPack />
-            <TrendingProducts />
-            <NiyuSpecials />
-            <AttarSection />
-            <CarPerfumes />
-            <About />
-            <ProductCollection />
-            <Reviews />
-            <Gallery />
-            <Contact />
-            <TrustBar />
-            <Footer />
-          </Suspense>
-        </main>
-      </div>
-    </WishlistProvider>
+      <WishlistProvider>
+        <div className="bg-surface min-h-screen relative">
+          <a href="#main-content" className="skip-nav">Skip to main content</a>
+          <Preloader />
+          <ScrollToTop />
+          <Navbar />
+          <OrderFlow />
+          <ProductDetail />
+          <main id="main-content">
+            <Suspense fallback={<LoadingFallback />}>
+              <Hero />
+              <DealBanner />
+              <TrendingNow />
+              <ProductCollection />
+              <TrustBar />
+              <AttarSection />
+              <CarPerfumes />
+              <About />
+              <Reviews />
+              <Contact />
+              <Footer />
+            </Suspense>
+          </main>
+        </div>
+      </WishlistProvider>
     </CartProvider>
   )
 }

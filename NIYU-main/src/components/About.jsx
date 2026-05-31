@@ -1,127 +1,94 @@
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-
-const cards = [
-  {
-    title: 'Handmade Inspired Perfumes',
-    description:
-      'At NIYU, every fragrance is lovingly crafted by hand. We draw inspiration from nature, traditions, and emotions to create perfumes and attars that feel personal, soulful, and timeless.',
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.2} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Affordable Luxury Concept',
-    description:
-      'Luxury shouldn\'t be out of reach. NIYU brings premium, chemical-free perfumes and attars to everyone who values elegance and purity.',
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.2} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Quality Fragrance Promise',
-    description:
-      'We promise uncompromising quality in every drop. Using pure oils, alcohol bases, and eco-friendly methods, NIYU ensures long-lasting scents that are safe, natural, and memorable.',
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.2} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-  },
-]
-
-function SectionTitle() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-      className="text-center mb-24"
-    >
-      <motion.div
-        initial={{ clipPath: 'inset(0 50% 0 50%)' }}
-        animate={isInView ? { clipPath: 'inset(0 0% 0 0%)' } : {}}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-        className="section-divider"
-      />
-      <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
-        Why NIYU Perfumes?
-      </h2>
-      <p className="text-ink-subtle font-body font-light max-w-xl mx-auto">
-        Crafted with passion, defined by purity
-      </p>
-    </motion.div>
-  )
-}
 
 function Card({ card, index }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const isInView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-      animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.23, 1, 0.32, 1] }}
-      className="group border border-ink/5 bg-cream hover:border-ink/10 transition-all duration-300 cursor-default active:scale-[0.98]"
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.12, ease: [0.23, 1, 0.32, 1] }}
+      className="card p-6 group"
     >
-      <div className="p-8 md:p-10">
-        <div className="mb-6 w-14 h-14 bg-ink/8 flex items-center justify-center group-hover:bg-ink/10 transition-colors duration-300 text-ink">
-          {card.icon}
-        </div>
-        <h3 className="text-xl md:text-2xl font-heading text-ink-soft mb-4">{card.title}</h3>
-        <p className="text-ink-muted font-body font-light leading-relaxed text-sm md:text-base">
-          {card.description}
-        </p>
-        <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full transition-all duration-700 ease-[var(--ease-out)]" />
+      <div className="w-12 h-12 rounded-2xl bg-surface-soft border border-black/5 flex items-center justify-center text-ink mb-4 group-hover:bg-gold/10 group-hover:border-gold/20 transition-all duration-300">
+        {card.icon}
       </div>
-    </motion.div>
-  )
-}
-
-function ImageWithParallax() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], [80, -80])
-
-  return (
-    <motion.div ref={ref} style={{ y }} className="overflow-hidden rounded-[1rem]">
-      <div className="">
-        <div className="overflow-hidden p-0.5">
-          <img
-            src="/1 million.jpeg"
-            alt="NIYU Perfumes artisan craftsmanship"
-            loading="lazy"
-            width="800"
-            height="1000"
-            className="w-full h-auto object-cover rounded-[calc(1.25rem-0.375rem-0.125rem)]"
-          />
-        </div>
-      </div>
+      <h3 className="text-lg font-heading text-ink mb-2 group-hover:text-gold-dark transition-colors">{card.title}</h3>
+      <p className="text-sm font-body text-ink-muted leading-relaxed">{card.description}</p>
     </motion.div>
   )
 }
 
 export default function About() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  const cards = [
+    {
+      title: 'Handmade Inspired',
+      description: 'Every fragrance is lovingly crafted by hand. We draw inspiration from nature, traditions, and emotions to create perfumes and attars that feel personal, soulful, and timeless.',
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+        </svg>
+      ),
+    },
+    {
+      title: 'Affordable Luxury',
+      description: "Luxury shouldn't be out of reach. NIYU brings premium, chemical-free perfumes and attars to everyone who values elegance and purity.",
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+        </svg>
+      ),
+    },
+    {
+      title: 'Quality Promise',
+      description: 'We promise uncompromising quality in every drop. Using pure oils, alcohol bases, and eco-friendly methods, NIYU ensures long-lasting scents that are safe, natural, and memorable.',
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      ),
+    },
+  ]
+
   return (
-    <section id="about" className="relative py-16 sm:py-24 px-4 sm:px-6">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(28,28,28,0.03)_0%,transparent_60%)]" />
-      <div className="relative max-w-7xl mx-auto">
-        <SectionTitle />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="relative">
-            <ImageWithParallax />
-          </div>
-          <div className="grid grid-cols-1 gap-5">
+    <section id="about" className="py-12 sm:py-16 px-4 sm:px-6 bg-surface" aria-label="About NIYU">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+          className="text-center mb-10"
+        >
+          <motion.p className="text-label text-gold-dark mb-2" initial={{ opacity: 0, x: -12 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ delay: 0.1 }}>
+            Why NIYU?
+          </motion.p>
+          <motion.h2 className="heading text-2xl sm:text-3xl md:text-4xl text-ink mb-3" initial={{ opacity: 0, x: -12 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ delay: 0.2 }}>
+            Crafted with Passion
+          </motion.h2>
+          <motion.p className="text-ink-muted font-body font-light text-sm max-w-md mx-auto" initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}>
+            Defined by purity, driven by love for fragrance
+          </motion.p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+            className="rounded-2xl overflow-hidden"
+          >
+            <img src="/1 million.jpeg" alt="NIYU Perfumes artisan craftsmanship" width="800" height="1000" loading="lazy" className="w-full h-auto object-cover" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 gap-4">
             {cards.map((card, i) => (
               <Card key={card.title} card={card} index={i} />
             ))}

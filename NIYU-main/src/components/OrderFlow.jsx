@@ -51,11 +51,11 @@ export default function OrderFlow() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-        className="fixed inset-0 z-[150] bg-ivory"
+        className="fixed inset-0 z-[150] bg-surface"
       >
         {/* Header + progress — measured for content height */}
         <div ref={headerRef}>
-          <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4 border-b border-ink/5 bg-ivory/90 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4 border-b border-black/5 bg-surface/90 backdrop-blur-sm">
             <button
               onClick={step === 'cart' ? closeFlow : () => {
                 const order = ['cart', 'checkout', 'payment', 'confirmation']
@@ -63,7 +63,7 @@ export default function OrderFlow() {
                 if (idx > 0) setStep(order[idx - 1])
                 else closeFlow()
               }}
-              className="w-10 h-10 rounded-full bg-cream/60 flex items-center justify-center hover:bg-cream transition-colors duration-300 min-w-[44px] min-h-[44px]"
+              className="w-10 h-10 rounded-full bg-surface-soft/60 flex items-center justify-center hover:bg-surface-soft transition-colors duration-300 min-w-[44px] min-h-[44px]"
               aria-label="Go back"
             >
               <svg className="w-4 h-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -75,7 +75,7 @@ export default function OrderFlow() {
             </h2>
             <button
               onClick={closeFlow}
-              className="w-10 h-10 rounded-full bg-cream/60 flex items-center justify-center hover:bg-cream transition-colors duration-300 min-w-[44px] min-h-[44px]"
+              className="w-10 h-10 rounded-full bg-surface-soft/60 flex items-center justify-center hover:bg-surface-soft transition-colors duration-300 min-w-[44px] min-h-[44px]"
               aria-label="Close"
             >
               <svg className="w-4 h-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -85,13 +85,13 @@ export default function OrderFlow() {
           </div>
 
           {step !== 'confirmation' && (
-            <div className="flex items-center gap-2 px-5 py-3 border-b border-ink/5">
+            <div className="flex items-center gap-2 px-5 py-3 border-b border-black/5">
               {['cart', 'checkout', 'payment'].map((s, i) => (
                 <div key={s} className="flex-1 flex items-center gap-2">
                   <div className={`h-1 flex-1 rounded-full transition-all duration-500 ${
                     ['cart', 'checkout', 'payment'].indexOf(step) >= i
                       ? 'bg-gold'
-                      : 'bg-ink/8'
+                      : 'bg-black/5'
                   }`} />
                 </div>
               ))}

@@ -122,6 +122,21 @@ const products = [
     sizes: [...defaultSizes],
     category: 'signature',
   },
+  {
+    id: 'midnight-rose',
+    name: 'Midnight Rose',
+    image: '/Product images new/Pretty_Women.png',
+    images: ['/Product images new/Pretty_Women.png', '/Product display image 2/Pretty_Women.jpg', '/Product images new/Pretty_Women.png'],
+    tag: 'Trending',
+    description: 'A captivating blend of dark rose and warm vanilla. Mysterious, elegant, and unforgettable.',
+    longDescription: 'Midnight Rose is the fragrance of a moonlit garden in full bloom. Deep damask rose unfolds over a heart of blackcurrant and pink pepper, settling into a velvety base of vanilla and smoky oudh. The effect is intoxicating — a scent that lingers like a whispered secret.',
+    notes: ['Dark Rose', 'Vanilla', 'Oudh'],
+    topNotes: ['Blackcurrant', 'Pink Pepper'],
+    heartNotes: ['Damask Rose', 'Jasmine'],
+    baseNotes: ['Vanilla', 'Oudh', 'Sandalwood'],
+    sizes: [...defaultSizes],
+    category: 'trending',
+  },
 ]
 
 export default products

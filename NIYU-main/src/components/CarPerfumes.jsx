@@ -1,143 +1,74 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
-const carPerfumes = [
-  { name: 'Oudh Drive' },
-  { name: 'Musk Rider' },
-  { name: 'Royal Leather' },
-  { name: 'Dark Amber' },
-  { name: 'Tobacco Rush' },
-  { name: 'Gold Oud' },
-  { name: 'Intense Drive' },
-  { name: 'Black Musk' },
-  { name: 'Velvet Oud' },
-  { name: 'Imperial Mist' },
+const carProducts = [
+  { id: 'car-1', name: 'Oudh Drive', image: '/NIYU Aqua.jpeg', description: 'Rich oudh fragrance for your car interior.', sizes: [{ label: 'One Size', price: 599 }] },
+  { id: 'car-2', name: 'Musk Rider', image: '/NIYU Aqua.jpeg', description: 'Warm musk scent for long drives.', sizes: [{ label: 'One Size', price: 599 }] },
+  { id: 'car-3', name: 'Dark Amber', image: '/NIYU Aqua.jpeg', description: 'Deep amber notes for a luxurious drive.', sizes: [{ label: 'One Size', price: 599 }] },
+  { id: 'car-4', name: 'Tobacco Rush', image: '/NIYU Aqua.jpeg', description: 'Bold tobacco fragrance for the modern man.', sizes: [{ label: 'One Size', price: 599 }] },
 ]
 
-function CarItem({ item, index }) {
+function StarRating() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.5, delay: 0.15 + index * 0.05, ease: [0.23, 1, 0.32, 1] }}
-      className="group py-3.5 border-b border-ink/5 last:border-b-0 flex items-center justify-between"
-    >
-      <div className="flex items-center gap-3">
-        <span className="text-xs text-ink font-body tabular-nums">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <h3 className="text-base sm:text-lg font-heading text-ink-soft group-hover:text-ink transition-colors duration-300">
-          {item.name}
-        </h3>
-      </div>
-      <div className="h-[1px] flex-1 mx-4 bg-ink/5 group-hover:bg-ink/20 transition-colors duration-500" />
-    </motion.div>
+    <div className="star-rating" role="img" aria-label="4 out of 5 stars">
+      {[1,2,3,4].map(s => (
+        <svg key={s} className="star star-filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+        </svg>
+      ))}
+      <svg className="star star-empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+      </svg>
+      <span className="rating-count">(42)</span>
+    </div>
   )
 }
 
 export default function CarPerfumes() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="car-perfumes" className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden" aria-label="Car perfumes">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_right,rgba(28,28,28,0.04)_0%,transparent_60%)]" />
-
-      <div className="relative max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="text-center mb-16"
-        >
-          <motion.div
-            initial={{ clipPath: 'inset(0 50% 0 50%)' }}
-            animate={isInView ? { clipPath: 'inset(0 0% 0 0%)' } : {}}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="section-divider"
-          />
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
-            Car Perfumes
-          </h2>
-          <p className="text-ink-subtle font-body font-light max-w-xl mx-auto">
-            Scent your journey — drive in elegance, arrive in style
-          </p>
-        </motion.div>
-
-        {/* Editorial Split: Image left, list right */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-          {/* Left — Car perfume image */}
-          <motion.div
-            initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-            whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
-            className="relative lg:sticky lg:top-32"
-          >
-            <div className="">
-              <div className="overflow-hidden p-0.5">
-                <img
-                  src="/Car images.jpeg"
-                  alt="NIYU car perfume — luxury car fragrance bottle on dashboard"
-                  loading="lazy"
-                  width="800"
-                  height="1000"
-                  className="w-full h-auto object-cover rounded-[calc(1.25rem-0.375rem-0.125rem)]"
-                />
-              </div>
-            </div>
-            <div className="absolute -bottom-4 -right-4 w-16 h-16 md:w-24 md:h-24 border-r border-b border-ink/15" aria-hidden="true" />
+    <section id="car-perfumes" className="overflow-hidden bg-surface" aria-label="Car perfumes">
+      <div className="bg-gradient-to-r from-ink to-ink-soft py-6 sm:py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
+            <h2 className="heading text-2xl sm:text-3xl md:text-4xl text-white mb-1">Car Perfumes</h2>
+            <p className="text-white/50 font-body font-light text-sm">Scent your journey — drive in elegance, arrive in style</p>
           </motion.div>
+        </div>
+      </div>
 
-          {/* Right — Car perfume list */}
-          <div className="lg:pt-8">
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-              className="text-sm font-body text-ink-muted leading-relaxed mb-8 max-w-md"
-            >
-              Transform every drive into a luxurious experience. Our car perfumes are crafted with natural essential oils that eliminate odors and fill your car with a long-lasting, premium fragrance.
-            </motion.p>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          {carProducts.map((product, i) => (
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.25, ease: [0.23, 1, 0.32, 1] }}
-              className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8"
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="card overflow-hidden group cursor-pointer flex flex-col"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-3 bg-ink/8 border border-ink/15">
-                <span className="text-xs font-body font-medium text-ink-soft tracking-wide">All Car Perfumes</span>
-                <div className="w-[1px] h-4 bg-ink/25" aria-hidden="true" />
-                <span className="text-sm font-body font-semibold text-ink">
-                  <span className="text-[11px] font-normal mr-0.5">&#8377;</span>599
-                </span>
+              <div className="relative aspect-square bg-surface-soft overflow-hidden p-4">
+                <img src={product.image} alt={product.name} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
               </div>
-              <a
-                href="https://wa.me/916302040779"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-ink hover:bg-ink-soft text-cream text-[11px] tracking-[0.1em] uppercase font-body font-medium transition-all duration-200 ease-[var(--ease-out)] min-h-[44px] active:scale-[0.97]"
-                aria-label="Buy car perfumes on WhatsApp"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-                Buy Now
-              </a>
+              <div className="p-3 flex flex-col flex-1">
+                <h3 className="text-sm font-heading text-ink leading-tight mb-1">{product.name}</h3>
+                <div className="mb-2"><StarRating /></div>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="price-sale">₹{product.sizes[0].price}</span>
+                </div>
+                <p className="text-[11px] text-ink-muted line-clamp-1 mb-3">{product.description}</p>
+                <div className="mt-auto">
+                  <button className="btn-add-to-cart" aria-label={`Add ${product.name} to cart`}>
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
             </motion.div>
-
-            <div>
-              {carPerfumes.map((item, i) => (
-                <CarItem key={item.name} item={item} index={i} />
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

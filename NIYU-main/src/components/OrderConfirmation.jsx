@@ -48,23 +48,23 @@ export default function OrderConfirmation() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-        className="w-full max-w-sm bg-cream/40 border border-ink/5 p-5 mb-6 text-left"
+        className="w-full max-w-sm bg-surface-soft/40 border border-black/5 p-5 mb-6 text-left"
       >
         <p className="text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body font-medium mb-3">Order Summary</p>
         {items.map((item, i) => (
-          <div key={i} className="flex justify-between py-2 border-b border-ink/5 last:border-0">
+          <div key={i} className="flex justify-between py-2 border-b border-black/5 last:border-0">
             <span className="text-sm font-body text-ink-soft">{item.name} ({item.size}) x{item.qty}</span>
             <span className="text-sm font-body font-semibold text-ink-soft">&#8377;{item.price * item.qty}</span>
           </div>
         ))}
-        <div className="flex justify-between pt-3 mt-2 border-t border-ink/10">
+        <div className="flex justify-between pt-3 mt-2 border-t border-black/8">
           <span className="text-sm font-body font-semibold text-ink-soft">Total</span>
           <span className="text-lg font-heading font-bold text-gold">&#8377;{subtotal}</span>
         </div>
         {orderId && (
           <p className="text-[11px] text-ink-subtle font-body mt-3">Order ID: {orderId}</p>
         )}
-        <div className="mt-3 pt-3 border-t border-ink/5">
+        <div className="mt-3 pt-3 border-t border-black/5">
           <p className="text-[11px] text-ink-subtle font-body">{delivery.name}</p>
           <p className="text-[11px] text-ink-subtle font-body">{delivery.phone}</p>
           <p className="text-[11px] text-ink-subtle font-body">{delivery.address}, {delivery.pincode}</p>
@@ -80,7 +80,7 @@ export default function OrderConfirmation() {
       >
         <button
           onClick={closeFlow}
-          className="w-full py-3 border border-ink/10 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-ink/20 transition-all duration-400 min-h-[44px]"
+          className="w-full py-3 border border-black/8 text-ink-muted text-[11px] tracking-[0.08em] uppercase font-body font-medium hover:border-black/10 transition-all duration-400 min-h-[44px]"
         >
           Continue Shopping
         </button>
