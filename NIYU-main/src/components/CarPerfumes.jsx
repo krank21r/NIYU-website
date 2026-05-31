@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { useCart } from '../context/CartContext'
 
 const carProducts = [
   { id: 'car-1', name: 'Oudh Drive', image: '/NIYU Aqua.jpeg', description: 'Rich oudh fragrance for your car interior.', sizes: [{ label: 'One Size', price: 599 }] },
@@ -27,6 +28,7 @@ function StarRating() {
 export default function CarPerfumes() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const { addToCart, openProductDetail } = useCart()
 
   return (
     <section id="car-perfumes" className="overflow-hidden bg-surface" aria-label="Car perfumes">
@@ -49,6 +51,7 @@ export default function CarPerfumes() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
               className="card overflow-hidden group cursor-pointer flex flex-col"
+              onClick={() => openProductDetail(product)}
             >
               <div className="relative aspect-square bg-surface-soft overflow-hidden p-4">
                 <img src={product.image} alt={product.name} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
@@ -61,7 +64,7 @@ export default function CarPerfumes() {
                 </div>
                 <p className="text-[11px] text-ink-muted line-clamp-1 mb-3">{product.description}</p>
                 <div className="mt-auto">
-                  <button className="btn-add-to-cart" aria-label={`Add ${product.name} to cart`}>
+                  <button className="btn-add-to-cart" aria-label={`Add ${product.name} to cart`} onClick={(e) => { e.stopPropagation(); addToCart({ name: product.name, image: product.image, description: product.description, size: product.sizes[0].label, price: product.sizes[0].price, qty: 1 }) }}>
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
                     Add to Cart
                   </button>

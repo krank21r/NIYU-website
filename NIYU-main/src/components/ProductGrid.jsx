@@ -97,7 +97,7 @@ function ProductCard({ product, index }) {
           {product.name}
         </h3>
         <div className="mb-2">
-          <StarRating rating={5} count={Math.floor(Math.random() * 200 + 50)} />
+          <StarRating rating={5} count={Math.floor((product.id * 37) % 200 + 50)} />
         </div>
         <div className="flex items-baseline gap-2 mb-1">
           <span className="price-sale">₹{displayPrice}</span>

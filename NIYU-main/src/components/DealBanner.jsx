@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const deals = [
@@ -12,7 +12,7 @@ export default function DealBanner() {
   const [current, setCurrent] = useState(0)
 
   // Auto-rotate deal text every 3 seconds
-  useState(() => {
+  useEffect(() => {
     const timer = setInterval(() => setCurrent(p => (p + 1) % deals.length), 3000)
     return () => clearInterval(timer)
   })
