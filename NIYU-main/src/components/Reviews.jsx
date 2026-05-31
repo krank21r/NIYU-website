@@ -31,17 +31,22 @@ function Stars({ rating }) {
 
 export default function Reviews() {
   const [current, setCurrent] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
   const ref = useRef(null)
 
   const next = useCallback(() => setCurrent(p => (p + 1) % reviews.length), [])
 
   useEffect(() => {
+    if (isPaused) return
     const timer = setInterval(next, 5000)
     return () => clearInterval(timer)
-  }, [next])
+  }, [next, isPaused])
 
   return (
-    <section id="reviews" className="py-12 sm:py-16 px-4 sm:px-6 overflow-hidden bg-surface-soft" aria-label="Customer reviews">
+    <section id="reviews" className="py-12 sm:py-16 px-4 sm:px-6 overflow-hidden bg-surface-soft" aria-label="Customer reviews"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <motion.div
