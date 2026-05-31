@@ -59,6 +59,7 @@ export default function CheckoutForm() {
                     value={delivery.name}
                     onChange={handleChange('name')}
                     placeholder="Full name"
+                    autoComplete="name"
                     className={inputClass('name')}
                   />
                   {errors.name && <p className="text-[11px] text-red-500 font-body mt-1">{errors.name}</p>}
@@ -71,6 +72,7 @@ export default function CheckoutForm() {
                     type="tel"
                     value={delivery.phone}
                     onChange={handleChange('phone')}
+                    autoComplete="tel"
                     placeholder="10-digit mobile number"
                     maxLength={10}
                     className={inputClass('phone')}
@@ -89,6 +91,7 @@ export default function CheckoutForm() {
                   value={delivery.email}
                   onChange={handleChange('email')}
                   placeholder="you@example.com"
+                  autoComplete="email"
                   className={inputClass('email')}
                 />
                 {errors.email && <p className="text-[11px] text-red-500 font-body mt-1">{errors.email}</p>}
@@ -103,6 +106,7 @@ export default function CheckoutForm() {
                   value={delivery.address}
                   onChange={handleChange('address')}
                   placeholder="House no., Street, Locality, City, State"
+                  autoComplete="street-address"
                   rows={3}
                   className={`${inputClass('address')} resize-none`}
                 />
@@ -117,6 +121,7 @@ export default function CheckoutForm() {
                 <input
                   type="text"
                   inputMode="numeric"
+                  autoComplete="postal-code"
                   value={delivery.pincode}
                   onChange={handleChange('pincode')}
                   placeholder="6-digit pincode"

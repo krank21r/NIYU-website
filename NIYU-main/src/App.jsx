@@ -67,7 +67,7 @@ export default function App() {
               <Hero />
               <DealBanner />
               <TrendingNow />
-              <ProductCollection />
+              <div id="collection"><ProductCollection /></div>
               <TrustBar />
               <AttarSection />
               <CarPerfumes />
