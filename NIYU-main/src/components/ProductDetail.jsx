@@ -28,6 +28,21 @@ export default function ProductDetail() {
     }
   }, [product?.id])
 
+  // Escape key to close
+  useEffect(() => {
+    if (!product) return
+    const onKey = (e) => { if (e.key === 'Escape') closeProductDetail() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [product, closeProductDetail])
+
+  useEffect(() => {
+    if (!product) return
+    const handleKey = (e) => { if (e.key === 'Escape') closeProductDetail() }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [product, closeProductDetail])
+
   useEffect(() => {
     if (!product) return
     const handlePop = () => closeProductDetail()

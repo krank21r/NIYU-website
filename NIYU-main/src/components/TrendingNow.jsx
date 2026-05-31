@@ -25,6 +25,7 @@ export default function TrendingNow() {
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
   const { addToCart, openProductDetail } = useCart()
   const { toggleWishlist, isWished } = useWishlist()
 
@@ -42,8 +43,18 @@ export default function TrendingNow() {
     return () => { if (el) el.removeEventListener('scroll', checkScroll) }
   }, [])
 
-  // Auto-scroll carousel
+  // Pause auto-scroll on hover/touch, resume after 8s
+  const pauseAutoScroll = () => {
+    setIsPaused(true)
+  }
+
+  const resumeAutoScroll = () => {
+    setTimeout(() => setIsPaused(false), 8000)
+  }
+
+  // Auto-scroll carousel — pauses on hover/touch
   useEffect(() => {
+    if (isPaused) return
     const timer = setInterval(() => {
       const el = scrollRef.current
       if (!el) return
@@ -59,7 +70,7 @@ export default function TrendingNow() {
       }
     }, 4000)
     return () => clearInterval(timer)
-  }, [])
+  }, [isPaused])
 
   const scroll = (direction) => {
     const el = scrollRef.current
@@ -137,6 +148,10 @@ export default function TrendingNow() {
           <div
             ref={scrollRef}
             className="flex gap-4 overflow-x-auto scrollbar-none overscroll-contain touch-manipulation snap-x snap-mandatory"
+            onMouseEnter={pauseAutoScroll}
+            onMouseLeave={resumeAutoScroll}
+            onTouchStart={pauseAutoScroll}
+            onTouchEnd={resumeAutoScroll}
           >
             {trendingProducts.map((product, i) => {
               const wished = isWished(product.id)
@@ -169,9 +184,13 @@ export default function TrendingNow() {
                       className="absolute top-2.5 right-2.5 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm border border-black/5 hover:bg-white transition-colors"
                       aria-label={wished ? 'Remove from wishlist' : 'Add to wishlist'}
                     >
-                      <svg className={`w-4 h-4 ${wished ? 'text-red-500' : 'text-ink-subtle'}`} fill={wished ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <motion.svg
+                        animate={wished ? { scale: [1, 1.3, 1] } : { scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        className={`w-4 h-4 ${wished ? 'text-red-500' : 'text-ink-subtle'}`} fill={wished ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
+                      >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                      </svg>
+                      </motion.svg>
                     </button>
                     <img
                       src={product.image}
@@ -228,9 +247,19 @@ export default function TrendingNow() {
         {/* Dot indicators — mobile */}
         <div className="flex sm:hidden justify-center gap-1.5 mt-4">
           {trendingProducts.map((_, i) => (
-            <div
+            <button
               key={i}
-              className="h-1.5 rounded-full transition-all duration-300"
+              onClick={() => {
+                const el = scrollRef.current
+                if (!el) return
+                const card = el.querySelectorAll('[data-card]')[i]
+                if (card) card.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
+                setActiveIndex(i)
+                pauseAutoScroll()
+                resumeAutoScroll()
+              }}
+              className="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
+              aria-label={`Go to slide ${i + 1}`}
               style={{
                 width: i === activeIndex ? 24 : 6,
                 backgroundColor: i === activeIndex ? '#c9a96e' : 'rgba(0,0,0,0.1)',

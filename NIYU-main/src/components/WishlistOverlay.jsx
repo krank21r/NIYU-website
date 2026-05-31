@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useWishlist } from '../context/WishlistContext'
 import { useCart } from '../context/CartContext'
@@ -8,6 +9,13 @@ export default function WishlistOverlay({ open, onClose }) {
   const { addToCart } = useCart()
 
   const wishedProducts = wishlist.map(id => getProductById(id)).filter(Boolean)
+
+  useEffect(() => {
+    if (!open) return
+    const handleKey = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [open, onClose])
 
   return (
     <AnimatePresence>

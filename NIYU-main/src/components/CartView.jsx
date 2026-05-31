@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
 export default function CartView() {
@@ -39,6 +39,7 @@ export default function CartView() {
 
           {/* Item list */}
           <div className="divide-y divide-black/5 border-t border-black/5">
+            <AnimatePresence>
             {items.map((item, index) => (
               <motion.div
                 key={`${item.name}-${item.size}-${index}`}
@@ -115,6 +116,7 @@ export default function CartView() {
                 </div>
               </motion.div>
             ))}
+            </AnimatePresence>
           </div>
 
           {/* Continue Shopping link — mobile */}

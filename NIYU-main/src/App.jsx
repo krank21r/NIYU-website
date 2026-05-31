@@ -14,6 +14,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Preloader from './components/Preloader'
 import ScrollToTop from './components/ScrollToTop'
+import ScrollProgress from './components/ScrollProgress'
 import OrderFlow from './components/OrderFlow'
 import ProductDetail from './components/ProductDetail'
 import { CartProvider } from './context/CartContext'
@@ -58,6 +59,7 @@ export default function App() {
         <div className="bg-surface min-h-screen relative">
           <a href="#main-content" className="skip-nav">Skip to main content</a>
           <Preloader />
+          <ScrollProgress />
           <ScrollToTop />
           <Navbar />
           <OrderFlow />

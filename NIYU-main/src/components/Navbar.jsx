@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
@@ -16,7 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [wishlistOpen, setWishlistOpen] = useState(false)
-  const { items } = useCart()
+  const { items, setStep } = useCart()
   const { wishlist } = useWishlist()
   const cartCount = items.length
 
@@ -25,6 +25,18 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Escape key to close overlays
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        if (mobileOpen) setMobileOpen(false)
+        else if (wishlistOpen) setWishlistOpen(false)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [mobileOpen, wishlistOpen])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -47,7 +59,7 @@ export default function Navbar() {
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
         {/* Main nav row */}
-        <div className={`bg-surface transition-all duration-300 ${scrolled ? '' : 'border-b border-black/5'}`}>
+        <div className={`transition-all duration-300 ${scrolled ? 'bg-surface/95 backdrop-blur-xl' : 'bg-surface border-b border-black/5'}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex items-center gap-3 sm:gap-4 h-14 sm:h-16">
               {/* Hamburger — mobile */}
@@ -89,6 +101,7 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <button
+                  onClick={() => cartCount > 0 ? setStep('cart') : null}
                   className="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-soft transition-colors"
                   aria-label={`Cart (${cartCount} items)`}
                 >

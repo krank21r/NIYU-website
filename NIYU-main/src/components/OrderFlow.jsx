@@ -33,6 +33,20 @@ export default function OrderFlow() {
     return () => window.removeEventListener('resize', updateHeight)
   }, [updateHeight, step])
 
+  // Escape key to close or go back
+  useEffect(() => {
+    if (step === 'closed') return
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        if (step === 'cart') closeFlow()
+        else if (step === 'checkout') setStep('cart')
+        else if (step === 'payment') setStep('checkout')
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [step, closeFlow, setStep])
+
   if (step === 'closed') return null
 
   if (step === 'product-modal') {
