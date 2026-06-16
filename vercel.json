@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd NIYU-main && npm install && npm run build",
+  "outputDirectory": "NIYU-main/dist",
+  "installCommand": "cd NIYU-main && npm install",
+  "framework": "vite"
+}
