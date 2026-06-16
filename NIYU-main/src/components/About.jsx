@@ -82,7 +82,7 @@ function Card({ card, index }) {
         <p className="text-ink-muted font-body font-light leading-relaxed text-sm md:text-base">
           {card.description}
         </p>
-        <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full transition-all duration-700 ease-[var(--ease-out)]" />
+        <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full group-hover:bg-gold transition-all duration-700 ease-[var(--ease-out)]" />
       </div>
     </motion.div>
   )
@@ -94,18 +94,16 @@ function ImageWithParallax() {
   const y = useTransform(scrollYProgress, [0, 1], [80, -80])
 
   return (
-    <motion.div ref={ref} style={{ y }} className="overflow-hidden rounded-[1rem]">
-      <div className="">
-        <div className="overflow-hidden p-0.5">
-          <img
-            src="/1 million.jpeg"
-            alt="NIYU Perfumes artisan craftsmanship"
-            loading="lazy"
-            width="800"
-            height="1000"
-            className="w-full h-auto object-cover rounded-[calc(1.25rem-0.375rem-0.125rem)]"
-          />
-        </div>
+    <motion.div ref={ref} style={{ y }} className="overflow-hidden rounded-[1rem] p-0.5">
+      <div className="overflow-hidden">
+        <img
+          src="/1 million.jpeg"
+          alt="NIYU Perfumes artisan craftsmanship"
+          loading="lazy"
+          width="800"
+          height="1000"
+          className="w-full h-auto object-cover rounded-[calc(1.25rem-0.375rem-0.125rem)]"
+        />
       </div>
     </motion.div>
   )

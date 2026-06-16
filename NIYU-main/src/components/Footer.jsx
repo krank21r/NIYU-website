@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const footerLinks = [
   { label: 'Shop', href: '#specials' },
@@ -7,6 +8,52 @@ const footerLinks = [
   { label: 'Car Perfumes', href: '#car-perfumes' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
+]
+
+const legalLinks = [
+  { label: 'Terms & Conditions', path: '/terms' },
+  { label: 'Privacy Policy', path: '/privacy' },
+  { label: 'Refund Policy', path: '/refund' },
+  { label: 'Shipping Policy', path: '/shipping' },
+]
+
+const valueProps = [
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H18.75m-7.5-3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+      </svg>
+    ),
+    label: 'Free Shipping',
+    sub: 'Across India',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+      </svg>
+    ),
+    label: 'Secure Payment',
+    sub: 'UPI only',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182M2.985 19.644l3.181-3.183" />
+      </svg>
+    ),
+    label: '7-Day Returns',
+    sub: 'Hassle-free',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+      </svg>
+    ),
+    label: 'Premium Quality',
+    sub: 'Pure oils only',
+  },
 ]
 
 const socialLinks = [
@@ -42,6 +89,28 @@ const socialLinks = [
 export default function Footer() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      navigate('/')
+      setTimeout(() => {
+        const el = document.querySelector(href)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    }
+  }
+
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    if (email.trim()) {
+      setSubscribed(true)
+      setEmail('')
+    }
+  }
 
   return (
     <footer className="relative bg-charcoal text-ivory overflow-hidden">
@@ -54,23 +123,67 @@ export default function Footer() {
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Value props bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 py-10 border-b border-white/8"
+        >
+          {valueProps.map((vp) => (
+            <div key={vp.label} className="flex items-center gap-3">
+              <div className="w-10 h-10 flex-shrink-0 border border-white/10 flex items-center justify-center text-gold">
+                {vp.icon}
+              </div>
+              <div>
+                <p className="text-[13px] font-body font-medium text-ivory/90">{vp.label}</p>
+                <p className="text-[11px] font-body font-light text-ivory/40">{vp.sub}</p>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
         {/* Main footer */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-          className="pt-16 sm:pt-20 pb-10 grid grid-cols-1 md:grid-cols-12 gap-10"
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+          className="pt-14 pb-10 grid grid-cols-1 md:grid-cols-12 gap-10"
         >
-          {/* Brand */}
-          <div className="md:col-span-5">
+          {/* Brand + Newsletter */}
+          <div className="md:col-span-4">
             <div className="flex items-baseline gap-1 mb-4">
               <span className="text-2xl font-heading tracking-[0.3em] text-ivory leading-none">NIYU</span>
               <sup className="text-[11px] font-body font-light text-ivory/40">&reg;</sup>
             </div>
-            <p className="text-sm font-body font-light text-ivory/50 leading-relaxed max-w-xs">
+            <p className="text-sm font-body font-light text-ivory/50 leading-relaxed max-w-xs mb-6">
               Pure oils, pure luxury. Handcrafted fragrances that tell your story.
             </p>
+            {/* Newsletter */}
+            <div>
+              <p className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-3">Get Updates</p>
+              {subscribed ? (
+                <p className="text-sm font-body text-gold">Thanks for subscribing!</p>
+              ) : (
+                <form onSubmit={handleSubscribe} className="flex">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email"
+                    required
+                    className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 text-sm font-body text-ivory placeholder:text-ivory/30 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-1 focus:ring-offset-charcoal focus:border-gold/40 transition-colors min-h-[44px]"
+                  />
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 bg-gold text-charcoal text-[11px] tracking-[0.1em] uppercase font-body font-semibold hover:bg-gold-light focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 transition-colors min-h-[44px]"
+                  >
+                    Join
+                  </button>
+                </form>
+              )}
+            </div>
             {/* Social */}
             <div className="flex gap-3 mt-6">
               {socialLinks.map((social) => (
@@ -89,13 +202,14 @@ export default function Footer() {
           </div>
 
           {/* Nav */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-2">
             <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-5">Navigate</h3>
             <ul className="space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
                     className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center"
                   >
                     {link.label}
@@ -105,31 +219,46 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Help */}
-          <div className="md:col-span-4">
-            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-5">Need Help?</h3>
+          {/* Legal */}
+          <div className="md:col-span-3">
+            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-5">Legal</h3>
             <ul className="space-y-3">
+              {legalLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.path}
+                    onClick={(e) => { e.preventDefault(); navigate(link.path); window.scrollTo(0, 0) }}
+                    className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Help + Business */}
+          <div className="md:col-span-3">
+            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-5">Need Help?</h3>
+            <ul className="space-y-3 mb-8">
               <li>
-                <a href="https://wa.me/916302040779" target="_blank" rel="noopener noreferrer" className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200">
+                <a href="https://wa.me/916302040779" target="_blank" rel="noopener noreferrer" className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center">
                   WhatsApp Us
                 </a>
               </li>
               <li>
-                <a href="mailto:niyuperfumes2907@gmail.com" className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200">
+                <a href="mailto:niyuperfumes2907@gmail.com" className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center">
                   Email Support
                 </a>
               </li>
-              <li>
-                <span className="text-sm font-body font-light text-ivory/60">
-                  Shipping: Free across India
-                </span>
-              </li>
-              <li>
-                <span className="text-sm font-body font-light text-ivory/60">
-                  Returns: 7-day hassle-free
-                </span>
-              </li>
             </ul>
+
+            {/* Business Details */}
+            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-3">Business</h3>
+            <div className="space-y-2 text-[12px] font-body font-light text-ivory/40">
+              <p>NIYU Perfumes</p>
+              <p>India</p>
+            </div>
           </div>
         </motion.div>
 
@@ -139,7 +268,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} NIYU Perfumes. All rights reserved.
           </p>
           <p className="text-[11px] font-body font-light text-ivory/30">
-            Crafted with love in India
+            Crafted by Krank
           </p>
         </div>
       </div>

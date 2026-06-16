@@ -33,6 +33,20 @@ export default function OrderFlow() {
     return () => window.removeEventListener('resize', updateHeight)
   }, [updateHeight, step])
 
+  // Lock body scroll when any flow step is open
+  useEffect(() => {
+    if (step !== 'closed' && step !== 'product-modal') {
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+    }
+  }, [step])
+
   if (step === 'closed') return null
 
   if (step === 'product-modal') {

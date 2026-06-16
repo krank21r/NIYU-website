@@ -35,7 +35,7 @@ function Stars({ rating }) {
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
-          className={`w-4 h-4 ${i < rating ? 'text-gold' : 'text-ink/10'}`}
+          className={`w-4 h-4 ${i < rating ? 'text-gold' : 'text-ink/20'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
           aria-hidden="true"
@@ -81,6 +81,9 @@ export default function Reviews() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink mb-4">
             What Our Customers Say
           </h2>
+          <p className="text-ink-subtle font-body font-light max-w-xl mx-auto">
+            Real experiences from our fragrance family
+          </p>
         </motion.div>
 
         <div className="relative min-h-[280px] flex items-center justify-center">
@@ -111,18 +114,19 @@ export default function Reviews() {
 
         <div className="flex justify-center gap-3 mt-12" role="tablist" aria-label="Review navigation">
           {reviews.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              role="tab"
-              aria-selected={i === current}
-              aria-label={`Review ${i + 1}`}
-              className={`transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center active:scale-90 ${
-                i === current
-                  ? 'w-10 h-4 bg-gold'
-                  : 'w-4 h-4 bg-ink/10 hover:bg-ink/20'
-              }`}
-            />
+            <div key={i} className="min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <button
+                onClick={() => setCurrent(i)}
+                role="tab"
+                aria-selected={i === current}
+                aria-label={`Review ${i + 1}`}
+                className={`transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-full active:scale-90 ${
+                  i === current
+                    ? 'w-10 h-4 bg-gold'
+                    : 'w-4 h-4 bg-ink/20 hover:bg-ink/30'
+                }`}
+              />
+            </div>
           ))}
         </div>
       </div>

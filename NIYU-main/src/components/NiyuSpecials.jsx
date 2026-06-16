@@ -37,12 +37,12 @@ function ProductCard({ product, index }) {
       className="flex-shrink-0 w-[220px] sm:w-[240px] snap-start"
     >
       <div
-        className="group card-luxury flex flex-col h-full cursor-pointer"
+        className="group card-luxury flex flex-col h-full cursor-pointer active:scale-[0.97] transition-transform duration-150"
         onClick={() => openProductDetail(product)}
       >
         <div className="relative flex justify-center items-center py-6 min-h-[200px]">
           {product.tag && (
-            <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-gradient-to-r from-gold to-gold-light text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
+            <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-gold text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
               {product.tag}
             </span>
           )}
@@ -81,7 +81,7 @@ function CategoryCard({ item, index, isActive, onClick }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}
-      className={`group cursor-pointer ${isActive ? 'ring-2 ring-gold ring-offset-2 ring-offset-ivory' : ''}`}
+      className={`group cursor-pointer active:scale-[0.97] transition-transform duration-150 ${isActive ? 'ring-2 ring-gold ring-offset-2 ring-offset-ivory' : ''}`}
       onClick={onClick}
     >
       <div className="relative overflow-hidden h-[200px] sm:h-[240px]">
@@ -91,15 +91,15 @@ function CategoryCard({ item, index, isActive, onClick }) {
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent transition-all duration-500 group-hover:from-black/80 group-hover:via-black/50" />
         <div className="relative h-full flex flex-col justify-center px-8 sm:px-12 z-10">
-          <h3 className="text-2xl sm:text-3xl font-heading text-white mb-2">
+          <h3 className="text-2xl sm:text-3xl font-heading text-white mb-2 group-hover:translate-x-1 transition-transform duration-300 ease-[var(--ease-out)]">
             {item.name}
           </h3>
-          <p className="text-sm sm:text-base font-body font-light text-white/80 max-w-xs leading-relaxed">
+          <p className="text-sm sm:text-base font-body font-light text-white/80 max-w-xs leading-relaxed group-hover:text-white/90 transition-colors duration-300">
             {item.tagline}
           </p>
-          {item.id === 'perfume' && (
+          {item.id === 'perfume' ? (
             <div className="flex items-center gap-2 mt-4">
               <span className="text-[11px] tracking-[0.1em] uppercase font-body font-medium text-gold group-hover:text-gold-light transition-colors duration-300">
                 {isActive ? 'Hide Collection' : 'Discover the Collection'}
@@ -109,6 +109,15 @@ function CategoryCard({ item, index, isActive, onClick }) {
                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 mt-4 opacity-0 group-hover:opacity-100 translate-x-[-8px] group-hover:translate-x-0 transition-all duration-300 ease-[var(--ease-out)]">
+              <span className="text-[11px] tracking-[0.1em] uppercase font-body font-medium text-gold">
+                Explore
+              </span>
+              <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
             </div>
           )}
@@ -153,13 +162,13 @@ export default function NiyuSpecials() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="text-center mb-14"
+          className="mb-14"
         >
           <motion.div
-            initial={{ clipPath: 'inset(0 50% 0 50%)' }}
+            initial={{ clipPath: 'inset(0 100% 0 0)' }}
             animate={isInView ? { clipPath: 'inset(0 0% 0 0%)' } : {}}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="section-divider mb-8"
+            className="w-10 h-[1px] bg-gold mb-6 origin-left"
           />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ink">
             Categories
@@ -222,7 +231,7 @@ export default function NiyuSpecials() {
         </div>
 
         {/* Attars & Car Perfumes Cards */}
-        <div className="flex flex-col gap-4 mt-4">
+        <div className="flex flex-col gap-5 mt-6">
           {categories.slice(1).map((item, i) => (
             <CategoryCard
               key={item.id}

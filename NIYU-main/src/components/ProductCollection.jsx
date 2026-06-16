@@ -74,7 +74,7 @@ function ProductCard({ product, index }) {
             {product.description}
           </p>
 
-          <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] mx-auto" />
+          <div className="mt-6 w-10 h-[1px] bg-ink/30 group-hover:w-full group-hover:bg-gold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] mx-auto" />
         </div>
       </div>
     </motion.div>

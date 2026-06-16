@@ -19,7 +19,7 @@ function TrendingCard({ product, index }) {
       className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start"
     >
       <div
-        className="group card-luxury flex flex-col h-full cursor-pointer"
+        className="group card-luxury flex flex-col h-full cursor-pointer active:scale-[0.97] transition-transform duration-150"
         onClick={() => openProductDetail(product)}
         role="button"
         tabIndex={0}
@@ -32,7 +32,7 @@ function TrendingCard({ product, index }) {
               e.stopPropagation()
               toggleWishlist(product.id)
             }}
-            className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-ivory/80 backdrop-blur-sm border border-ink/5 hover:border-ink/15 transition-all duration-300 z-10 min-w-[44px] min-h-[44px]"
+            className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-ivory/80 backdrop-blur-sm border border-ink/5 hover:border-ink/15 transition-all duration-300 z-10 min-w-[44px] min-h-[44px] active:scale-[0.97]"
             aria-label={isWished(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
           >
             <svg
@@ -47,7 +47,7 @@ function TrendingCard({ product, index }) {
           </button>
 
           {/* Tag */}
-          <span className="inline-flex self-start px-3 py-1 bg-gradient-to-r from-gold to-gold-light text-ivory text-label mb-6">
+          <span className="inline-flex self-start px-3 py-1 bg-gold text-ivory text-label mb-6">
             {product.tag}
           </span>
 
@@ -69,7 +69,7 @@ function TrendingCard({ product, index }) {
 
           {/* Info */}
           <div className="mt-auto">
-            <div className="w-8 h-[1px] bg-gradient-to-r from-gold to-transparent group-hover:w-16 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] mb-4" />
+            <div className="w-8 h-[1px] bg-gold group-hover:w-16 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] mb-4" />
             <h3 className="text-xl font-heading font-light text-ink mb-3">
               {product.name}
             </h3>
@@ -83,7 +83,7 @@ function TrendingCard({ product, index }) {
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-center gap-2 w-full py-3 bg-charcoal/5 group-hover:bg-charcoal text-charcoal group-hover:text-ivory text-label transition-all duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[44px]">
+            <div className="flex items-center justify-center gap-2 w-full py-3 bg-charcoal/5 group-hover:bg-charcoal text-charcoal group-hover:text-ivory text-label transition-all duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[44px] active:scale-[0.97]">
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

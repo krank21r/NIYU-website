@@ -1,7 +1,7 @@
 export const defaultSizes = [
-  { label: '15ml', price: 499 },
-  { label: '30ml', price: 899 },
-  { label: '50ml', price: 1299 },
+  { label: '15ml', price: 499, stock: 20 },
+  { label: '30ml', price: 899, stock: 15 },
+  { label: '50ml', price: 1299, stock: 10 },
 ]
 
 const products = [

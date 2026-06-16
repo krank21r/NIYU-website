@@ -77,7 +77,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease: [0.23, 1, 0.32, 1] }}
-              className="group border border-white/10 bg-white/5 hover:bg-white/8 hover:border-ivory/20 transition-all duration-200 flex flex-col items-center text-center p-8 md:p-10 active:scale-[0.98]"
+              className="group border border-white/10 bg-white/5 hover:bg-white/8 hover:border-ivory/20 transition-all duration-200 flex flex-col items-center text-center p-8 md:p-10 active:scale-[0.98] relative overflow-hidden focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal"
               aria-label={`Contact via ${item.label}: ${item.value}`}
             >
               <div className="w-12 h-12 bg-white/8 flex items-center justify-center text-ivory/60 group-hover:text-gold transition-colors duration-200 mb-4">
@@ -89,6 +89,8 @@ export default function Contact() {
               <p className="text-base font-body text-ivory/80 font-light break-all">
                 {item.value}
               </p>
+              {/* Hover underline */}
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-center" />
             </motion.a>
           ))}
         </div>

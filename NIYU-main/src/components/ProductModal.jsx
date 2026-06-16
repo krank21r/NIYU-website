@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
+import ProductJsonLd from './ProductJsonLd'
 
 const defaultSizes = [
   { label: '15ml', price: 499 },
@@ -35,6 +36,7 @@ export default function ProductModal() {
       description: product.description || '',
       size: selectedSize.label,
       price: selectedSize.price,
+      stock: selectedSize.stock || 99,
       qty,
     })
   }
@@ -56,6 +58,7 @@ export default function ProductModal() {
         className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-cream shadow-[0_24px_80px_rgba(0,0,0,0.15)] overscroll-contain"
         onClick={(e) => e.stopPropagation()}
       >
+        <ProductJsonLd product={product} selectedSize={selectedSize} />
         {/* Close button */}
         <button
           onClick={closeFlow}

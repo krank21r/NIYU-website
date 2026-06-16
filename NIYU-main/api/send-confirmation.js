@@ -2,6 +2,16 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+function escapeHtml(str) {
+  if (!str) return ''
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
@@ -13,12 +23,18 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing required fields' })
   }
 
+  const safeName = escapeHtml(name)
+  const safePhone = escapeHtml(phone)
+  const safeAddress = escapeHtml(address)
+  const safePincode = escapeHtml(pincode)
+  const safeOrderId = escapeHtml(orderId)
+
   const itemRows = items.map(item =>
     `<tr>
-      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#1a1a1a;">${item.name}</td>
-      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#666;text-align:center;">${item.size}</td>
-      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#666;text-align:center;">${item.qty}</td>
-      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#1a1a1a;text-align:right;">&#8377;${item.price * item.qty}</td>
+      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#1a1a1a;">${escapeHtml(item.name)}</td>
+      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#666;text-align:center;">${escapeHtml(item.size)}</td>
+      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#666;text-align:center;">${Number(item.qty)}</td>
+      <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:Georgia,serif;color:#1a1a1a;text-align:right;">&#8377;${Number(item.price) * Number(item.qty)}</td>
     </tr>`
   ).join('')
 
@@ -32,9 +48,9 @@ export default async function handler(req, res) {
     <div style="border-top:1px solid #d4c9a8;margin-bottom:32px;"></div>
 
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1a1a1a;margin:0 0 8px;">Order Confirmed</h2>
-    <p style="font-family:Georgia,serif;font-size:14px;color:#666;margin:0 0 24px;">Thank you for your order, ${name}. We'll dispatch it shortly.</p>
+    <p style="font-family:Georgia,serif;font-size:14px;color:#666;margin:0 0 24px;">Thank you for your order, ${safeName}. We'll dispatch it shortly.</p>
 
-    ${orderId ? `<p style="font-family:Georgia,serif;font-size:12px;color:#999;margin:0 0 24px;letter-spacing:0.05em;">Order #${orderId}</p>` : ''}
+    ${safeOrderId ? `<p style="font-family:Georgia,serif;font-size:12px;color:#999;margin:0 0 24px;letter-spacing:0.05em;">Order #${safeOrderId}</p>` : ''}
 
     <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
       <thead>
@@ -50,12 +66,12 @@ export default async function handler(req, res) {
 
     <div style="border-top:2px solid #d4c9a8;padding-top:16px;margin-bottom:32px;text-align:right;">
       <span style="font-family:Georgia,serif;font-size:14px;color:#666;">Total: </span>
-      <span style="font-family:Georgia,serif;font-size:20px;color:#1a1a1a;font-weight:bold;">&#8377;${subtotal}</span>
+      <span style="font-family:Georgia,serif;font-size:20px;color:#1a1a1a;font-weight:bold;">&#8377;${Number(subtotal)}</span>
     </div>
 
     <div style="background:#f0ece4;padding:20px;margin-bottom:32px;">
       <p style="font-family:Georgia,serif;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#999;margin:0 0 8px;">Delivery Address</p>
-      <p style="font-family:Georgia,serif;font-size:14px;color:#1a1a1a;margin:0;">${address}, ${pincode}</p>
+      <p style="font-family:Georgia,serif;font-size:14px;color:#1a1a1a;margin:0;">${safeAddress}, ${safePincode}</p>
     </div>
 
     <div style="text-align:center;">
@@ -69,7 +85,6 @@ export default async function handler(req, res) {
   `
 
   try {
-    // Send confirmation to customer
     await resend.emails.send({
       from: 'NIYU Perfumes <onboarding@resend.dev>',
       to: [email],
@@ -77,14 +92,13 @@ export default async function handler(req, res) {
       html,
     })
 
-    // Send notification to store owner
     await resend.emails.send({
       from: 'NIYU Perfumes <onboarding@resend.dev>',
       to: ['niyuperfumes2907@gmail.com'],
-      subject: `NEW ORDER — ${name} — ₹${subtotal}`,
+      subject: `NEW ORDER — ${safeName} — ₹${Number(subtotal)}`,
       html: html.replace(
         'Thank you for your order',
-        `New order from <strong>${name}</strong> — Phone: <strong>${phone || 'N/A'}</strong><br/><br/>Thank you for your order`
+        `New order from <strong>${safeName}</strong> — Phone: <strong>${safePhone || 'N/A'}</strong><br/><br/>Thank you for your order`
       ),
     })
 

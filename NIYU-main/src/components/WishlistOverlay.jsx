@@ -79,7 +79,7 @@ export default function WishlistOverlay({ open, onClose }) {
                         <div className="flex items-center gap-2 mt-2">
                           <button
                             onClick={() => {
-                              addToCart({ ...product, size: product.sizes[0].label, price: product.sizes[0].price, qty: 1, image: product.image })
+                              addToCart({ ...product, size: product.sizes[0].label, price: product.sizes[0].price, stock: product.sizes[0].stock || 99, qty: 1, image: product.image })
                             }}
                             className="flex-1 py-2 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.08em] uppercase font-body font-semibold transition-all duration-400 min-h-[36px]"
                           >

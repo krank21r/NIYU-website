@@ -2,20 +2,25 @@ import { motion } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
 export default function CartView() {
-  const { items, subtotal, removeFromCart, updateQty, setStep, closeFlow } = useCart()
+  const { items, subtotal, total, removeFromCart, updateQty, setStep, closeFlow } = useCart()
 
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-6">
-        <svg className="w-16 h-16 text-ink-subtle/40 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-        </svg>
-        <p className="text-ink-subtle font-body text-sm mb-6">Your cart is empty</p>
+      <div className="flex flex-col items-center justify-center py-20 px-6">
+        <div className="w-20 h-20 rounded-full bg-cream/60 border border-ink/5 flex items-center justify-center mb-6">
+          <svg className="w-9 h-9 text-ink-subtle/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </div>
+        <p className="text-lg font-heading font-semibold text-ink-soft mb-2">Your cart is empty</p>
+        <p className="text-[13px] text-ink-subtle font-body mb-8 text-center max-w-[240px]">
+          Looks like you haven't added any fragrances yet
+        </p>
         <button
           onClick={closeFlow}
-          className="py-3 px-8 border border-ink/15 text-ink text-[11px] tracking-[0.1em] uppercase font-body font-medium hover:bg-ink/5 transition-all duration-400 min-h-[44px]"
+          className="py-3.5 px-10 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
         >
-          Continue Shopping
+          Explore Fragrances
         </button>
       </div>
     )
@@ -63,9 +68,11 @@ export default function CartView() {
                     <h4 className="text-sm sm:text-[15px] font-heading font-semibold text-ink-soft leading-tight">
                       {item.name}
                     </h4>
-                    <p className="text-[12px] text-ink-subtle font-body mt-0.5">
-                      Size: {item.size}
-                    </p>
+                    {item.size && (
+                      <p className="text-[12px] text-ink-subtle font-body mt-0.5">
+                        Size: {item.size}
+                      </p>
+                    )}
                     <p className="text-[12px] text-ink-subtle font-body">
                       MRP: <span className="text-ink-soft font-medium">&#8377;{item.price}</span>
                     </p>
@@ -90,7 +97,8 @@ export default function CartView() {
                       </span>
                       <button
                         onClick={() => updateQty(index, item.qty + 1)}
-                        className="w-9 h-9 flex items-center justify-center hover:bg-ink/5 transition-colors min-w-[44px] min-h-[44px]"
+                        disabled={item.qty >= (item.stock || 99)}
+                        className="w-9 h-9 flex items-center justify-center hover:bg-ink/5 transition-colors disabled:opacity-30 min-w-[44px] min-h-[44px]"
                         aria-label="Increase quantity"
                       >
                         <svg className="w-3 h-3 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -98,6 +106,13 @@ export default function CartView() {
                         </svg>
                       </button>
                     </div>
+
+                    {/* Low stock warning */}
+                    {item.stock <= 5 && (
+                      <span className="text-[11px] text-amber-600 font-body ml-3 self-center">
+                        Only {item.stock} left
+                      </span>
+                    )}
 
                     {/* Line total */}
                     <span className="text-[15px] font-heading font-bold text-ink-soft">
@@ -145,15 +160,23 @@ export default function CartView() {
               <div className="border-t border-ink/5 pt-3 mt-3">
                 <div className="flex justify-between">
                   <span className="text-sm font-body font-semibold text-ink-soft">Total</span>
-                  <span className="text-lg font-heading font-bold text-gold">&#8377;{subtotal}</span>
+                  <span className="text-lg font-heading font-bold text-gold">&#8377;{total}</span>
                 </div>
               </div>
             </div>
 
+            {/* Estimated delivery */}
+            <p className="text-[11px] text-ink-subtle font-body mt-4 flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Estimated delivery: 3-7 business days
+            </p>
+
             {/* CTA */}
             <button
               onClick={() => setStep('checkout')}
-              className="w-full mt-6 py-3.5 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
+              className="w-full mt-5 py-3.5 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.1em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
             >
               Proceed to Checkout
             </button>

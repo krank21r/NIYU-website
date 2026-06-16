@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useWishlist } from '../context/WishlistContext'
+import { useCart } from '../context/CartContext'
 import WishlistOverlay from './WishlistOverlay'
+import SearchOverlay from './SearchOverlay'
 
 const navLinks = [
   { label: 'Home', href: '#hero' },
@@ -17,7 +19,9 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [active, setActive] = useState('#hero')
   const [wishlistOpen, setWishlistOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const { wishlistCount } = useWishlist()
+  const { items, setStep } = useCart()
 
   useEffect(() => {
     let ticking = false
@@ -59,6 +63,19 @@ export default function Navbar() {
       targetEl.scrollIntoView({ behavior: 'smooth' })
       setActive(href)
     }
+    if (mobileOpen) setMobileOpen(false)
+  }
+
+  const cartCount = items.reduce((sum, item) => sum + item.qty, 0)
+
+  const openCart = () => {
+    setStep('cart')
+    document.body.style.overflow = 'hidden'
+    if (mobileOpen) setMobileOpen(false)
+  }
+
+  const openSearch = () => {
+    setSearchOpen(true)
     if (mobileOpen) setMobileOpen(false)
   }
 
@@ -117,21 +134,51 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Wishlist icon — right */}
-          <button
-            onClick={() => setWishlistOpen(true)}
-            className="relative w-10 h-10 flex items-center justify-center hover:text-gold transition-colors duration-300 min-w-[44px] min-h-[44px]"
-            aria-label="Open wishlist"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-            </svg>
-            {wishlistCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
-                {wishlistCount}
-              </span>
-            )}
-          </button>
+          {/* Icons — right */}
+          <div className="flex items-center gap-1">
+            {/* Search icon */}
+            <button
+              onClick={openSearch}
+              className="w-10 h-10 flex items-center justify-center hover:text-gold transition-colors duration-300 min-w-[44px] min-h-[44px]"
+              aria-label="Open search"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+            </button>
+
+            {/* Wishlist icon */}
+            <button
+              onClick={() => setWishlistOpen(true)}
+              className="relative w-10 h-10 flex items-center justify-center hover:text-gold transition-colors duration-300 min-w-[44px] min-h-[44px]"
+              aria-label="Open wishlist"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+
+            {/* Cart icon */}
+            <button
+              onClick={openCart}
+              className="relative w-10 h-10 flex items-center justify-center hover:text-gold transition-colors duration-300 min-w-[44px] min-h-[44px]"
+              aria-label="Open cart"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </motion.header>
 
@@ -189,21 +236,51 @@ export default function Navbar() {
             <sup className="text-[11px] font-body font-light tracking-normal text-ink-muted">&reg;</sup>
           </motion.a>
 
-          {/* Wishlist icon — right */}
-          <button
-            onClick={() => setWishlistOpen(true)}
-            className="relative w-11 h-11 flex items-center justify-center"
-            aria-label="Open wishlist"
-          >
-            <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-            </svg>
-            {wishlistCount > 0 && (
-              <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
-                {wishlistCount}
-              </span>
-            )}
-          </button>
+          {/* Icons — right */}
+          <div className="flex items-center gap-0.5">
+            {/* Search icon */}
+            <button
+              onClick={openSearch}
+              className="w-11 h-11 flex items-center justify-center hover:text-gold transition-colors duration-300"
+              aria-label="Open search"
+            >
+              <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+            </button>
+
+            {/* Wishlist icon */}
+            <button
+              onClick={() => setWishlistOpen(true)}
+              className="relative w-11 h-11 flex items-center justify-center hover:text-gold transition-colors duration-300"
+              aria-label="Open wishlist"
+            >
+              <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+
+            {/* Cart icon */}
+            <button
+              onClick={openCart}
+              className="relative w-11 h-11 flex items-center justify-center hover:text-gold transition-colors duration-300"
+              aria-label="Open cart"
+            >
+              <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-gold text-white text-[9px] font-body font-bold rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </motion.header>
 
@@ -273,6 +350,9 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Search Overlay */}
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* Wishlist Overlay */}
       <WishlistOverlay open={wishlistOpen} onClose={() => setWishlistOpen(false)} />

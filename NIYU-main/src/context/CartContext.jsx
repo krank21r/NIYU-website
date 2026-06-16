@@ -1,16 +1,39 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { stopSmoothScroll, startSmoothScroll } from '../hooks/useLenis'
 
 const CartContext = createContext(null)
+const CART_STORAGE_KEY = 'niyu_cart'
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function saveCart(items) {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
+  } catch {
+    // localStorage full or unavailable
+  }
+}
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(loadCart)
   const [step, setStep] = useState('closed')
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [delivery, setDelivery] = useState({ name: '', phone: '', email: '', address: '', pincode: '' })
   const [orderId, setOrderId] = useState(null)
   const [detailProduct, setDetailProduct] = useState(null)
+
+  // Persist cart to localStorage on every change
+  useEffect(() => {
+    saveCart(items)
+  }, [items])
 
   const openProductModal = useCallback((product) => {
     setSelectedProduct(product)
@@ -42,10 +65,12 @@ export function CartProvider({ children }) {
       const existing = prev.findIndex(i => i.name === item.name && i.size === item.size)
       if (existing >= 0) {
         const updated = [...prev]
-        updated[existing] = { ...updated[existing], qty: updated[existing].qty + item.qty }
+        const maxStock = item.stock || 99
+        const newQty = Math.min(updated[existing].qty + item.qty, maxStock)
+        updated[existing] = { ...updated[existing], qty: newQty, stock: maxStock }
         return updated
       }
-      return [...prev, item]
+      return [...prev, { ...item, stock: item.stock || 99 }]
     })
     setStep('cart')
     stopSmoothScroll()
@@ -55,16 +80,22 @@ export function CartProvider({ children }) {
     setItems(prev => prev.filter((_, i) => i !== index))
   }, [])
 
+  const clearCart = useCallback(() => {
+    setItems([])
+  }, [])
+
   const updateQty = useCallback((index, qty) => {
     if (qty < 1) return
     setItems(prev => {
       const updated = [...prev]
-      updated[index] = { ...updated[index], qty }
+      const maxStock = updated[index].stock || 99
+      updated[index] = { ...updated[index], qty: Math.min(qty, maxStock) }
       return updated
     })
   }, [])
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
+  const total = subtotal
 
   const confirmOrder = useCallback(async () => {
     let savedOrderId = null
@@ -83,6 +114,7 @@ export function CartProvider({ children }) {
             pincode: delivery.pincode,
             items: items.map(i => ({ name: i.name, size: i.size, price: i.price, qty: i.qty })),
             subtotal,
+            total,
             payment_method: 'UPI',
             status: 'pending',
           })
@@ -111,6 +143,7 @@ export function CartProvider({ children }) {
       orderId: savedOrderId,
       items: items.map(i => ({ name: i.name, size: i.size, price: i.price, qty: i.qty })),
       subtotal,
+      total,
       address: delivery.address,
       pincode: delivery.pincode,
     }
@@ -121,12 +154,14 @@ export function CartProvider({ children }) {
     }).catch(err => console.error('[NIYU] Email failed:', err))
 
     setStep('confirmation')
-  }, [items, delivery, subtotal])
+    // Clear cart after successful order
+    setItems([])
+  }, [items, delivery, subtotal, total])
 
   return (
     <CartContext.Provider value={{
-      items, step, selectedProduct, delivery, subtotal, orderId, detailProduct,
-      openProductModal, closeFlow, addToCart, removeFromCart, updateQty,
+      items, step, selectedProduct, delivery, subtotal, total, orderId, detailProduct,
+      openProductModal, closeFlow, addToCart, removeFromCart, updateQty, clearCart,
       openProductDetail, closeProductDetail,
       setStep, setDelivery, confirmOrder,
     }}>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
+import ProductJsonLd from './ProductJsonLd'
 
 const ease = [0.23, 1, 0.32, 1]
 
@@ -9,6 +10,8 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(null)
   const [qty, setQty] = useState(1)
   const [activeImage, setActiveImage] = useState(0)
+  const [liked, setLiked] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
   const scrollRef = useRef(null)
 
   const product = detailProduct
@@ -19,6 +22,8 @@ export default function ProductDetail() {
       setSelectedSize(sizes[sizes.length - 1] || null)
       setQty(1)
       setActiveImage(0)
+      setLiked(false)
+      setImageLoaded(false)
     }
   }, [product?.id])
 
@@ -56,6 +61,7 @@ export default function ProductDetail() {
       description: product.description || '',
       size: selectedSize.label,
       price: selectedSize.price,
+      stock: selectedSize.stock || 99,
       qty,
     })
     closeProductDetail()
@@ -73,6 +79,7 @@ export default function ProductDetail() {
           transition={{ duration: 0.35, ease }}
           className="fixed inset-0 z-[150] bg-ivory overflow-y-auto"
         >
+          <ProductJsonLd product={product} selectedSize={selectedSize} />
           {/* Header */}
           <div className="sticky top-0 z-20 bg-ivory/95 backdrop-blur-sm border-b border-ink/5">
             <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 h-14">
@@ -94,18 +101,29 @@ export default function ProductDetail() {
                 {product.name}
               </h1>
 
-              <button
-                onClick={() => {
-                  closeProductDetail()
-                  history.back()
-                }}
-                className="w-11 h-11 flex items-center justify-center text-ink-muted hover:text-ink transition-colors duration-300"
-                aria-label="Close"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setLiked(!liked)}
+                  className="w-11 h-11 flex items-center justify-center text-ink-muted hover:text-ink transition-colors duration-300"
+                  aria-label={liked ? "Remove from wishlist" : "Add to wishlist"}
+                >
+                  <svg className="w-5 h-5" fill={liked ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => {
+                    closeProductDetail()
+                    history.back()
+                  }}
+                  className="w-11 h-11 flex items-center justify-center text-ink-muted hover:text-ink transition-colors duration-300"
+                  aria-label="Close"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -118,8 +136,13 @@ export default function ProductDetail() {
               <div className="lg:w-[55%]">
                 {/* Main Image */}
                 <div className="relative bg-ivory border border-ink/5 flex justify-center items-center py-8 sm:py-12 mb-4">
+                  {!imageLoaded && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-48 h-64 bg-ink/5 animate-pulse" />
+                    </div>
+                  )}
                   {product.tag && (
-                    <span className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-gradient-to-r from-gold to-gold-light text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
+                    <span className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-gold text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
                       {product.tag}
                     </span>
                   )}
@@ -127,12 +150,13 @@ export default function ProductDetail() {
                     <motion.img
                       key={activeImage}
                       initial={{ opacity: 0, scale: 0.98 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      animate={{ opacity: imageLoaded ? 1 : 0, scale: 1 }}
                       exit={{ opacity: 0, scale: 1.02 }}
                       transition={{ duration: 0.3, ease }}
                       src={images[activeImage]}
                       alt={`${product.name} perfume bottle`}
-                      className="h-64 sm:h-80 md:h-96 w-auto object-contain"
+                      className={`h-64 sm:h-80 md:h-96 w-auto object-contain transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      onLoad={() => setImageLoaded(true)}
                     />
                   </AnimatePresence>
                 </div>
@@ -146,7 +170,7 @@ export default function ProductDetail() {
                         onClick={() => setActiveImage(i)}
                         className={`flex-1 border p-2 flex justify-center items-center transition-all duration-300 ${
                           activeImage === i
-                            ? 'border-ink/30 bg-ink/5'
+                            ? 'border-gold bg-gold/5'
                             : 'border-ink/5 hover:border-ink/15'
                         }`}
                         aria-label={`View image ${i + 1}`}
@@ -274,12 +298,12 @@ export default function ProductDetail() {
                   </p>
                 </motion.div>
 
-                {/* Action Buttons */}
+                {/* Action Buttons — desktop */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2, ease }}
-                  className="flex flex-col gap-3 pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
+                  className="hidden sm:flex flex-col gap-3 pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
                 >
                   <button
                     onClick={handleAddToCart}
@@ -294,7 +318,26 @@ export default function ProductDetail() {
                     Buy Now
                   </button>
                 </motion.div>
+
+                {/* Mobile spacer for sticky CTA */}
+                <div className="h-28 sm:hidden" />
               </div>
+            </div>
+
+            {/* Sticky Mobile CTA */}
+            <div className="fixed bottom-0 left-0 right-0 z-[160] bg-ivory/95 backdrop-blur-sm border-t border-ink/8 px-4 py-3 flex gap-3 sm:hidden" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}>
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 py-3.5 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
+              >
+                Add to Cart
+              </button>
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 py-3.5 border border-gold text-gold hover:bg-gold hover:text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
+              >
+                Buy Now
+              </button>
             </div>
 
             {/* Fragrance Notes Pyramid */}
@@ -306,14 +349,14 @@ export default function ProductDetail() {
                 transition={{ duration: 0.8, ease }}
                 className="mt-16 sm:mt-24"
               >
-                <div className="text-center mb-12">
-                  <div className="section-divider origin-center mb-8" />
+                <div className="mb-12">
+                  <div className="w-10 h-[1px] bg-gold mb-6 origin-left" />
                   <h3 className="text-3xl sm:text-4xl font-heading font-light text-ink">
                     Fragrance Notes
                   </h3>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 max-w-3xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 max-w-3xl">
                   {[
                     { label: 'Top Notes', notes: product.topNotes },
                     { label: 'Heart Notes', notes: product.heartNotes },
@@ -321,7 +364,7 @@ export default function ProductDetail() {
                   ].filter(col => col.notes?.length > 0).map((col, i, arr) => (
                     <div
                       key={col.label}
-                      className={`text-center px-6 ${i < arr.length - 1 ? 'sm:border-r sm:border-ink/8' : ''}`}
+                      className={`${i < arr.length - 1 ? 'sm:border-r sm:border-ink/8' : ''}`}
                     >
                       <p className="text-[11px] tracking-[0.15em] uppercase text-gold-dark font-body font-medium mb-4">
                         {col.label}
@@ -347,8 +390,8 @@ export default function ProductDetail() {
                 className="mt-16 sm:mt-24"
               >
                 <div className="bg-gradient-to-b from-ivory to-parchment py-16 sm:py-20 px-6 sm:px-12">
-                  <div className="max-w-2xl mx-auto text-center">
-                    <div className="section-divider origin-center mb-8" />
+                  <div className="max-w-2xl">
+                    <div className="w-10 h-[1px] bg-gold mb-6 origin-left" />
                     <h3 className="text-3xl sm:text-4xl font-heading font-light text-ink mb-6">
                       The Essence
                     </h3>
