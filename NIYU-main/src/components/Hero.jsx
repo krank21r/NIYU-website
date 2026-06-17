@@ -16,7 +16,7 @@ export default function Hero() {
     <section ref={ref} id="hero" className="relative min-h-[100dvh] overflow-hidden">
       {/* Background Slider with cinematic parallax */}
       <motion.div
-        className="absolute top-[6%] -left-[5%] -right-[5%] -bottom-[5%] w-[110%] h-[110%]"
+        className="absolute top-0 -left-[5%] -right-[5%] -bottom-[5%] w-[110%] h-[110%]"
         style={{ scale: bgScale, y: bgY }}
       >
         <motion.img
