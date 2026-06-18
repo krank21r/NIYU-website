@@ -31,7 +31,7 @@ const ShippingPolicy = lazy(() => import('./components/legal/ShippingPolicy'))
 
 function LoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-ivory">
+    <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="flex flex-col items-center gap-4">
         <div className="w-8 h-8 border border-gold/30 border-t-gold rounded-full animate-spin" />
         <p className="text-xs tracking-[0.2em] uppercase text-ink-subtle font-body">Loading</p>
@@ -75,7 +75,7 @@ export default function App() {
     <BrowserRouter>
       <CartProvider>
         <WishlistProvider>
-          <div className="bg-ivory min-h-screen relative">
+          <div className="bg-white min-h-screen relative">
             <a href="#main-content" className="skip-nav">
               Skip to main content
             </a>

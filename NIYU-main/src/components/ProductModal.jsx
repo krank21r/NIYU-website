@@ -71,7 +71,7 @@ export default function ProductModal() {
         </button>
 
         {/* Product image */}
-        <div className="relative bg-ivory/50 flex justify-center items-center py-10 px-6">
+        <div className="relative bg-white/50 flex justify-center items-center py-10 px-6">
           <img
             src={product.image}
             alt={product.name}
@@ -95,7 +95,7 @@ export default function ProductModal() {
           {notes.length > 0 && (
             <div className="flex gap-2 flex-wrap mb-5">
               {notes.map((note) => (
-                <span key={note} className="px-3 py-1 bg-ivory border border-ink/8 text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body">
+                <span key={note} className="px-3 py-1 bg-white border border-ink/8 text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body">
                   {note}
                 </span>
               ))}

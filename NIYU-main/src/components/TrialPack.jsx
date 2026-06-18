@@ -28,20 +28,20 @@ export default function TrialPack() {
         className="relative max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
       >
         {/* Left — Badge */}
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] tracking-[0.15em] uppercase text-ivory/80 font-body font-medium shrink-0">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] tracking-[0.15em] uppercase text-white/80 font-body font-medium shrink-0">
           <span className="w-1 h-1 rounded-full bg-gold animate-pulse-soft" />
           New to NIYU?
         </span>
 
         {/* Center — Text */}
         <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-3 text-center sm:text-left">
-          <span className="text-sm sm:text-base font-heading text-ivory/90">
+          <span className="text-sm sm:text-base font-heading text-white/90">
             Start with a Trial Pack
           </span>
-          <span className="hidden sm:inline text-ivory/20" aria-hidden="true">|</span>
-          <span className="text-lg sm:text-xl font-heading font-bold text-ivory">
-            <span className="text-sm font-normal text-ivory/50 mr-0.5">&#8377;</span>99
-            <span className="text-[11px] text-ivory/50 font-body font-normal ml-1.5">onwards</span>
+          <span className="hidden sm:inline text-white/20" aria-hidden="true">|</span>
+          <span className="text-lg sm:text-xl font-heading font-bold text-white">
+            <span className="text-sm font-normal text-white/50 mr-0.5">&#8377;</span>99
+            <span className="text-[11px] text-white/50 font-body font-normal ml-1.5">onwards</span>
           </span>
         </div>
 

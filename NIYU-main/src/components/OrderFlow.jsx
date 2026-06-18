@@ -65,11 +65,11 @@ export default function OrderFlow() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-        className="fixed inset-0 z-[150] bg-ivory"
+        className="fixed inset-0 z-[150] bg-white"
       >
         {/* Header + progress — measured for content height */}
         <div ref={headerRef}>
-          <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4 border-b border-ink/5 bg-ivory/90 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4 border-b border-ink/5 bg-white/90 backdrop-blur-sm">
             <button
               onClick={step === 'cart' ? closeFlow : () => {
                 const order = ['cart', 'checkout', 'payment', 'confirmation']

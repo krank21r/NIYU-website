@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
 export default function CheckoutForm() {
-  const { delivery, setDelivery, setStep, subtotal, total, items } = useCart()
+  const { delivery, setDelivery, setStep, subtotal, total, items, discount, appliedCoupon } = useCart()
   const [errors, setErrors] = useState({})
   const [consent, setConsent] = useState({ terms: false, privacy: false })
 
@@ -261,6 +261,12 @@ export default function CheckoutForm() {
                 <span className="text-ink-subtle">Delivery</span>
                 <span className="text-green-700 font-medium">Free</span>
               </div>
+              {discount > 0 && (
+                <div className="flex justify-between text-[13px] font-body">
+                  <span className="text-green-700">Discount ({appliedCoupon?.code})</span>
+                  <span className="text-green-700 font-medium">-&#8377;{discount}</span>
+                </div>
+              )}
               <div className="border-t border-ink/5 pt-2 mt-2">
                 <div className="flex justify-between">
                   <span className="text-sm font-body font-semibold text-ink-soft">Total</span>

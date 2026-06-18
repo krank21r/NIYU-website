@@ -42,7 +42,7 @@ function ProductCard({ product, index }) {
       >
         <div className="relative flex justify-center items-center py-6 min-h-[200px]">
           {product.tag && (
-            <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-gold text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
+            <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-gold text-white text-[11px] tracking-[0.12em] uppercase font-body font-medium">
               {product.tag}
             </span>
           )}
@@ -81,7 +81,7 @@ function CategoryCard({ item, index, isActive, onClick }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}
-      className={`group cursor-pointer active:scale-[0.97] transition-transform duration-150 ${isActive ? 'ring-2 ring-gold ring-offset-2 ring-offset-ivory' : ''}`}
+      className={`group cursor-pointer active:scale-[0.97] transition-transform duration-150 ${isActive ? 'ring-2 ring-gold ring-offset-2 ring-offset-white' : ''}`}
       onClick={onClick}
     >
       <div className="relative overflow-hidden h-[200px] sm:h-[240px]">
@@ -198,7 +198,7 @@ export default function NiyuSpecials() {
                 <div className="hidden sm:flex items-center gap-2">
                   <button
                     onClick={() => scroll('left')}
-                    className="w-10 h-10 border border-ink/8 bg-ivory/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-200 group active:scale-[0.97]"
+                    className="w-10 h-10 border border-ink/8 bg-white/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-200 group active:scale-[0.97]"
                     aria-label="Scroll left"
                   >
                     <svg className="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -207,7 +207,7 @@ export default function NiyuSpecials() {
                   </button>
                   <button
                     onClick={() => scroll('right')}
-                    className="w-10 h-10 border border-ink/8 bg-ivory/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-200 group active:scale-[0.97]"
+                    className="w-10 h-10 border border-ink/8 bg-white/60 flex items-center justify-center hover:border-ink/20 hover:bg-ink/5 transition-all duration-200 group active:scale-[0.97]"
                     aria-label="Scroll right"
                   >
                     <svg className="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

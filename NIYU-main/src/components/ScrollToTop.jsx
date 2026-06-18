@@ -23,7 +23,7 @@ export default function ScrollToTop() {
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
           onClick={scrollToTop}
-          className="fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full bg-ivory/80 backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(28,28,28,0.06),0_0_0_1px_rgba(220,220,220,0.5)] hover:shadow-[0_4px_24px_rgba(28,28,28,0.1),0_0_0_1px_rgba(28,28,28,0.2)] transition-all duration-200 cursor-pointer group min-h-[44px] min-w-[44px] active:scale-[0.95]"
+          className="fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(28,28,28,0.06),0_0_0_1px_rgba(220,220,220,0.5)] hover:shadow-[0_4px_24px_rgba(28,28,28,0.1),0_0_0_1px_rgba(28,28,28,0.2)] transition-all duration-200 cursor-pointer group min-h-[44px] min-w-[44px] active:scale-[0.95]"
           style={{ bottom: 'max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom)))' }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

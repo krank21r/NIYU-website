@@ -17,7 +17,7 @@ const slides = [
   },
   {
     id: 2,
-    image: '/attar.jpeg',
+    image: '/attar-hero.jpg.png',
     badge: 'BESTSELLER',
     title: 'Pure Attar\nCollection',
     subtitle: 'Alcohol-free traditional attars — long-lasting, handcrafted luxury',
@@ -48,8 +48,6 @@ const categories = [
   { label: 'Attars', icon: '◈', href: '#attars' },
   { label: 'Car Perfumes', icon: '⬡', href: '#car-perfumes' },
   { label: 'Gift Sets', icon: '❖', href: '#specials' },
-  { label: 'New In', icon: '★', href: '#collection' },
-  { label: 'Bestsellers', icon: '◆', href: '#trending' },
 ]
 
 const autoplayInterval = 5000
@@ -96,7 +94,7 @@ export default function Hero() {
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* ── Announcement Bar ── */}
-      <div className="bg-charcoal text-ivory overflow-hidden">
+      <div className="bg-charcoal text-white overflow-hidden">
         <div className="animate-marquee whitespace-nowrap py-2">
           <span className="inline-block px-8 text-[11px] tracking-[0.15em] uppercase font-body font-light">
             Free Shipping on Orders Above ₹999
@@ -104,14 +102,6 @@ export default function Hero() {
           <span className="inline-block px-4 text-gold/40" aria-hidden="true">✦</span>
           <span className="inline-block px-8 text-[11px] tracking-[0.15em] uppercase font-body font-light">
             100% Authentic Arabian Fragrances
-          </span>
-          <span className="inline-block px-4 text-gold/40" aria-hidden="true">✦</span>
-          <span className="inline-block px-8 text-[11px] tracking-[0.15em] uppercase font-body font-light">
-            Cash on Delivery Available
-          </span>
-          <span className="inline-block px-4 text-gold/40" aria-hidden="true">✦</span>
-          <span className="inline-block px-8 text-[11px] tracking-[0.15em] uppercase font-body font-light">
-            Easy 7-Day Returns
           </span>
           <span className="inline-block px-4 text-gold/40" aria-hidden="true">✦</span>
           {/* Duplicate for seamless loop */}
@@ -122,32 +112,6 @@ export default function Hero() {
           <span className="inline-block px-8 text-[11px] tracking-[0.15em] uppercase font-body font-light">
             100% Authentic Arabian Fragrances
           </span>
-          <span className="inline-block px-4 text-gold/40" aria-hidden="true">✦</span>
-          <span className="inline-block px-8 text-[11px] tracking-[0.15em] uppercase font-body font-light">
-            Cash on Delivery Available
-          </span>
-          <span className="inline-block px-4 text-gold/40" aria-hidden="true">✦</span>
-          <span className="inline-block px-8 text-[11px] tracking-[0.15em] uppercase font-body font-light">
-            Easy 7-Day Returns
-          </span>
-        </div>
-      </div>
-
-      {/* ── Category Chips ── */}
-      <div className="bg-cream/80 backdrop-blur-md border-b border-gold/8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center gap-1 py-3 overflow-x-auto scrollbar-none overscroll-contain touch-manipulation">
-            {categories.map((cat) => (
-              <a
-                key={cat.label}
-                href={cat.href}
-                className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-ivory border border-gold/10 hover:border-gold/30 hover:bg-gold/5 text-ink-soft hover:text-charcoal transition-all duration-200 text-[11px] tracking-[0.08em] uppercase font-body font-medium min-h-[36px]"
-              >
-                <span className="text-gold text-[10px]">{cat.icon}</span>
-                {cat.label}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -165,102 +129,22 @@ export default function Hero() {
             className="absolute inset-0"
           >
             {/* Background Image */}
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 overflow-hidden">
               <img
                 src={slide.image}
                 alt=""
                 className="w-full h-full object-cover object-center"
               />
-              {/* Gradient Overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-charcoal/20" />
             </div>
 
-            {/* Content */}
-            <div className="relative h-full flex items-center">
-              <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 xl:px-20">
-                <div className="max-w-xl">
-                  {/* Discount Badge */}
-                  {slide.discount && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
-                      className="inline-block mb-4"
-                    >
-                      <span className="inline-flex items-center px-4 py-1.5 bg-gold text-charcoal text-[11px] tracking-[0.12em] uppercase font-body font-semibold">
-                        {slide.discount}
-                      </span>
-                    </motion.div>
-                  )}
 
-                  {/* Badge */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                  >
-                    <span className="inline-flex items-center gap-2 text-gold-light text-[11px] tracking-[0.2em] uppercase font-body font-medium mb-3">
-                      <span className="w-6 h-[1px] bg-gold-light" />
-                      {slide.badge}
-                    </span>
-                  </motion.div>
-
-                  {/* Title */}
-                  <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                    className="font-heading font-light text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-ivory leading-[1.1] mb-4 whitespace-pre-line"
-                  >
-                    {slide.title}
-                  </motion.h1>
-
-                  {/* Subtitle */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
-                    className="text-ivory/70 font-body font-light text-sm sm:text-base max-w-md mb-8 leading-relaxed"
-                  >
-                    {slide.subtitle}
-                  </motion.p>
-
-                  {/* CTAs */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.5 }}
-                    className="flex flex-wrap items-center gap-3"
-                  >
-                    <a
-                      href={slide.ctaLink}
-                      className="group inline-flex items-center gap-2 px-6 py-3 bg-ivory text-charcoal font-body font-medium text-[11px] tracking-[0.12em] uppercase hover:bg-gold hover:text-charcoal transition-all duration-300 min-h-[44px]"
-                    >
-                      {slide.cta}
-                      <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                      </svg>
-                    </a>
-                    {slide.secondaryCta && (
-                      <a
-                        href={slide.secondaryLink}
-                        className="inline-flex items-center gap-2 px-6 py-3 border border-ivory/30 text-ivory font-body font-medium text-[11px] tracking-[0.12em] uppercase hover:bg-ivory/10 hover:border-ivory/50 transition-all duration-300 min-h-[44px]"
-                      >
-                        {slide.secondaryCta}
-                      </a>
-                    )}
-                  </motion.div>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </AnimatePresence>
 
         {/* ── Navigation Arrows ── */}
         <button
           onClick={prev}
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-ivory/10 backdrop-blur-md border border-ivory/20 text-ivory hover:bg-ivory/20 transition-all duration-200 active:scale-95"
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-200 active:scale-95"
           aria-label="Previous slide"
         >
           <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -269,7 +153,7 @@ export default function Hero() {
         </button>
         <button
           onClick={next}
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-ivory/10 backdrop-blur-md border border-ivory/20 text-ivory hover:bg-ivory/20 transition-all duration-200 active:scale-95"
+          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-200 active:scale-95"
           aria-label="Next slide"
         >
           <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -286,7 +170,7 @@ export default function Hero() {
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === current
                   ? 'w-8 bg-gold'
-                  : 'w-1.5 bg-ivory/40 hover:bg-ivory/60'
+                  : 'w-1.5 bg-white/40 hover:bg-white/60'
               }`}
               aria-label={`Go to slide ${i + 1}`}
             />
@@ -295,13 +179,11 @@ export default function Hero() {
       </div>
 
       {/* ── Quick Deals Strip ── */}
-      <div className="bg-ivory border-b border-gold/8">
+      <div className="bg-white border-b border-gold/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between py-3 gap-4">
             <div className="flex items-center gap-3 overflow-x-auto scrollbar-none">
-              <DealPill label="Flat 20% OFF" sub="on first order" code="NIYU20" />
-              <DealPill label="Buy 2 Get 1" sub="on Attars" code="ATTAR321" />
-              <DealPill label="Free Gift" sub="on orders above ₹1499" code="GIFT1499" />
+              <DealPill label="Flat 10% OFF" sub="" code="NIYU10" />
             </div>
             <a
               href="#specials"

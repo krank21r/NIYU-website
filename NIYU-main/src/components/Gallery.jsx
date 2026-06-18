@@ -35,7 +35,7 @@ function GalleryItem({ item, index }) {
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent" />
         <div className="absolute inset-0 border border-white/5 group-hover:border-ink/15 transition-all duration-300" />
         <div className="text-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]">
-          <p className="text-sm font-body text-ivory tracking-wider uppercase">{item.label}</p>
+          <p className="text-sm font-body text-white tracking-wider uppercase">{item.label}</p>
           <div className="w-8 h-[1px] bg-gold-light mx-auto mt-3" />
         </div>
       </div>

@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
 export default function CartView() {
-  const { items, subtotal, total, removeFromCart, updateQty, setStep, closeFlow } = useCart()
+  const { items, subtotal, total, discount, appliedCoupon, couponError, removeFromCart, updateQty, setStep, closeFlow, applyCoupon, removeCoupon, clearCouponError } = useCart()
+  const [couponInput, setCouponInput] = useState('')
 
   if (items.length === 0) {
     return (
@@ -157,7 +159,65 @@ export default function CartView() {
                 <span className="text-ink-subtle">Delivery</span>
                 <span className="text-green-700 font-medium">Free</span>
               </div>
+
+              {/* Coupon Code */}
+              <div className="pt-2">
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between py-2 px-3 bg-green-50 border border-green-200">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-[12px] font-body font-medium text-green-700">
+                        {appliedCoupon.code} applied
+                      </span>
+                    </div>
+                    <button
+                      onClick={removeCoupon}
+                      className="text-[11px] text-red-500 hover:text-red-600 font-body underline"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={couponInput}
+                        onChange={(e) => {
+                          setCouponInput(e.target.value.toUpperCase())
+                          if (couponError) clearCouponError()
+                        }}
+                        placeholder="Coupon code"
+                        className="flex-1 px-3 py-2 border border-ink/10 bg-white text-sm font-body text-ink-soft placeholder:text-ink-subtle/50 focus:outline-none focus:border-gold/50 transition-colors"
+                      />
+                      <button
+                        onClick={() => {
+                          if (couponInput.trim()) {
+                            applyCoupon(couponInput)
+                            if (!couponError) setCouponInput('')
+                          }
+                        }}
+                        className="px-4 py-2 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.08em] uppercase font-body font-medium transition-colors min-h-[40px]"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                    {couponError && (
+                      <p className="text-[11px] text-red-500 font-body mt-1.5">{couponError}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+
               <div className="border-t border-ink/5 pt-3 mt-3">
+                {discount > 0 && (
+                  <div className="flex justify-between text-sm font-body mb-2">
+                    <span className="text-green-700">Discount</span>
+                    <span className="text-green-700 font-medium">-&#8377;{discount}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-sm font-body font-semibold text-ink-soft">Total</span>
                   <span className="text-lg font-heading font-bold text-gold">&#8377;{total}</span>

@@ -4,6 +4,30 @@ import { stopSmoothScroll, startSmoothScroll } from '../hooks/useLenis'
 
 const CartContext = createContext(null)
 const CART_STORAGE_KEY = 'niyu_cart'
+const COUPON_STORAGE_KEY = 'niyu_coupon'
+
+const COUPONS = {
+  NIYU10: { type: 'percent', value: 10 },
+}
+
+function loadCoupon() {
+  try {
+    const raw = localStorage.getItem(COUPON_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
+}
+
+function saveCoupon(coupon) {
+  try {
+    if (coupon) {
+      localStorage.setItem(COUPON_STORAGE_KEY, JSON.stringify(coupon))
+    } else {
+      localStorage.removeItem(COUPON_STORAGE_KEY)
+    }
+  } catch {}
+}
 
 function loadCart() {
   try {
@@ -29,6 +53,8 @@ export function CartProvider({ children }) {
   const [delivery, setDelivery] = useState({ name: '', phone: '', email: '', address: '', pincode: '' })
   const [orderId, setOrderId] = useState(null)
   const [detailProduct, setDetailProduct] = useState(null)
+  const [appliedCoupon, setAppliedCoupon] = useState(loadCoupon)
+  const [couponError, setCouponError] = useState('')
 
   // Persist cart to localStorage on every change
   useEffect(() => {
@@ -95,7 +121,36 @@ export function CartProvider({ children }) {
   }, [])
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
-  const total = subtotal
+
+  const discount = appliedCoupon
+    ? appliedCoupon.type === 'percent'
+      ? Math.round(subtotal * appliedCoupon.value / 100)
+      : 0
+    : 0
+  const total = Math.max(0, subtotal - discount)
+
+  const applyCoupon = useCallback((code) => {
+    const normalized = code.trim().toUpperCase()
+    const coupon = COUPONS[normalized]
+    if (!coupon) {
+      setCouponError('Invalid coupon code')
+      return false
+    }
+    setAppliedCoupon({ ...coupon, code: normalized })
+    saveCoupon({ ...coupon, code: normalized })
+    setCouponError('')
+    return true
+  }, [])
+
+  const removeCoupon = useCallback(() => {
+    setAppliedCoupon(null)
+    saveCoupon(null)
+    setCouponError('')
+  }, [])
+
+  const clearCouponError = useCallback(() => {
+    setCouponError('')
+  }, [])
 
   const confirmOrder = useCallback(async () => {
     let savedOrderId = null
@@ -161,9 +216,10 @@ export function CartProvider({ children }) {
   return (
     <CartContext.Provider value={{
       items, step, selectedProduct, delivery, subtotal, total, orderId, detailProduct,
+      appliedCoupon, discount, couponError,
       openProductModal, closeFlow, addToCart, removeFromCart, updateQty, clearCart,
       openProductDetail, closeProductDetail,
-      setStep, setDelivery, confirmOrder,
+      setStep, setDelivery, confirmOrder, applyCoupon, removeCoupon, clearCouponError,
     }}>
       {children}
     </CartContext.Provider>

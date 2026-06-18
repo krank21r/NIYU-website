@@ -77,11 +77,11 @@ export default function ProductDetail() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.35, ease }}
-          className="fixed inset-0 z-[150] bg-ivory overflow-y-auto"
+          className="fixed inset-0 z-[150] bg-white overflow-y-auto"
         >
           <ProductJsonLd product={product} selectedSize={selectedSize} />
           {/* Header */}
-          <div className="sticky top-0 z-20 bg-ivory/95 backdrop-blur-sm border-b border-ink/5">
+          <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-ink/5">
             <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 h-14">
               <button
                 onClick={() => {
@@ -135,14 +135,14 @@ export default function ProductDetail() {
               {/* Left: Image Gallery */}
               <div className="lg:w-[55%]">
                 {/* Main Image */}
-                <div className="relative bg-ivory border border-ink/5 flex justify-center items-center py-8 sm:py-12 mb-4">
+                <div className="relative bg-white border border-ink/5 flex justify-center items-center py-8 sm:py-12 mb-4">
                   {!imageLoaded && (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-48 h-64 bg-ink/5 animate-pulse" />
                     </div>
                   )}
                   {product.tag && (
-                    <span className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-gold text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-medium">
+                    <span className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-gold text-white text-[11px] tracking-[0.12em] uppercase font-body font-medium">
                       {product.tag}
                     </span>
                   )}
@@ -215,7 +215,7 @@ export default function ProductDetail() {
                     className="flex gap-2 flex-wrap mb-6"
                   >
                     {notes.map((note) => (
-                      <span key={note} className="px-3 py-1.5 bg-ivory border border-ink/8 text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body">
+                      <span key={note} className="px-3 py-1.5 bg-white border border-ink/8 text-[11px] tracking-[0.1em] uppercase text-ink-subtle font-body">
                         {note}
                       </span>
                     ))}
@@ -313,7 +313,7 @@ export default function ProductDetail() {
                   </button>
                   <button
                     onClick={handleAddToCart}
-                    className="w-full py-4 border border-gold text-gold hover:bg-gold hover:text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
+                    className="w-full py-4 border border-gold text-gold hover:bg-gold hover:text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
                   >
                     Buy Now
                   </button>
@@ -325,7 +325,7 @@ export default function ProductDetail() {
             </div>
 
             {/* Sticky Mobile CTA */}
-            <div className="fixed bottom-0 left-0 right-0 z-[160] bg-ivory/95 backdrop-blur-sm border-t border-ink/8 px-4 py-3 flex gap-3 sm:hidden" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}>
+            <div className="fixed bottom-0 left-0 right-0 z-[160] bg-white/95 backdrop-blur-sm border-t border-ink/8 px-4 py-3 flex gap-3 sm:hidden" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}>
               <button
                 onClick={handleAddToCart}
                 className="flex-1 py-3.5 bg-ink hover:bg-ink-soft text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
@@ -334,7 +334,7 @@ export default function ProductDetail() {
               </button>
               <button
                 onClick={handleAddToCart}
-                className="flex-1 py-3.5 border border-gold text-gold hover:bg-gold hover:text-ivory text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
+                className="flex-1 py-3.5 border border-gold text-gold hover:bg-gold hover:text-white text-[11px] tracking-[0.12em] uppercase font-body font-semibold transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[48px]"
               >
                 Buy Now
               </button>
@@ -389,7 +389,7 @@ export default function ProductDetail() {
                 transition={{ duration: 0.8, ease }}
                 className="mt-16 sm:mt-24"
               >
-                <div className="bg-gradient-to-b from-ivory to-parchment py-16 sm:py-20 px-6 sm:px-12">
+                <div className="bg-gradient-to-b from-white to-parchment py-16 sm:py-20 px-6 sm:px-12">
                   <div className="max-w-2xl">
                     <div className="w-10 h-[1px] bg-gold mb-6 origin-left" />
                     <h3 className="text-3xl sm:text-4xl font-heading font-light text-ink mb-6">

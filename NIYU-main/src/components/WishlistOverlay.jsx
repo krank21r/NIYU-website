@@ -29,7 +29,7 @@ export default function WishlistOverlay({ open, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-ivory z-[201] flex flex-col shadow-[-8px_0_30px_rgba(0,0,0,0.08)]"
+            className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-white z-[201] flex flex-col shadow-[-8px_0_30px_rgba(0,0,0,0.08)]"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4 border-b border-ink/5">
@@ -66,7 +66,7 @@ export default function WishlistOverlay({ open, onClose }) {
                 <div className="p-5 space-y-4">
                   {wishedProducts.map((product) => (
                     <div key={product.id} className="flex gap-4 p-3 bg-cream/30 border border-ink/5">
-                      <div className="w-16 h-20 flex-shrink-0 bg-ivory/60 flex items-center justify-center overflow-hidden">
+                      <div className="w-16 h-20 flex-shrink-0 bg-white/60 flex items-center justify-center overflow-hidden">
                         <img src={product.image} alt={product.name} className="h-16 w-auto object-contain" />
                       </div>
                       <div className="flex-1 min-w-0 flex flex-col justify-between">

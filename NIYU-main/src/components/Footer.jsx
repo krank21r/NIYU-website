@@ -113,7 +113,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative bg-charcoal text-ivory overflow-hidden">
+    <footer className="relative bg-charcoal text-white overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" aria-hidden="true"
         style={{
           backgroundImage: 'linear-gradient(110deg, transparent 25%, rgba(28,28,28,0.4) 50%, transparent 75%)',
@@ -136,8 +136,8 @@ export default function Footer() {
                 {vp.icon}
               </div>
               <div>
-                <p className="text-[13px] font-body font-medium text-ivory/90">{vp.label}</p>
-                <p className="text-[11px] font-body font-light text-ivory/40">{vp.sub}</p>
+                <p className="text-[13px] font-body font-medium text-white/90">{vp.label}</p>
+                <p className="text-[11px] font-body font-light text-white/40">{vp.sub}</p>
               </div>
             </div>
           ))}
@@ -154,15 +154,15 @@ export default function Footer() {
           {/* Brand + Newsletter */}
           <div className="md:col-span-4">
             <div className="flex items-baseline gap-1 mb-4">
-              <span className="text-2xl font-heading tracking-[0.3em] text-ivory leading-none">NIYU</span>
-              <sup className="text-[11px] font-body font-light text-ivory/40">&reg;</sup>
+              <span className="text-2xl font-heading tracking-[0.3em] text-white leading-none">NIYU</span>
+              <sup className="text-[11px] font-body font-light text-white/40">&reg;</sup>
             </div>
-            <p className="text-sm font-body font-light text-ivory/50 leading-relaxed max-w-xs mb-6">
+            <p className="text-sm font-body font-light text-white/50 leading-relaxed max-w-xs mb-6">
               Pure oils, pure luxury. Handcrafted fragrances that tell your story.
             </p>
             {/* Newsletter */}
             <div>
-              <p className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-3">Get Updates</p>
+              <p className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-white/40 mb-3">Get Updates</p>
               {subscribed ? (
                 <p className="text-sm font-body text-gold">Thanks for subscribing!</p>
               ) : (
@@ -173,7 +173,7 @@ export default function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email"
                     required
-                    className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 text-sm font-body text-ivory placeholder:text-ivory/30 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-1 focus:ring-offset-charcoal focus:border-gold/40 transition-colors min-h-[44px]"
+                    className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 text-sm font-body text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-1 focus:ring-offset-charcoal focus:border-gold/40 transition-colors min-h-[44px]"
                   />
                   <button
                     type="submit"
@@ -192,7 +192,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-11 h-11 border border-white/10 flex items-center justify-center text-ivory/40 hover:text-gold hover:border-gold/30 transition-all duration-200 active:scale-90"
+                  className="w-11 h-11 border border-white/10 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold/30 transition-all duration-200 active:scale-90"
                   aria-label={`Follow NIYU on ${social.label}`}
                 >
                   {social.icon}
@@ -203,14 +203,14 @@ export default function Footer() {
 
           {/* Nav */}
           <div className="md:col-span-2">
-            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-5">Navigate</h3>
+            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-white/40 mb-5">Navigate</h3>
             <ul className="space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center"
+                    className="text-sm font-body font-light text-white/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center"
                   >
                     {link.label}
                   </a>
@@ -221,14 +221,14 @@ export default function Footer() {
 
           {/* Legal */}
           <div className="md:col-span-3">
-            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-5">Legal</h3>
+            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-white/40 mb-5">Legal</h3>
             <ul className="space-y-3">
               {legalLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.path}
                     onClick={(e) => { e.preventDefault(); navigate(link.path); window.scrollTo(0, 0) }}
-                    className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center"
+                    className="text-sm font-body font-light text-white/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center"
                   >
                     {link.label}
                   </a>
@@ -239,23 +239,23 @@ export default function Footer() {
 
           {/* Help + Business */}
           <div className="md:col-span-3">
-            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-5">Need Help?</h3>
+            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-white/40 mb-5">Need Help?</h3>
             <ul className="space-y-3 mb-8">
               <li>
-                <a href="https://wa.me/916302040779" target="_blank" rel="noopener noreferrer" className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center">
+                <a href="https://wa.me/916302040779" target="_blank" rel="noopener noreferrer" className="text-sm font-body font-light text-white/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center">
                   WhatsApp Us
                 </a>
               </li>
               <li>
-                <a href="mailto:niyuperfumes2907@gmail.com" className="text-sm font-body font-light text-ivory/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center">
+                <a href="mailto:niyuperfumes2907@gmail.com" className="text-sm font-body font-light text-white/60 hover:text-gold transition-colors duration-200 min-h-[44px] flex items-center">
                   Email Support
                 </a>
               </li>
             </ul>
 
             {/* Business Details */}
-            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-ivory/40 mb-3">Business</h3>
-            <div className="space-y-2 text-[12px] font-body font-light text-ivory/40">
+            <h3 className="text-[11px] tracking-[0.12em] uppercase font-body font-medium text-white/40 mb-3">Business</h3>
+            <div className="space-y-2 text-[12px] font-body font-light text-white/40">
               <p>NIYU Perfumes</p>
               <p>India</p>
             </div>
@@ -264,10 +264,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/8 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[11px] font-body font-light text-ivory/30">
+          <p className="text-[11px] font-body font-light text-white/30">
             &copy; {new Date().getFullYear()} NIYU Perfumes. All rights reserved.
           </p>
-          <p className="text-[11px] font-body font-light text-ivory/30">
+          <p className="text-[11px] font-body font-light text-white/30">
             Crafted by Krank
           </p>
         </div>

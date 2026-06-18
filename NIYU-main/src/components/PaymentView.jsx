@@ -165,7 +165,7 @@ export default function PaymentView() {
               <p className="text-[13px] text-ink-subtle font-body mb-3">
                 Open any UPI app on your phone and send <span className="font-semibold text-ink-soft">&#8377;{subtotal}</span> to:
               </p>
-              <div className="flex items-center gap-2 bg-ivory border border-ink/10 px-4 py-3 mb-4">
+              <div className="flex items-center gap-2 bg-white border border-ink/10 px-4 py-3 mb-4">
                 <span className="text-base font-body font-semibold text-ink-soft tracking-wide flex-1 select-all">
                   {UPI_ID}
                 </span>

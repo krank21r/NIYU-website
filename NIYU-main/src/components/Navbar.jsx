@@ -292,7 +292,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-0 z-40 bg-ivory/98 backdrop-blur-3xl flex flex-col items-center justify-center lg:hidden"
+            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-3xl flex flex-col items-center justify-center lg:hidden"
           >
             {/* Close button — top right */}
             <button

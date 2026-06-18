@@ -34,7 +34,7 @@ export default function LegalLayout({ title, lastUpdated, children }) {
   }
 
   return (
-    <div className="bg-ivory min-h-screen relative">
+    <div className="bg-white min-h-screen relative">
       <ScrollToTop />
       <script
         type="application/ld+json"

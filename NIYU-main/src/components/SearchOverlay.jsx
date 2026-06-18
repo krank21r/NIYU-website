@@ -65,7 +65,7 @@ export default function SearchOverlay({ open, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25, ease }}
-          className="fixed inset-0 z-[100] bg-ivory/98 backdrop-blur-3xl flex flex-col"
+          className="fixed inset-0 z-[100] bg-white/98 backdrop-blur-3xl flex flex-col"
           onClick={onClose}
         >
           <motion.div

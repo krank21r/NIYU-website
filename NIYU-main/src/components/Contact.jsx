@@ -57,10 +57,10 @@ export default function Contact() {
           transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-14"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-ivory mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-white mb-4">
             Let's Connect
           </h2>
-          <p className="text-ivory/50 font-body font-light max-w-xl mx-auto">
+          <p className="text-white/50 font-body font-light max-w-xl mx-auto">
             Reach out for orders, custom fragrances, or any queries
           </p>
           <div className="w-12 h-[1px] bg-gold/40 mx-auto mt-6" aria-hidden="true" />
@@ -77,16 +77,16 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease: [0.23, 1, 0.32, 1] }}
-              className="group border border-white/10 bg-white/5 hover:bg-white/8 hover:border-ivory/20 transition-all duration-200 flex flex-col items-center text-center p-8 md:p-10 active:scale-[0.98] relative overflow-hidden focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal"
+              className="group border border-white/10 bg-white/5 hover:bg-white/8 hover:border-white/20 transition-all duration-200 flex flex-col items-center text-center p-8 md:p-10 active:scale-[0.98] relative overflow-hidden focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal"
               aria-label={`Contact via ${item.label}: ${item.value}`}
             >
-              <div className="w-12 h-12 bg-white/8 flex items-center justify-center text-ivory/60 group-hover:text-gold transition-colors duration-200 mb-4">
+              <div className="w-12 h-12 bg-white/8 flex items-center justify-center text-white/60 group-hover:text-gold transition-colors duration-200 mb-4">
                 {item.icon}
               </div>
-              <p className="text-[11px] tracking-[0.12em] uppercase text-ivory/40 font-body font-medium mb-2">
+              <p className="text-[11px] tracking-[0.12em] uppercase text-white/40 font-body font-medium mb-2">
                 {item.label}
               </p>
-              <p className="text-base font-body text-ivory/80 font-light break-all">
+              <p className="text-base font-body text-white/80 font-light break-all">
                 {item.value}
               </p>
               {/* Hover underline */}
