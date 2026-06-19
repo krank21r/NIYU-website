@@ -8,20 +8,20 @@ const categories = [
     id: 'perfume',
     name: 'Perfume',
     tagline: 'Connoisseurs of perfumery \u2014 heritage, held in a bottle.',
-    image: '/1 million.jpeg',
+    image: '/category-perfume.webp',
   },
   {
     id: 'attars',
     name: 'Attars',
     tagline: 'Rich fragrant oils \u2014 a timeless touch of tradition.',
-    image: '/attar.jpeg',
+    image: '/category-attar.webp',
     sectionId: 'attars',
   },
   {
     id: 'car-perfumes',
     name: 'Car Perfumes',
     tagline: 'Luxury scents for every journey.',
-    image: '/Car images.jpeg',
+    image: '/category-car.webp',
     sectionId: 'car-perfumes',
   },
 ]

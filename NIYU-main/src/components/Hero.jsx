@@ -4,20 +4,20 @@ import { motion, AnimatePresence } from 'framer-motion'
 const slides = [
   {
     id: 1,
-    image: '/niyu-hero-ocean.jpg.PNG',
+    image: '/hero-perfume.jpg.png',
     badge: 'NEW ARRIVAL',
-    title: 'Discover Your\nSignature Scent',
-    subtitle: 'Premium Arabian & French perfumes crafted from the finest ingredients',
+    title: '',
+    subtitle: '',
     cta: 'Shop Now',
     ctaLink: '#specials',
     secondaryCta: 'View All',
     secondaryLink: '#collection',
-    discount: 'Up to 30% OFF',
+    discount: '',
     gradient: 'from-charcoal/80 via-charcoal/40 to-transparent',
   },
   {
     id: 2,
-    image: '/attar-hero.jpg.png',
+    image: '/hero-attar.jpg.png',
     badge: 'BESTSELLER',
     title: 'Pure Attar\nCollection',
     subtitle: 'Alcohol-free traditional attars — long-lasting, handcrafted luxury',
@@ -137,7 +137,84 @@ export default function Hero() {
               />
             </div>
 
+            {/* Gradient Overlay */}
+            <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
 
+            {/* Text Content */}
+            <div className="relative h-full flex items-center px-6 sm:px-12 lg:px-20">
+              <div className="max-w-lg">
+                {/* Badge */}
+                {slide.badge && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15, duration: 0.5 }}
+                    className="inline-block px-4 py-1.5 mb-4 text-[10px] tracking-[0.2em] uppercase font-body font-medium text-gold border border-gold/30 bg-gold/5 backdrop-blur-sm"
+                  >
+                    {slide.badge}
+                  </motion.span>
+                )}
+
+                {/* Title */}
+                {slide.title && (
+                  <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25, duration: 0.6 }}
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold text-white leading-tight mb-4 whitespace-pre-line"
+                  >
+                    {slide.title}
+                  </motion.h1>
+                )}
+
+                {/* Subtitle */}
+                <motion.p
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35, duration: 0.6 }}
+                  className="text-sm sm:text-base md:text-lg text-white/70 font-body font-light leading-relaxed mb-6 max-w-md"
+                >
+                  {slide.subtitle}
+                </motion.p>
+
+                {/* CTAs */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45, duration: 0.6 }}
+                  className="flex items-center gap-3 mt-24"
+                >
+                  <a
+                    href={slide.ctaLink}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-ink text-[11px] tracking-[0.15em] uppercase font-body font-semibold hover:bg-gold-light transition-colors duration-200"
+                  >
+                    {slide.cta}
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                  <a
+                    href={slide.secondaryLink}
+                    className="inline-flex items-center gap-2 px-6 py-3 text-white/70 text-[11px] tracking-[0.15em] uppercase font-body font-medium border border-white/20 hover:bg-white/10 hover:text-white transition-colors duration-200"
+                  >
+                    {slide.secondaryCta}
+                  </a>
+                </motion.div>
+              </div>
+
+              {/* Discount Tag */}
+              {slide.discount && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="absolute right-6 sm:right-12 lg:right-20 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center justify-center w-24 h-24 lg:w-28 lg:h-28 rounded-full bg-gold/10 backdrop-blur-md border border-gold/30"
+                >
+                  <span className="text-[10px] tracking-[0.15em] uppercase text-gold/80 font-body font-medium">Save</span>
+                  <span className="text-lg lg:text-xl font-heading font-bold text-gold">{slide.discount}</span>
+                </motion.div>
+              )}
+            </div>
           </motion.div>
         </AnimatePresence>
 

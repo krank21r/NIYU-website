@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment & system
+.env
+CLAUDE.md
+
+# Generated scripts and outputs
+data/
+scripts/
+
+# 3D hero (unused)
+/NIYU-main/src/components/Hero3D.jsx
