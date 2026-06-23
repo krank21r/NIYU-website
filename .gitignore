@@ -33,3 +33,5 @@ scripts/
 
 # 3D hero (unused)
 /NIYU-main/src/components/Hero3D.jsx
+
+.vercel

@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import RevealUp from './RevealUp'
 
 const contacts = [
   {
@@ -39,59 +40,45 @@ export default function Contact() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="contact" className="relative py-16 sm:py-24 px-4 sm:px-6" aria-label="Contact us">
-      <div className="absolute inset-0 bg-charcoal" />
-      <div className="absolute inset-0 opacity-[0.06] pointer-events-none" aria-hidden="true"
-        style={{
-          backgroundImage: 'linear-gradient(110deg, transparent 25%, rgba(28,28,28,0.4) 50%, transparent 75%)',
-          backgroundSize: '200% 100%',
-          animation: 'shimmer-gold 5s linear infinite',
-        }}
-      />
-
-      <div className="relative max-w-7xl mx-auto">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-          className="text-center mb-14"
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-white mb-4">
-            Let's Connect
-          </h2>
-          <p className="text-white/50 font-body font-light max-w-xl mx-auto">
-            Reach out for orders, custom fragrances, or any queries
-          </p>
-          <div className="w-12 h-[1px] bg-gold/40 mx-auto mt-6" aria-hidden="true" />
-        </motion.div>
+    <section id="contact" className="relative py-24 md:py-32 px-6 bg-surface-secondary" aria-label="Contact us">
+      <div className="max-w-7xl mx-auto">
+        <RevealUp>
+          <div className="text-center mb-16 md:mb-20">
+            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent font-body">
+              Get in Touch
+            </span>
+            <h2 className="font-heading font-black text-[clamp(2.5rem,8vw,6rem)] leading-[0.85] tracking-[-0.03em] text-text-primary mt-4 mb-4">
+              Let's Connect
+            </h2>
+            <p className="text-base md:text-lg font-body font-light text-text-secondary max-w-xl mx-auto">
+              Reach out for orders, custom fragrances, or any queries
+            </p>
+            <span className="block w-8 h-[1px] bg-accent mx-auto mt-6" />
+          </div>
+        </RevealUp>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {contacts.map((item, i) => (
-            <motion.a
-              key={item.label}
-              href={item.href}
-              target={item.label === 'WhatsApp' || item.label === 'Instagram' ? '_blank' : undefined}
-              rel={item.label === 'WhatsApp' || item.label === 'Instagram' ? 'noopener noreferrer' : undefined}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease: [0.23, 1, 0.32, 1] }}
-              className="group border border-white/10 bg-white/5 hover:bg-white/8 hover:border-white/20 transition-all duration-200 flex flex-col items-center text-center p-8 md:p-10 active:scale-[0.98] relative overflow-hidden focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal"
-              aria-label={`Contact via ${item.label}: ${item.value}`}
-            >
-              <div className="w-12 h-12 bg-white/8 flex items-center justify-center text-white/60 group-hover:text-gold transition-colors duration-200 mb-4">
-                {item.icon}
-              </div>
-              <p className="text-[11px] tracking-[0.12em] uppercase text-white/40 font-body font-medium mb-2">
-                {item.label}
-              </p>
-              <p className="text-base font-body text-white/80 font-light break-all">
-                {item.value}
-              </p>
-              {/* Hover underline */}
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-center" />
-            </motion.a>
+            <RevealUp key={item.label} delay={i * 100}>
+              <a
+                href={item.href}
+                target={item.label === 'WhatsApp' || item.label === 'Instagram' ? '_blank' : undefined}
+                rel={item.label === 'WhatsApp' || item.label === 'Instagram' ? 'noopener noreferrer' : undefined}
+                className="group block bg-surface-secondary border border-[rgba(38,38,38,0.06)] hover:border-accent/30 hover:bg-accent/[0.04] transition-all duration-400 text-center p-10 md:p-12"
+                style={{ transitionTimingFunction: 'var(--ease-premium)' }}
+                aria-label={`Contact via ${item.label}: ${item.value}`}
+              >
+                <div className="w-12 h-12 flex items-center justify-center mx-auto mb-4 text-accent/60 group-hover:text-accent transition-colors duration-400">
+                  {item.icon}
+                </div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-text-tertiary font-body mb-2">
+                  {item.label}
+                </p>
+                <p className="text-base font-body text-text-primary font-light break-all">
+                  {item.value}
+                </p>
+              </a>
+            </RevealUp>
           ))}
         </div>
       </div>

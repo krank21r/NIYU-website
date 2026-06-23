@@ -10,7 +10,7 @@ const ease = [0.23, 1, 0.32, 1]
 const allItems = [
   ...products.map(p => ({ ...p, type: 'perfume' })),
   ...attars.map(a => ({ ...a, type: 'attar' })),
-  ...carPerfumes.map(c => ({ ...c, type: 'car-perfume' })),
+  ...carPerfumes.flatMap(cat => cat.items.map(c => ({ ...c, type: 'car-perfume' }))),
 ]
 
 export default function SearchOverlay({ open, onClose }) {
@@ -141,7 +141,7 @@ export default function SearchOverlay({ open, onClose }) {
                         <p className="text-xs font-body text-ink-muted mt-0.5 truncate">
                           {item.type === 'perfume' && item.notes && `${item.notes.join(' · ')} · ₹${item.sizes?.[0]?.price || ''}`}
                           {item.type === 'attar' && `Attar · ₹${item.price || '699'}`}
-                          {item.type === 'car-perfume' && `Car Perfume · ₹${item.price || '599'}`}
+                          {item.type === 'car-perfume' && `Aero Drive · ₹${item.price || '599'}`}
                         </p>
                       </div>
                       <svg className="w-4 h-4 text-ink-muted group-hover:text-gold transition-colors duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

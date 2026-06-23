@@ -33,7 +33,7 @@ function ProductCard({ product, index }) {
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}
+      transition={{ duration: 0.5, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
       className="flex-shrink-0 w-[220px] sm:w-[240px] snap-start"
     >
       <div
@@ -50,7 +50,7 @@ function ProductCard({ product, index }) {
             src={product.image}
             alt={`${product.name} perfume`}
             loading="lazy"
-            className="h-40 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-500 ease-[var(--ease-out)] group-hover:scale-105 group-hover:drop-shadow-[0_12px_32px_rgba(201,169,110,0.25)]"
+            className="h-40 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-500 ease-[var(--ease-out)] group-hover:scale-105 hover-grayscale"
           />
         </div>
         <div className="p-5 mt-auto">
@@ -80,16 +80,16 @@ function CategoryCard({ item, index, isActive, onClick }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className={`group cursor-pointer active:scale-[0.97] transition-transform duration-150 ${isActive ? 'ring-2 ring-gold ring-offset-2 ring-offset-white' : ''}`}
       onClick={onClick}
     >
-      <div className="relative overflow-hidden h-[200px] sm:h-[240px]">
+      <div className="relative overflow-hidden h-[200px] sm:h-[240px] hover-grayscale">
         <img
           src={item.image}
           alt={`NIYU ${item.name} collection`}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent transition-all duration-500 group-hover:from-black/80 group-hover:via-black/50" />
         <div className="relative h-full flex flex-col justify-center px-8 sm:px-12 z-10">
